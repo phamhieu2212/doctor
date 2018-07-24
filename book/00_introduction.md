@@ -2,7 +2,7 @@
 
 ## What it is?
 
-Laravel Boilerplate is build on Laravel 5.3 and add some additional rules and features to accelerate web system development and make it easy to keep consistency of the code. 
+Laravel Boilerplate is build on Laravel 5.4 and add some additional rules and features to accelerate web system development and make it easy to keep consistency of the code. 
 It have the following features.
 
 * Use repository patterns and provide generators for it.

@@ -11,7 +11,7 @@
 
 * Clone boilerplate to local
 
-`git clone git@github.com:takaaki-mizuno/laravel-boilerplate.git`
+`git clone https://github.com/thanhnt37/laravel-boilerplate.git`
 
 * Create new repository on remote ( e.g. GitHub )
 
@@ -21,7 +21,7 @@
 
 * Add boilerplate remote repository as another remote url.
 
-`git remote add boilerplate git@github.com:takaaki-mizuno/laravel-boilerplate.git`
+`git remote add boilerplate https://github.com/thanhnt37/laravel-boilerplate.git`
 
 * You can get update of boiler plate with `git pull boilerplate master` command anytime you like.
 
