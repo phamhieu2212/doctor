@@ -25,7 +25,7 @@
             <!-------------------------------- Begin: Body ----------------------------------->
             <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
                 <!-------------------------------- Begin: Left Aside ----------------------------------->
-                @include('pages.admin.metronic.layout.left-aside')
+                @include('pages.admin.metronic.layout.left_aside')
                         <!-------------------------------- End: Left Aside ----------------------------------->
 
                 <div class="m-grid__item m-grid__item--fluid m-wrapper">

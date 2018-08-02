@@ -159,6 +159,8 @@
                     </a>
                 </li>
             @endif
+
+            <!-- %%SIDEMENU%% -->
         </ul>
     </div>
     <!-- END: Aside Menu -->

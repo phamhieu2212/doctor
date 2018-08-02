@@ -18,7 +18,7 @@ class AuthController extends Controller
 
     public function getSignIn()
     {
-        return view('pages.admin.' . config('view.admin') . '.auth.signin_v2', [
+        return view('pages.admin.' . config('view.admin') . '.auth.signin', [
         ]);
     }
 

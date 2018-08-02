@@ -17,7 +17,7 @@ return [
         realpath(base_path('resources/views')),
     ],
 
-    'admin' => 'adminlte',
+    'admin' => 'metronic',
 
     /*
     |--------------------------------------------------------------------------

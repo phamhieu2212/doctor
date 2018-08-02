@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Generators;
 
+use function ICanBoogie\pluralize;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
@@ -281,7 +282,23 @@ class AdminCRUDMakeCommand extends GeneratorCommandBase
     {
         $sideMenu = $this->files->get($this->getSideBarViewPath());
 
-        $value = '<li @if( $menu==\''.\StringHelper::camel2Snake($name).'s\') class="active" @endif ><a href="{!! \URL::action(\'Admin\\'.$name.'Controller@index\') !!}"><i class="fa fa-users"></i> <span>'.\StringHelper::pluralize($name).'</span></a></li>'.PHP_EOL.'            <!-- %%SIDEMENU%% -->';
+        $theme = config('view.admin');
+        if( $theme == 'metronic' ) {
+            $value = '<li class="m-menu__item @if( $menu==\'' . snake_case(pluralize($name)) . '\') m-menu__item--active @endif" aria-haspopup="true">
+                <a href="{!! \URL::action(\'Admin\\' . $name . 'Controller@index\') !!}" class="m-menu__link">
+                    <i class="m-menu__link-icon la la-sticky-note"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                @lang(\'admin.menu.' . snake_case(pluralize($name)) . '\')
+                            </span>
+                        </span>
+                    </span>
+                </a>
+            </li>' . PHP_EOL . PHP_EOL .'            <!-- %%SIDEMENU%% -->';
+        } elseif ($theme == 'adminlte') {
+            $value = '<li @if( $menu==\'' . snake_case(pluralize($name)) . '\') class="active" @endif ><a href="{!! \URL::action(\'Admin\\'.$name.'Controller@index\') !!}"><i class="fa fa-users"></i> <span> @lang(\'admin.menu.' . snake_case(pluralize($name)) . '\') </span></a></li>'.PHP_EOL.'            <!-- %%SIDEMENU%% -->';
+        }
 
         $sideMenu = str_replace('<!-- %%SIDEMENU%% -->', $value, $sideMenu);
         $this->files->put($this->getSideBarViewPath(), $sideMenu);
@@ -289,7 +306,12 @@ class AdminCRUDMakeCommand extends GeneratorCommandBase
 
     protected function getSideBarViewPath()
     {
-        return $this->laravel['path'].'/../resources/views/pages/admin/' . config('view.admin') . '/layout/left_navigation.blade.php';
+        $theme = config('view.admin');
+        if( $theme == 'metronic' ) {
+            return $this->laravel['path'].'/../resources/views/pages/admin/metronic/layout/left_aside.blade.php';
+        }
+
+        return $this->laravel['path'].'/../resources/views/pages/admin/adminlte/layout/left_navigation.blade.php';
     }
 
     /**

@@ -63,7 +63,7 @@ class {{$controllerName}}Controller extends Controller
             'pages.admin.' . config('view.admin') . '.{{$viewFolder}}.edit',
             [
                 'isNew'     => true,
-                '{{str_plural($objectName)}}' => $this->{{$reposName}}Repository->getBlankModel(),
+                '{{$objectName}}' => $this->{{$reposName}}Repository->getBlankModel(),
             ]
         );
     }
