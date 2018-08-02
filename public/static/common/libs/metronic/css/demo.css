@@ -39,7 +39,7 @@ $table-inverse-color:           $body-bg !default;
 */
 
 /*!
- * Bootstrap v4.1.1 (https://getbootstrap.com/)
+ * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -72,7 +72,7 @@ $table-inverse-color:           $body-bg !default;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -268,8 +268,9 @@ img {
   border-style: none;
 }
 
-svg:not(:root) {
+svg {
   overflow: hidden;
+  vertical-align: middle;
 }
 
 table {
@@ -1960,7 +1961,6 @@ pre code {
 
 .table {
   width: 100%;
-  max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
 }
@@ -2260,6 +2260,7 @@ pre code {
 .form-control {
   display: block;
   width: 100%;
+  height: calc(2.55rem + 2px);
   padding: 0.65rem 1rem;
   font-size: 1rem;
   line-height: 1.25;
@@ -2321,10 +2322,6 @@ pre code {
   opacity: 1;
 }
 
-select.form-control:not([size]):not([multiple]) {
-  height: calc(2.55rem + 2px);
-}
-
 select.form-control:focus::-ms-value {
   color: #495057;
   background-color: #fff;
@@ -2372,61 +2369,34 @@ select.form-control:focus::-ms-value {
 }
 
 .form-control-plaintext.form-control-sm,
-.input-group-sm > .form-control-plaintext.form-control,
-.input-group-sm > .input-group-prepend > .form-control-plaintext.input-group-text,
-.input-group-sm > .input-group-append > .form-control-plaintext.input-group-text,
-.input-group-sm > .input-group-prepend > .form-control-plaintext.btn,
-.input-group-sm > .input-group-append > .form-control-plaintext.btn,
-.form-control-plaintext.form-control-lg,
-.input-group-lg > .form-control-plaintext.form-control,
-.input-group-lg > .input-group-prepend > .form-control-plaintext.input-group-text,
-.input-group-lg > .input-group-append > .form-control-plaintext.input-group-text,
-.input-group-lg > .input-group-prepend > .form-control-plaintext.btn,
-.input-group-lg > .input-group-append > .form-control-plaintext.btn {
+.form-control-plaintext.form-control-lg {
   padding-right: 0;
   padding-left: 0;
 }
 
-.form-control-sm,
-.input-group-sm > .form-control,
-.input-group-sm > .input-group-prepend > .input-group-text,
-.input-group-sm > .input-group-append > .input-group-text,
-.input-group-sm > .input-group-prepend > .btn,
-.input-group-sm > .input-group-append > .btn {
+.form-control-sm {
+  height: calc(2.0125rem + 2px);
   padding: 0.35rem 0.75rem;
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
 
-select.form-control-sm:not([size]):not([multiple]),
-.input-group-sm > select.form-control:not([size]):not([multiple]),
-.input-group-sm > .input-group-prepend > select.input-group-text:not([size]):not([multiple]),
-.input-group-sm > .input-group-append > select.input-group-text:not([size]):not([multiple]),
-.input-group-sm > .input-group-prepend > select.btn:not([size]):not([multiple]),
-.input-group-sm > .input-group-append > select.btn:not([size]):not([multiple]) {
-  height: calc(2.0125rem + 2px);
-}
-
-.form-control-lg,
-.input-group-lg > .form-control,
-.input-group-lg > .input-group-prepend > .input-group-text,
-.input-group-lg > .input-group-append > .input-group-text,
-.input-group-lg > .input-group-prepend > .btn,
-.input-group-lg > .input-group-append > .btn {
+.form-control-lg {
+  height: calc(3.875rem + 2px);
   padding: 1rem 1.5rem;
   font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
 
-select.form-control-lg:not([size]):not([multiple]),
-.input-group-lg > select.form-control:not([size]):not([multiple]),
-.input-group-lg > .input-group-prepend > select.input-group-text:not([size]):not([multiple]),
-.input-group-lg > .input-group-append > select.input-group-text:not([size]):not([multiple]),
-.input-group-lg > .input-group-prepend > select.btn:not([size]):not([multiple]),
-.input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]) {
-  height: calc(3.875rem + 2px);
+select.form-control[size],
+select.form-control[multiple] {
+  height: auto;
+}
+
+textarea.form-control {
+  height: auto;
 }
 
 .form-group {
@@ -2506,13 +2476,13 @@ select.form-control-lg:not([size]):not([multiple]),
   z-index: 5;
   display: none;
   max-width: 100%;
-  padding: .5rem;
+  padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: .875rem;
-  line-height: 1;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: #fff;
-  background-color: rgba(52, 191, 163, 0.8);
-  border-radius: .2rem;
+  background-color: rgba(52, 191, 163, 0.9);
+  border-radius: 0.25rem;
 }
 
 .was-validated .form-control:valid,
@@ -2598,8 +2568,8 @@ select.form-control-lg:not([size]):not([multiple]),
   border-color: #34bfa3;
 }
 
-.was-validated .custom-file-input:valid ~ .custom-file-label::before,
-.custom-file-input.is-valid ~ .custom-file-label::before {
+.was-validated .custom-file-input:valid ~ .custom-file-label::after,
+.custom-file-input.is-valid ~ .custom-file-label::after {
   border-color: inherit;
 }
 
@@ -2630,13 +2600,13 @@ select.form-control-lg:not([size]):not([multiple]),
   z-index: 5;
   display: none;
   max-width: 100%;
-  padding: .5rem;
+  padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: .875rem;
-  line-height: 1;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: #fff;
-  background-color: rgba(244, 81, 108, 0.8);
-  border-radius: .2rem;
+  background-color: rgba(244, 81, 108, 0.9);
+  border-radius: 0.25rem;
 }
 
 .was-validated .form-control:invalid,
@@ -2722,8 +2692,8 @@ select.form-control-lg:not([size]):not([multiple]),
   border-color: #f4516c;
 }
 
-.was-validated .custom-file-input:invalid ~ .custom-file-label::before,
-.custom-file-input.is-invalid ~ .custom-file-label::before {
+.was-validated .custom-file-input:invalid ~ .custom-file-label::after,
+.custom-file-input.is-invalid ~ .custom-file-label::after {
   border-color: inherit;
 }
 
@@ -2885,11 +2855,6 @@ select.form-control-lg:not([size]):not([multiple]),
 
 .btn:not(:disabled):not(.disabled) {
   cursor: pointer;
-}
-
-.btn:not(:disabled):not(.disabled):active,
-.btn:not(:disabled):not(.disabled).active {
-  background-image: none;
 }
 
 a.btn.disabled,
@@ -4016,12 +3981,6 @@ input[type="button"].btn-block {
   margin-bottom: 0;
 }
 
-.input-group > .form-control:focus,
-.input-group > .custom-select:focus,
-.input-group > .custom-file:focus {
-  z-index: 3;
-}
-
 .input-group > .form-control + .form-control,
 .input-group > .form-control + .custom-select,
 .input-group > .form-control + .custom-file,
@@ -4032,6 +3991,16 @@ input[type="button"].btn-block {
 .input-group > .custom-file + .custom-select,
 .input-group > .custom-file + .custom-file {
   margin-left: -1px;
+}
+
+.input-group > .form-control:focus,
+.input-group > .custom-select:focus,
+.input-group > .custom-file .custom-file-input:focus ~ .custom-file-label {
+  z-index: 3;
+}
+
+.input-group > .custom-file .custom-file-input:focus {
+  z-index: 4;
 }
 
 .input-group > .form-control:not(:last-child),
@@ -4121,6 +4090,30 @@ input[type="button"].btn-block {
 .input-group-text input[type="radio"],
 .input-group-text input[type="checkbox"] {
   margin-top: 0;
+}
+
+.input-group-lg > .form-control,
+.input-group-lg > .input-group-prepend > .input-group-text,
+.input-group-lg > .input-group-append > .input-group-text,
+.input-group-lg > .input-group-prepend > .btn,
+.input-group-lg > .input-group-append > .btn {
+  height: calc(3.875rem + 2px);
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .input-group-prepend > .input-group-text,
+.input-group-sm > .input-group-append > .input-group-text,
+.input-group-sm > .input-group-prepend > .btn,
+.input-group-sm > .input-group-append > .btn {
+  height: calc(2.0125rem + 2px);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
 }
 
 .input-group > .input-group-prepend > .btn,
@@ -4284,8 +4277,8 @@ input[type="button"].btn-block {
 .custom-select:focus {
   border-color: #c2c7f3;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px rgba(194, 199, 243, 0.5);
-          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px rgba(194, 199, 243, 0.5);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(194, 199, 243, 0.5);
+          box-shadow: 0 0 0 0.2rem rgba(194, 199, 243, 0.5);
 }
 
 .custom-select:focus::-ms-value {
@@ -4350,6 +4343,10 @@ input[type="button"].btn-block {
   border-color: #c2c7f3;
 }
 
+.custom-file-input:disabled ~ .custom-file-label {
+  background-color: #e9ecef;
+}
+
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: "Browse";
 }
@@ -4399,6 +4396,19 @@ input[type="button"].btn-block {
   outline: none;
 }
 
+.custom-range:focus::-webkit-slider-thumb {
+  -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
+          box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
+}
+
+.custom-range:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
+}
+
+.custom-range:focus::-ms-thumb {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
+}
+
 .custom-range::-moz-focus-outer {
   border: 0;
 }
@@ -4410,14 +4420,19 @@ input[type="button"].btn-block {
   background-color: #5867dd;
   border: 0;
   border-radius: 1rem;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   -webkit-appearance: none;
           appearance: none;
 }
 
-.custom-range::-webkit-slider-thumb:focus {
-  outline: none;
-  -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
-          box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
+@media screen and (prefers-reduced-motion: reduce) {
+  .custom-range::-webkit-slider-thumb {
+    -webkit-transition: none;
+    transition: none;
+  }
 }
 
 .custom-range::-webkit-slider-thumb:active {
@@ -4440,13 +4455,19 @@ input[type="button"].btn-block {
   background-color: #5867dd;
   border: 0;
   border-radius: 1rem;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   -moz-appearance: none;
        appearance: none;
 }
 
-.custom-range::-moz-range-thumb:focus {
-  outline: none;
-  box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
+@media screen and (prefers-reduced-motion: reduce) {
+  .custom-range::-moz-range-thumb {
+    -webkit-transition: none;
+    transition: none;
+  }
 }
 
 .custom-range::-moz-range-thumb:active {
@@ -4466,15 +4487,24 @@ input[type="button"].btn-block {
 .custom-range::-ms-thumb {
   width: 1rem;
   height: 1rem;
+  margin-top: 0;
+  margin-right: 0.2rem;
+  margin-left: 0.2rem;
   background-color: #5867dd;
   border: 0;
   border-radius: 1rem;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   appearance: none;
 }
 
-.custom-range::-ms-thumb:focus {
-  outline: none;
-  box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(88, 103, 221, 0.25);
+@media screen and (prefers-reduced-motion: reduce) {
+  .custom-range::-ms-thumb {
+    -webkit-transition: none;
+    transition: none;
+  }
 }
 
 .custom-range::-ms-thumb:active {
@@ -4500,6 +4530,24 @@ input[type="button"].btn-block {
   margin-right: 15px;
   background-color: #dee2e6;
   border-radius: 1rem;
+}
+
+.custom-control-label::before,
+.custom-file-label,
+.custom-select {
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .custom-control-label::before,
+  .custom-file-label,
+  .custom-select {
+    -webkit-transition: none;
+    transition: none;
+  }
 }
 
 .nav {
@@ -6103,15 +6151,15 @@ input[type="button"].btn-block {
   opacity: .5;
 }
 
-.close:hover,
-.close:focus {
+.close:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+
+.close:not(:disabled):not(.disabled):hover,
+.close:not(:disabled):not(.disabled):focus {
   color: #000;
   text-decoration: none;
   opacity: .75;
-}
-
-.close:not(:disabled):not(.disabled) {
-  cursor: pointer;
 }
 
 button.close {
@@ -6125,6 +6173,11 @@ button.close {
   overflow: hidden;
 }
 
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -6135,11 +6188,6 @@ button.close {
   display: none;
   overflow: hidden;
   outline: 0;
-}
-
-.modal-open .modal {
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .modal-dialog {
@@ -6178,6 +6226,12 @@ button.close {
       -ms-flex-align: center;
           align-items: center;
   min-height: calc(100% - (0.5rem * 2));
+}
+
+.modal-dialog-centered::before {
+  display: block;
+  height: calc(100vh - (0.5rem * 2));
+  content: "";
 }
 
 .modal-content {
@@ -6288,6 +6342,10 @@ button.close {
 
   .modal-dialog-centered {
     min-height: calc(100% - (1.75rem * 2));
+  }
+
+  .modal-dialog-centered::before {
+    height: calc(100vh - (1.75rem * 2));
   }
 
   .modal-sm {
@@ -6641,27 +6699,29 @@ button.close {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  -webkit-transition: -webkit-transform 0.6s ease;
-  transition: -webkit-transform 0.6s ease;
-  transition: transform 0.6s ease;
-  transition: transform 0.6s ease, -webkit-transform 0.6s ease;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   -webkit-perspective: 1000px;
           perspective: 1000px;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
-  .carousel-item {
-    -webkit-transition: none;
-    transition: none;
-  }
-}
-
 .carousel-item.active,
 .carousel-item-next,
 .carousel-item-prev {
   display: block;
+  -webkit-transition: -webkit-transform 0.6s ease;
+  transition: -webkit-transform 0.6s ease;
+  transition: transform 0.6s ease;
+  transition: transform 0.6s ease, -webkit-transform 0.6s ease;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .carousel-item.active,
+  .carousel-item-next,
+  .carousel-item-prev {
+    -webkit-transition: none;
+    transition: none;
+  }
 }
 
 .carousel-item-next,
@@ -37579,21 +37639,11 @@ td > .m-checkbox.m-checkbox--single {
   border-radius: 1.3rem;
 }
 
-.form-control.m-input--pill.form-control-lg,
-.input-group-lg > .form-control.m-input--pill,
-.input-group-lg > .input-group-prepend > .form-control.m-input--pill.input-group-text,
-.input-group-lg > .input-group-append > .form-control.m-input--pill.input-group-text,
-.input-group-lg > .input-group-prepend > .form-control.m-input--pill.btn,
-.input-group-lg > .input-group-append > .form-control.m-input--pill.btn {
+.form-control.m-input--pill.form-control-lg {
   border-radius: 2rem;
 }
 
-.form-control.m-input--pill.form-control-sm,
-.input-group-sm > .form-control.m-input--pill,
-.input-group-sm > .input-group-prepend > .form-control.m-input--pill.input-group-text,
-.input-group-sm > .input-group-append > .form-control.m-input--pill.input-group-text,
-.input-group-sm > .input-group-prepend > .form-control.m-input--pill.btn,
-.input-group-sm > .input-group-append > .form-control.m-input--pill.btn {
+.form-control.m-input--pill.form-control-sm {
   border-radius: 1.1rem;
 }
 
@@ -37778,111 +37828,41 @@ td > .m-checkbox.m-checkbox--single {
   font-size: 1.3em;
 }
 
-.m-input-icon .form-control.form-control-lg + .m-input-icon__icon,
-.m-input-icon .input-group-lg > .form-control + .m-input-icon__icon,
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.input-group-text + .m-input-icon__icon,
-.m-input-icon .input-group-lg > .input-group-append > .form-control.input-group-text + .m-input-icon__icon,
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.btn + .m-input-icon__icon,
-.m-input-icon .input-group-lg > .input-group-append > .form-control.btn + .m-input-icon__icon {
+.m-input-icon .form-control.form-control-lg + .m-input-icon__icon {
   width: 4.2rem;
 }
 
 .m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-lg > .form-control + .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.input-group-text + .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.input-group-text + .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.btn + .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.btn + .m-input-icon__icon [class^="la-"],
-.m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-lg > .form-control + .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.input-group-text + .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.input-group-text + .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.btn + .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.btn + .m-input-icon__icon [class*=" la-"] {
+.m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class*=" la-"] {
   font-size: 1.6em;
 }
 
 .m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-lg > .form-control + .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.input-group-text + .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.input-group-text + .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.btn + .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.btn + .m-input-icon__icon [class^="fa-"],
-.m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-lg > .form-control + .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.input-group-text + .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.input-group-text + .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.btn + .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.btn + .m-input-icon__icon [class*=" fa-"] {
+.m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class*=" fa-"] {
   font-size: 1.3em;
 }
 
 .m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-lg > .form-control + .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.input-group-text + .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.input-group-text + .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.btn + .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.btn + .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-lg > .form-control + .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.input-group-text + .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.input-group-text + .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-lg > .input-group-prepend > .form-control.btn + .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-lg > .input-group-append > .form-control.btn + .m-input-icon__icon [class*=" flaticon-"] {
+.m-input-icon .form-control.form-control-lg + .m-input-icon__icon [class*=" flaticon-"] {
   font-size: 1.4em;
 }
 
-.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon,
-.m-input-icon .input-group-sm > .form-control ~ .m-input-icon__icon,
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.input-group-text ~ .m-input-icon__icon,
-.m-input-icon .input-group-sm > .input-group-append > .form-control.input-group-text ~ .m-input-icon__icon,
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.btn ~ .m-input-icon__icon,
-.m-input-icon .input-group-sm > .input-group-append > .form-control.btn ~ .m-input-icon__icon {
+.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon {
   width: 2.7rem;
 }
 
 .m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-sm > .form-control ~ .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.input-group-text ~ .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.input-group-text ~ .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.btn ~ .m-input-icon__icon [class^="la-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.btn ~ .m-input-icon__icon [class^="la-"],
-.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-sm > .form-control ~ .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.input-group-text ~ .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.input-group-text ~ .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.btn ~ .m-input-icon__icon [class*=" la-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.btn ~ .m-input-icon__icon [class*=" la-"] {
+.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class*=" la-"] {
   font-size: 1.1em;
 }
 
 .m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-sm > .form-control ~ .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.input-group-text ~ .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.input-group-text ~ .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.btn ~ .m-input-icon__icon [class^="fa-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.btn ~ .m-input-icon__icon [class^="fa-"],
-.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-sm > .form-control ~ .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.input-group-text ~ .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.input-group-text ~ .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.btn ~ .m-input-icon__icon [class*=" fa-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.btn ~ .m-input-icon__icon [class*=" fa-"] {
+.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class*=" fa-"] {
   font-size: 1em;
 }
 
 .m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-sm > .form-control ~ .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.input-group-text ~ .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.input-group-text ~ .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.btn ~ .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.btn ~ .m-input-icon__icon [class^="flaticon-"],
-.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-sm > .form-control ~ .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.input-group-text ~ .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.input-group-text ~ .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-sm > .input-group-prepend > .form-control.btn ~ .m-input-icon__icon [class*=" flaticon-"],
-.m-input-icon .input-group-sm > .input-group-append > .form-control.btn ~ .m-input-icon__icon [class*=" flaticon-"] {
+.m-input-icon .form-control.form-control-sm ~ .m-input-icon__icon [class*=" flaticon-"] {
   font-size: 1em;
 }
 
@@ -37890,21 +37870,11 @@ td > .m-checkbox.m-checkbox--single {
   padding-left: 2.8rem;
 }
 
-.m-input-icon.m-input-icon--left .form-control.form-control-lg,
-.m-input-icon.m-input-icon--left .input-group-lg > .form-control,
-.m-input-icon.m-input-icon--left .input-group-lg > .input-group-prepend > .form-control.input-group-text,
-.m-input-icon.m-input-icon--left .input-group-lg > .input-group-append > .form-control.input-group-text,
-.m-input-icon.m-input-icon--left .input-group-lg > .input-group-prepend > .form-control.btn,
-.m-input-icon.m-input-icon--left .input-group-lg > .input-group-append > .form-control.btn {
+.m-input-icon.m-input-icon--left .form-control.form-control-lg {
   padding-left: 3.6rem;
 }
 
-.m-input-icon.m-input-icon--left .form-control.form-control-sm,
-.m-input-icon.m-input-icon--left .input-group-sm > .form-control,
-.m-input-icon.m-input-icon--left .input-group-sm > .input-group-prepend > .form-control.input-group-text,
-.m-input-icon.m-input-icon--left .input-group-sm > .input-group-append > .form-control.input-group-text,
-.m-input-icon.m-input-icon--left .input-group-sm > .input-group-prepend > .form-control.btn,
-.m-input-icon.m-input-icon--left .input-group-sm > .input-group-append > .form-control.btn {
+.m-input-icon.m-input-icon--left .form-control.form-control-sm {
   padding-left: 2.5rem;
 }
 
@@ -37912,21 +37882,11 @@ td > .m-checkbox.m-checkbox--single {
   padding-right: 2.8rem;
 }
 
-.m-input-icon.m-input-icon--right .form-control.form-control-lg,
-.m-input-icon.m-input-icon--right .input-group-lg > .form-control,
-.m-input-icon.m-input-icon--right .input-group-lg > .input-group-prepend > .form-control.input-group-text,
-.m-input-icon.m-input-icon--right .input-group-lg > .input-group-append > .form-control.input-group-text,
-.m-input-icon.m-input-icon--right .input-group-lg > .input-group-prepend > .form-control.btn,
-.m-input-icon.m-input-icon--right .input-group-lg > .input-group-append > .form-control.btn {
+.m-input-icon.m-input-icon--right .form-control.form-control-lg {
   padding-right: 3.6rem;
 }
 
-.m-input-icon.m-input-icon--right .form-control.form-control-sm,
-.m-input-icon.m-input-icon--right .input-group-sm > .form-control,
-.m-input-icon.m-input-icon--right .input-group-sm > .input-group-prepend > .form-control.input-group-text,
-.m-input-icon.m-input-icon--right .input-group-sm > .input-group-append > .form-control.input-group-text,
-.m-input-icon.m-input-icon--right .input-group-sm > .input-group-prepend > .form-control.btn,
-.m-input-icon.m-input-icon--right .input-group-sm > .input-group-append > .form-control.btn {
+.m-input-icon.m-input-icon--right .form-control.form-control-sm {
   padding-right: 2.5rem;
 }
 
