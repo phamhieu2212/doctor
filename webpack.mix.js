@@ -77,7 +77,9 @@ mix
             "public/static/common/libs/line-awesome/css/line-awesome.css",
             "public/static/common/libs/flaticon/css/flaticon.css",
             "public/static/common/libs/metronic/css/styles.css",
-            "public/static/common/libs/metronic/css/demo.css"
+            "public/static/common/libs/metronic/css/demo.css",
+            "node_modules/bootstrap-tagsinput/src/bootstrap-tagsinput.css",
+            "node_modules/sweetalert2/dist/sweetalert2.min.css",
         ],
         'public/static/common/libs/metronic/css/final.css'
     )
@@ -135,12 +137,18 @@ mix
             "public/static/common/libs/jquery-idletimer/idle-timer.min.js",
             "node_modules/waypoints/lib/jquery.waypoints.js",
             "node_modules/counterup/jquery.counterup.js",
+            "node_modules/bootstrap-tagsinput/src/bootstrap-tagsinput.js",
+            "node_modules/zenscroll/zenscroll-min.js",
+            "node_modules/es6-promise-polyfill/promise.min.js",
+            "node_modules/sweetalert2/dist/sweetalert2.min.js",
 
             // metronic demo
             "resources/assets/metronic/src/js/framework/base/util.js",
             "resources/assets/metronic/src/js/framework/base/app.js",
-            "resources/assets/metronic/src/js/framework/components/general/datatable/datatable.js",
             "resources/assets/metronic/src/js/framework/components/general/*.js",
+            "resources/assets/metronic/src/js/framework/components/plugins/base/*.js",
+            "resources/assets/metronic/src/js/framework/components/plugins/forms/*.js",
+            "resources/assets/metronic/src/js/framework/components/plugins/charts/*.js",
             "resources/assets/metronic/src/js/demo/default/base/*.js",
             "resources/assets/metronic/src/js/app/base/*.js",
             "resources/assets/metronic/src/js/snippets/base/*.js"
