@@ -7,6 +7,8 @@ use App\Models\AdminUser;
 
 class AdminUserRepository extends AuthenticatableRepository implements AdminUserRepositoryInterface
 {
+    protected $querySearchTargets = ['name', 'email'];
+
     public function getBlankModel()
     {
         return new AdminUser();

@@ -53,20 +53,22 @@ class AdminUserController extends Controller
         $paginate['direction']  = $request->direction();
         $paginate['baseUrl']    = action('Admin\AdminUserController@index');
 
-        $count = $this->adminUserRepository->count();
-        $adminUsers = $this->adminUserRepository->get(
-            $paginate['order'],
-            $paginate['direction'],
-            $paginate['offset'],
-            $paginate['limit']
-        );
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
 
+        $count = $this->adminUserRepository->countByFilter($filter);
+        $adminUsers = $this->adminUserRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
+        
         return view(
             'pages.admin.' . config('view.admin') . '.admin-users.index',
             [
                 'adminUsers' => $adminUsers,
                 'count'      => $count,
                 'paginate'   => $paginate,
+                'keyword'    => $keyword
             ]
         );
     }
