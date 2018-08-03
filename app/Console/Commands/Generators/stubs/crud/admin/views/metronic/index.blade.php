@@ -7,7 +7,7 @@
 ＠stop
 
 ＠section('scripts')
-    <script src="｛!! \URLHelper::asset('metronic/demo/default/custom/components/base/sweetalert2.js', 'admin') !!}"></script>
+    <script src="｛!! \URLHelper::asset('libs/metronic/demo/default/custom/components/base/sweetalert2.js', 'admin') !!}"></script>
     <script src="｛!! \URLHelper::asset('metronic/js/delete_item.js', 'admin') !!}"></script>
 ＠stop
 

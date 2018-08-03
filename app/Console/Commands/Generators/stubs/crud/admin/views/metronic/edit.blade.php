@@ -12,7 +12,7 @@
 ＠stop
 
 ＠section('scripts')
-    <script src="｛!! \URLHelper::asset('metronic/demo/default/custom/crud/forms/validation/form-controls.js', 'admin') !!}"></script>
+    <script src="｛!! \URLHelper::asset('libs/metronic/demo/default/custom/crud/forms/validation/form-controls.js', 'admin') !!}"></script>
     <script>
         $(document).ready(function () {
             $('#cover-image').change(function (event) {
@@ -80,6 +80,21 @@
         </div>
 
         <div class="m-portlet__body">
+            @if(isset($errors) && count($errors))
+                <?php $errs = $errors->all(); ?>
+                <div class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                    <strong>
+                        Error !!!
+                    </strong>
+                    <ul>
+                        @foreach($errs as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form class="m-form m-form--fit" action="＠if($isNew)｛!! action('Admin\{{$modelName}}Controller@store') !!}＠else｛!! action('Admin\{{$modelName}}Controller@update', [${{$objectName}}->id]) !!}＠endif" method="POST">
                 ＠if( !$isNew ) <input type="hidden" name="_method" value="PUT"> ＠endif
                 ｛!! csrf_field() !!}
@@ -109,7 +124,7 @@
                         @elseif( $column['type'] == 'StringType' )
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group m-form__group row">
+                                    <div class="form-group m-form__group row @if ($errors->has("{{$column['name']}}")) has-danger @endif">
                                         <label for="{{$column['name']}}">＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')</label>
                                         <input type="text" class="form-control m-input" name="{{$column['name']}}" id="{{$column['name']}}" required placeholder="＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')" value="｛{ old('{{$column['name']}}') ? old('{{$column['name']}}') : ${{$objectName}}->{{$column['name']}} }}">
                                     </div>
@@ -118,7 +133,7 @@
                         @elseif( ($column['type'] == 'IntegerType') || ($column['type'] == 'BigIntType') )
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group m-form__group row">
+                                    <div class="form-group m-form__group row @if ($errors->has("{{$column['name']}}")) has-danger @endif">
                                         <label for="{{$column['name']}}">＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')</label>
                                         <input type="number" min="0" class="form-control m-input" name="{{$column['name']}}" id="{{$column['name']}}" required placeholder="＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')" value="｛{ old('{{$column['name']}}') ? old('{{$column['name']}}') : ${{$objectName}}->{{$column['name']}} }}">
                                     </div>
@@ -127,7 +142,7 @@
                         @elseif( $column['type'] == 'BooleanType' )
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group m-form__group row">
+                                    <div class="form-group m-form__group row @if ($errors->has("{{$column['name']}}")) has-danger @endif">
                                         <label for="{{$column['name']}}" class="label-switch">＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')</label>
                                         <span class="m-switch m-switch--outline m-switch--icon m-switch--primary">
                                             <label>
@@ -141,7 +156,7 @@
                         @elseif( $column['type'] == 'TextType' )
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group m-form__group row">
+                                    <div class="form-group m-form__group row @if ($errors->has("{{$column['name']}}")) has-danger @endif">
                                         <label for="{{$column['name']}}">＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')</label>
                                         <textarea name="{{$column['name']}}" id="{{$column['name']}}" class="form-control m-input" rows="3" placeholder="＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')">｛{ old('{{$column['name']}}') ? old('{{$column['name']}}') : ${{$objectName}}->{{$column['name']}} }}</textarea>
                                     </div>
@@ -150,7 +165,7 @@
                         @elseif( $column['type'] == 'DateTimeType' )
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group m-form__group row input-group date">
+                                    <div class="form-group m-form__group row input-group date @if ($errors->has("{{$column['name']}}")) has-danger @endif">
                                         <label for="{{$column['name']}}" class="label-datetimepicker">＠lang('admin.pages.{{$viewFolder}}.columns.{{$column['name']}}')</label>
                                         <input type="text" class="form-control m-input datetime-picker" readonly="" placeholder="Select date &amp; time" id="{{$column['name']}}" name="{{$column['name']}}">
                                         <div class="input-group-append">
