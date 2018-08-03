@@ -31,16 +31,15 @@ class LogController extends Controller {
         $paginate[ 'order' ]        = $request->order();
         $paginate[ 'direction' ]    = $request->direction();
         $paginate[ 'baseUrl' ]      = action( 'Admin\LogController@index' );
-        $filter[ 'keyword' ]        = $request->get( 'l_search_keyword', '' );
 
-        $logs = $this->logRepository->getWithFilter(
-            $filter,
-            $paginate[ 'order' ],
-            $paginate[ 'direction' ],
-            $paginate[ 'offset' ],
-            $paginate[ 'limit' ]
-        );
-        $count = $this->logRepository->countWithFilter( $filter );
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
+
+        $count = $this->logRepository->countByFilter($filter);
+        $logs = $this->logRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
 
         return view(
             'pages.admin.' . config('view.admin') . '.logs.index',
@@ -48,7 +47,7 @@ class LogController extends Controller {
                 'logs'     => $logs,
                 'count'    => $count,
                 'paginate' => $paginate,
-                'keyword'  => $filter[ 'keyword' ],
+                'keyword'  => $keyword
             ]
         );
     }

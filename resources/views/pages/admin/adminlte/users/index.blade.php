@@ -54,18 +54,18 @@
 
                     <th style="width: 40px">@lang('admin.pages.common.label.actions')</th>
                 </tr>
-                @foreach( $models as $model )
+                @foreach( $users as $user )
                     <tr>
-                        <td>{{ $model->id }}</td>
-                        <td>{{ $model->name }}</td>
-                        <td>{{ $model->email }}</td>
-                        <td>{{ $model->locale }}</td>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->locale }}</td>
 
                         <td>
-                            <a href="{!! URL::action('Admin\UserController@show', $model->id) !!}"
+                            <a href="{!! URL::action('Admin\UserController@show', $user->id) !!}"
                                class="btn btn-block btn-primary btn-xs">@lang('admin.pages.common.buttons.edit')</a>
                             <a href="#" class="btn btn-block btn-danger btn-xs delete-button"
-                               data-delete-url="{!! action('Admin\UserController@destroy', $model->id) !!}">@lang('admin.pages.common.buttons.delete')</a>
+                               data-delete-url="{!! action('Admin\UserController@destroy', $user->id) !!}">@lang('admin.pages.common.buttons.delete')</a>
                         </td>
                     </tr>
                 @endforeach
