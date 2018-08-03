@@ -44,20 +44,22 @@ class UserController extends Controller {
         $paginate[ 'direction' ] = $request->direction();
         $paginate[ 'baseUrl' ]   = action( 'Admin\UserController@index' );
 
-        $count  = $this->userRepository->count();
-        $models = $this->userRepository->get(
-            $paginate[ 'order' ],
-            $paginate[ 'direction' ],
-            $paginate[ 'offset' ],
-            $paginate[ 'limit' ]
-        );
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
+
+        $count = $this->userRepository->countByFilter($filter);
+        $users = $this->userRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
 
         return view(
             'pages.admin.' . config('view.admin') . '.users.index',
             [
-                'models'   => $models,
+                'users'    => $users,
                 'count'    => $count,
                 'paginate' => $paginate,
+                'keyword'  => $keyword
             ]
         );
     }

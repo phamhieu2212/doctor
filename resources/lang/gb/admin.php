@@ -186,6 +186,7 @@ return [
                 'name'                 => 'Name',
                 'email'                => 'Email',
                 'password'             => 'Password',
+                're_password'          => 'Confirm Password',
                 'gender'               => 'Gender',
                 'gender_male'          => 'Male',
                 'gender_female'        => 'Female',
