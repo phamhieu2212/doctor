@@ -80,20 +80,20 @@
         </div>
 
         <div class="m-portlet__body">
-            @if(isset($errors) && count($errors))
-                <?php $errs = $errors->all(); ?>
+            ＠if(isset($errors) && count($errors))
+                ｛{ $errs = $errors->all() }}
                 <div class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                     <strong>
                         Error !!!
                     </strong>
                     <ul>
-                        @foreach($errs as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+                        ＠foreach($errs as $error)
+                            <li>｛{ $error }}</li>
+                        ＠endforeach
                     </ul>
                 </div>
-            @endif
+            ＠endif
 
             <form class="m-form m-form--fit" action="＠if($isNew)｛!! action('Admin\{{$modelName}}Controller@store') !!}＠else｛!! action('Admin\{{$modelName}}Controller@update', [${{$objectName}}->id]) !!}＠endif" method="POST">
                 ＠if( !$isNew ) <input type="hidden" name="_method" value="PUT"> ＠endif
