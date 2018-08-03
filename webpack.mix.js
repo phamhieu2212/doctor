@@ -28,21 +28,29 @@ mix
     .copyDirectory("public/static/common/libs/line-awesome/fonts/**", 'public/static/common/libs/metronic/fonts')
     .copyDirectory("public/static/common/libs/flaticon/fonts/**", 'public/static/common/libs/metronic/fonts')
 
-    // for front-end
-    .copyDirectory('node_modules/roboto-fontface/fonts', 'public/static/web/fonts')
+    // metronic fonts for front-end
     .copyDirectory("public/static/common/libs/metronic/fonts", 'public/static/web/2018/fonts')
+
+    // metronic fonts for admin-page
+    .copyDirectory("public/static/common/libs/metronic/fonts", 'public/static/admin/metronic/fonts')
+
+    // for public common fonts
+    .copyDirectory('node_modules/roboto-fontface/fonts', 'public/static/common/fonts')
 
     .sass(
         'resources/assets/metronic/src/sass/demo/default/style.scss',
         'public/static/common/libs/metronic/css/demo.css'
     )
-
     .sass(
         'resources/assets/web/2018/sass/application.scss',
         'public/static/web/2018/css/application.css'
+    )
+    .sass(
+        'resources/assets/admin/metronic/sass/application.scss',
+        'public/static/admin/metronic/css/application.css'
     );
 
-
+// --------------- begin: compile metronic libs ---------------
 mix
     .styles(
         [
@@ -81,7 +89,7 @@ mix
             "node_modules/bootstrap-tagsinput/src/bootstrap-tagsinput.css",
             "node_modules/sweetalert2/dist/sweetalert2.min.css",
         ],
-        'public/static/common/libs/metronic/css/final.css'
+        'public/static/common/libs/metronic/css/compiled.css'
     )
     .scripts(
         [
@@ -153,21 +161,43 @@ mix
             "resources/assets/metronic/src/js/app/base/*.js",
             "resources/assets/metronic/src/js/snippets/base/*.js"
         ],
-        'public/static/common/libs/metronic/js/final.js'
+        'public/static/common/libs/metronic/js/compiled.js'
     );
+// --------------- end: compile metronic libs ---------------
 
+// --------------- begin: web front-end ---------------
 mix
     .styles(
         [
-            'public/static/common/libs/metronic/css/final.css',
+            'public/static/common/libs/metronic/css/compiled.css',
             "public/static/web/2018/css/application.css"
         ],
-        "public/static/web/2018/css/styles.css"
+        "public/static/web/2018/css/compiled.css"
     )
     .scripts(
         [
-            'public/static/common/libs/metronic/js/final.js',
+            'public/static/common/libs/metronic/js/compiled.js',
             'resources/assets/web/2018/js/homepage.js'
         ],
-        'public/static/web/2018/js/scripts.js'
+        'public/static/web/2018/js/compiled.js'
     );
+// --------------- end: web front-end ---------------
+
+// --------------- begin: admin page ---------------
+mix
+    .styles(
+        [
+            'public/static/common/libs/metronic/css/compiled.css',
+            "public/static/admin/metronic/css/customize-fonts.css",
+            'public/static/admin/metronic/css/application.css'
+        ],
+        "public/static/admin/metronic/css/compiled.css"
+    )
+    .scripts(
+        [
+            'public/static/common/libs/metronic/js/compiled.js',
+            'resources/assets/admin/metronic/js/config.js'
+        ],
+        'public/static/admin/metronic/js/compiled.js'
+    );
+// --------------- end: admin page ---------------
