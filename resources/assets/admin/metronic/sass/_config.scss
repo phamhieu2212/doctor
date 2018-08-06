@@ -61,3 +61,25 @@ body {
 .m-list-timeline__items .m-list-timeline__item.unread {
 	background-color: azure;
 }
+#language-switcher {
+	ul.m-menu__subnav {
+		list-style: none;
+		padding-left: 15px;
+
+		li.m-menu__item {
+			a:hover {
+				text-decoration: none;
+			}
+			img {
+				width: 32px;
+				margin-right: 10px;
+			}
+			span.m-menu__link-text {
+				color: #676c7b;
+				font-weight: 400;
+				font-size: 1rem;
+				text-transform: initial;
+			}
+		}
+	}
+}

@@ -398,8 +398,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light"
-                                m-dropdown-toggle="click">
+                            <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
                                     <span class="m-topbar__userpic">
                                         <img src="{!! \URLHelper::asset('libs/metronic/app/media/img/users/user4.jpg', 'admin') !!}"
@@ -413,7 +412,7 @@
                                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
                                     <div class="m-dropdown__inner">
                                         <div class="m-dropdown__header m--align-center"
-                                             style="background: url({!! \URLHelper::asset('metronic/app/media/img/misc/user_profile_bg.jpg', 'admin') !!}); background-size: cover;">
+                                             style="background: url({!! \URLHelper::asset('libs/metronic/app/media/img/misc/user_profile_bg.jpg', 'admin') !!}); background-size: cover;">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
                                                     <img src="{!! \URLHelper::asset('libs/metronic/app/media/img/users/user4.jpg', 'admin') !!}"
@@ -494,6 +493,33 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li id="language-switcher" class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch" m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
+                                <a href="#" class="m-nav__link m-dropdown__toggle">
+                                    <span class="m-nav__link-icon">
+                                        <img src="{!! \URLHelper::asset('img/flags/' . \App::getLocale() . '.png', 'common') !!}" alt="" style="width: 32px;">
+                                    </span>
+                                </a>
+                                <div class="m-dropdown__wrapper">
+                                    <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                                    <div class="m-dropdown__inner ">
+                                        <div class="m-dropdown__header">
+                                            <?php $siteLanguages = ['gb' => 'English', 'jp' => 'Japanese', 'vn' => 'Tiếng Việt'] ?>
+                                            <ul class="m-menu__subnav">
+                                                @foreach($siteLanguages as $key => $name)
+                                                    <li class="m-menu__item " aria-haspopup="true">
+                                                        <a href="?locale={{$key}}" class="m-menu__link ">
+                                                            <img src="{!! \URLHelper::asset("img/flags/$key.png", 'common') !!}" alt="" style="width: 32px;">
+                                                            <span class="m-menu__link-text">
+                                                                {{$name}}
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
