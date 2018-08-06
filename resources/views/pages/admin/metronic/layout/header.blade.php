@@ -286,7 +286,8 @@
                                                                         <?php $notices = $notifications->where('category_type', $type); ?>
                                                                         @if(count($notices))
                                                                             @foreach($notices as $notice)
-                                                                                <div class="m-list-timeline__item">
+                                                                                <div class="m-list-timeline__item @if($notice->id > $authUser->last_notification_id) unread @endif">
+                                                                                    <a href="{{ action('Admin\AdminUserNotificationController@show', $notice->id) }}" style="width: 100%; height: 100%; position: absolute;"></a>
                                                                                     <span class="m-list-timeline__badge"></span>
                                                                                     <span class="m-list-timeline__text">
                                                                                         {!! substr($notice->content, 0, 65) !!} @if( strlen($notice->content) > 65 )...@endif
@@ -313,6 +314,10 @@
                                                                                     </span>
                                                                                 </div>
                                                                             @endforeach
+
+                                                                            <p class="text-center">
+                                                                                <a href="{{ action('Admin\AdminUserNotificationController@index') }}" class="btn btc-sm m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-accent" style="width: 125px; padding: 0.1rem 1rem; margin-top: 10px;">Show All</a>
+                                                                            </p>
                                                                         @else
                                                                             <div class="m-stack m-stack--ver m-stack--general" style="min-height: 180px;">
                                                                                 <div class="m-stack__item m-stack__item--center m-stack__item--middle">

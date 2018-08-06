@@ -90,9 +90,8 @@
                                 <th style="width: 10px">{!! \PaginationHelper::sort('id', 'ID') !!}</th>
                                 <th>{!! \PaginationHelper::sort('category_type', trans('admin.pages.admin-user-notifications.columns.category_type')) !!}</th>
                                 <th>{!! \PaginationHelper::sort('type', trans('admin.pages.admin-user-notifications.columns.type')) !!}</th>
-                                <th>{!! \PaginationHelper::sort('locale', trans('admin.pages.admin-user-notifications.columns.locale')) !!}</th>
-                                <th>{!! \PaginationHelper::sort('read', trans('admin.pages.admin-user-notifications.columns.read')) !!}</th>
-                                <th>{!! \PaginationHelper::sort('sent_at', trans('admin.pages.admin-user-notifications.columns.sent_at')) !!}</th>
+                                <th>{!! \PaginationHelper::sort('read', trans('admin.pages.admin-user-notifications.columns.content')) !!}</th>
+                                <th width="100">{!! \PaginationHelper::sort('sent_at', trans('admin.pages.admin-user-notifications.columns.sent_at')) !!}</th>
 
                                 <th style="width: 40px">@lang('admin.pages.common.label.actions')</th>
                             </tr>
@@ -108,18 +107,7 @@
                                     <td>{{ $notification->id }}</td>
                                     <td>{{ @$notifyCategories[$notification->category_type] }}</td>
                                     <td>{{ @$notifyTypes[$notification->type] }}</td>
-                                    <td>{{ $notification->locale }}</td>
-                                    <td>
-                                        @if($notification->read)
-                                            <span class="m--font-success">
-												Yes
-											</span>
-                                        @else
-                                            <span class="m--font-danger">
-												No
-											</span>
-                                        @endif
-                                    </td>
+                                    <td>{!! substr($notification->content, 0, 180) !!} @if( strlen($notification->content) > 180 )...@endif</td>
                                     <td>{{ $notification->sent_at }}</td>
                                     <td>
                                         <a href="{!! action('Admin\AdminUserNotificationController@show', $notification->id) !!}"

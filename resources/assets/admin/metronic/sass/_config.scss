@@ -58,3 +58,6 @@ body {
 .m-list-timeline__items .m-list-timeline__item .m-list-timeline__time {
 	font-size: 0.75rem;
 }
+.m-list-timeline__items .m-list-timeline__item.unread {
+	background-color: azure;
+}

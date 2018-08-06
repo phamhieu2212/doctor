@@ -42,17 +42,17 @@ class Notification extends Base
     const CATEGORY_TYPE_APPLICATION = 'application';
     const CATEGORY_TYPE_SYSTEM      = 'system';
     const CATEGORY_TYPE             = [
-        self::CATEGORY_TYPE_APPLICATION => "Application",
-        self::CATEGORY_TYPE_SYSTEM      => "System"
+        self::CATEGORY_TYPE_APPLICATION => "Applications",
+        self::CATEGORY_TYPE_SYSTEM      => "Systems"
     ];
 
     const TYPE_NOTIFICATION  = 'notification';
     const TYPE_WARNING       = 'warning';
     const TYPE_ADVERTISEMENT = 'advertisement';
     const TYPE               = [
-        self::TYPE_NOTIFICATION  => "Notification",
-        self::TYPE_WARNING       => "Warning",
-        self::TYPE_ADVERTISEMENT => "Advertisement"
+        self::TYPE_NOTIFICATION  => "Notifications",
+        self::TYPE_WARNING       => "Warnings",
+        self::TYPE_ADVERTISEMENT => "Advertisements"
     ];
 
     /**
