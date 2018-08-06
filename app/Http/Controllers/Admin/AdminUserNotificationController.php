@@ -53,13 +53,14 @@ class AdminUserNotificationController extends Controller
         $paginate['direction']  = $request->direction();
         $paginate['baseUrl']    = action('Admin\AdminUserNotificationController@index');
 
-        $count = $this->adminUserNotificationRepository->count();
-        $notifications = $this->adminUserNotificationRepository->get(
-            $paginate['order'],
-            $paginate['direction'],
-            $paginate['offset'],
-            $paginate['limit']
-        );
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
+
+        $count = $this->adminUserNotificationRepository->countByFilter($filter);
+        $notifications = $this->adminUserNotificationRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
 
         return view(
             'pages.admin.' . config('view.admin') . '.admin-user-notifications.index',
@@ -67,6 +68,7 @@ class AdminUserNotificationController extends Controller
                 'notifications' => $notifications,
                 'count'         => $count,
                 'paginate'      => $paginate,
+                'keyword'       => $keyword
             ]
         );
     }
@@ -83,6 +85,7 @@ class AdminUserNotificationController extends Controller
             [
                 'isNew'                 => true,
                 'adminUserNotification' => $this->adminUserNotificationRepository->getBlankModel(),
+                'adminUsers'            => $this->adminUserRepository->all()
             ]
         );
     }
@@ -166,6 +169,7 @@ class AdminUserNotificationController extends Controller
             [
                 'isNew'                 => false,
                 'adminUserNotification' => $model,
+                'adminUsers'            => $this->adminUserRepository->all()
             ]
         );
     }

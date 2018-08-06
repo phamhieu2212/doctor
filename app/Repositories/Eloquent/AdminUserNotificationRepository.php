@@ -7,6 +7,8 @@ use App\Models\AdminUserNotification;
 
 class AdminUserNotificationRepository extends NotificationRepository implements AdminUserNotificationRepositoryInterface
 {
+    protected $querySearchTargets = ['type', 'data', 'content'];
+
     public function getBlankModel()
     {
         return new AdminUserNotification();
