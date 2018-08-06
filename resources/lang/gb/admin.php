@@ -131,7 +131,7 @@ return [
         ],
         'admin-user-notifications' => [
             'columns' => [
-                'user_id'       => 'User',
+                'user_id'       => 'Receiver',
                 'category_type' => 'Category',
                 'type'          => 'Type',
                 'data'          => 'Data',

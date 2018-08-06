@@ -39,10 +39,21 @@ class Notification extends Base
 {
     const BROADCAST_USER_ID = 0;
 
-    const CATEGORY_TYPE_SYSTEM_MESSAGE = 'system';
+    const CATEGORY_TYPE_APPLICATION = 'application';
+    const CATEGORY_TYPE_SYSTEM      = 'system';
+    const CATEGORY_TYPE             = [
+        self::CATEGORY_TYPE_APPLICATION => "Application",
+        self::CATEGORY_TYPE_SYSTEM      => "System"
+    ];
 
-    const TYPE_GENERAL_MESSAGE = 'general_message';
-    const TYPE_GENERAL_ALERT = 'general_alert';
+    const TYPE_NOTIFICATION  = 'notification';
+    const TYPE_WARNING       = 'warning';
+    const TYPE_ADVERTISEMENT = 'advertisement';
+    const TYPE               = [
+        self::TYPE_NOTIFICATION  => "Notification",
+        self::TYPE_WARNING       => "Warning",
+        self::TYPE_ADVERTISEMENT => "Advertisement"
+    ];
 
     /**
      * The attributes that are mass assignable.

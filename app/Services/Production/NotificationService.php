@@ -25,7 +25,7 @@ class NotificationService extends BaseService implements UserNotificationService
 
     public function broadcastSystemMessage($type, $locale, $content)
     {
-        return $this->sendNotification(Notification::BROADCAST_USER_ID, Notification::CATEGORY_TYPE_SYSTEM_MESSAGE,
+        return $this->sendNotification(Notification::BROADCAST_USER_ID, Notification::CATEGORY_TYPE_APPLICATION,
             $type, $locale, $content, []);
     }
 

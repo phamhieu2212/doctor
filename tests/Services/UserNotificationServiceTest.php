@@ -30,7 +30,7 @@ class UserNotificationServiceTest extends TestCase
         $user = factory(User::class)->create();
 
         $notification1 = $service->sendNotification($user->id, 'somecategory', 'sometype', '', 'TEST MESSAGE', ['test' => 1]);
-        $notification2 = $service->broadcastSystemMessage(UserNotification::TYPE_GENERAL_MESSAGE, \App::getLocale(), 'BROADCAST MESSAGE');
+        $notification2 = $service->broadcastSystemMessage(UserNotification::TYPE_NOTIFICATION, \App::getLocale(), 'BROADCAST MESSAGE');
 
         $this->assertEquals(1, $notification1->getData('test'));
         $this->assertEquals('BROADCAST MESSAGE', $notification2->content);

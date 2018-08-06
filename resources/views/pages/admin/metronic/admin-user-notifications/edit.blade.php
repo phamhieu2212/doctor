@@ -105,7 +105,7 @@
 
                                 <select class="form-control m-input" name="user_id" id="user_id" required>
                                     <option>Select a Receiver</option>
-                                    <option value="-1">To All</option>
+                                    <option value="{{\App\Models\Notification::BROADCAST_USER_ID}}">Send All</option>
                                     @foreach( $adminUsers as $adminUser )
                                         <option value="{!! $adminUser->id !!}" @if( (old('user_id') && old('user_id') == $adminUser->id) || ( $adminUserNotification->user_id === $adminUser->id) ) selected @endif >
                                             {{ $adminUser->email }} ({{$adminUser->name}})
@@ -118,10 +118,10 @@
                             <div class="form-group m-form__group row @if ($errors->has('category_type')) has-danger @endif">
                                 <label for="category_type">@lang('admin.pages.admin-user-notifications.columns.category_type')</label>
 
-                                <?php $notifyCategories = ['Application', 'System']; ?>
+                                <?php $notifyCategories = \App\Models\Notification::CATEGORY_TYPE; ?>
                                 <select class="form-control m-input" name="category_type" id="category_type" required>
-                                    @foreach( $notifyCategories as $category )
-                                        <option value="{{ $category }}" @if( (old('category_type') && old('category_type') == $category) || ( $adminUserNotification->category_type == $category) ) selected @endif >
+                                    @foreach( $notifyCategories as $key => $category )
+                                        <option value="{{ $key }}" @if( (old('category_type') && old('category_type') == $key) || ( $adminUserNotification->category_type == $key) ) selected @endif >
                                             {{ $category }}
                                         </option>
                                     @endforeach
@@ -132,10 +132,10 @@
                             <div class="form-group m-form__group row @if ($errors->has('type')) has-danger @endif">
                                 <label for="type">@lang('admin.pages.admin-user-notifications.columns.type')</label>
 
-                                <?php $notifyTypes = ['Notification', 'Warning', 'Advertisement']; ?>
+                                <?php $notifyTypes = \App\Models\Notification::TYPE; ?>
                                 <select class="form-control m-input" name="type" id="type" required>
-                                    @foreach( $notifyTypes as $notifyType )
-                                        <option value="{{ $notifyType }}" @if( (old('type') && old('type') == $notifyType) || ( $adminUserNotification->type == $notifyType) ) selected @endif >
+                                    @foreach( $notifyTypes as $key => $notifyType )
+                                        <option value="{{ $key }}" @if( (old('type') && old('type') == $key) || ( $adminUserNotification->type == $key) ) selected @endif >
                                             {{ $notifyType }}
                                         </option>
                                     @endforeach

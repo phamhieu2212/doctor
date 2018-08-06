@@ -135,8 +135,8 @@ $factory->define(
     function (Faker\Generator $faker) {
         return [
             'user_id'       => \App\Models\UserNotification::BROADCAST_USER_ID,
-            'category_type' => \App\Models\UserNotification::CATEGORY_TYPE_SYSTEM_MESSAGE,
-            'type'          => \App\Models\UserNotification::TYPE_GENERAL_MESSAGE,
+            'category_type' => \App\Models\UserNotification::CATEGORY_TYPE_APPLICATION,
+            'type'          => \App\Models\UserNotification::TYPE_NOTIFICATION,
             'data'          => '',
             'locale'        => 'en',
             'content'       => 'TEST',
@@ -151,8 +151,8 @@ $factory->define(
     function (Faker\Generator $faker) {
         return [
             'user_id'       => \App\Models\AdminUserNotification::BROADCAST_USER_ID,
-            'category_type' => \App\Models\AdminUserNotification::CATEGORY_TYPE_SYSTEM_MESSAGE,
-            'type'          => \App\Models\AdminUserNotification::TYPE_GENERAL_MESSAGE,
+            'category_type' => \App\Models\AdminUserNotification::CATEGORY_TYPE_APPLICATION,
+            'type'          => \App\Models\AdminUserNotification::TYPE_NOTIFICATION,
             'data'          => '',
             'locale'        => 'en',
             'content'       => 'TEST',

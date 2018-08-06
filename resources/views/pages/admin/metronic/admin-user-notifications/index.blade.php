@@ -99,11 +99,15 @@
                             </thead>
 
                             <tbody>
+                            <?php
+                            $notifyCategories = \App\Models\Notification::CATEGORY_TYPE;
+                            $notifyTypes = \App\Models\Notification::TYPE;
+                            ?>
                             @foreach( $notifications as $notification )
                                 <tr>
                                     <td>{{ $notification->id }}</td>
-                                    <td>{{ $notification->category_type }}</td>
-                                    <td>{{ $notification->type }}</td>
+                                    <td>{{ @$notifyCategories[$notification->category_type] }}</td>
+                                    <td>{{ @$notifyTypes[$notification->type] }}</td>
                                     <td>{{ $notification->locale }}</td>
                                     <td>
                                         @if($notification->read)
