@@ -112,6 +112,7 @@ class AdminUserNotificationController extends Controller
 
         $input['sent_at'] = ($input['sent_at'] != "") ? $input['sent_at'] : null;
         $input['read']    = $request->get('read', 0);
+        $input['user_id'] = $request->get('user_id', 0);
 
         $model = $this->adminUserNotificationRepository->create($input);
 
@@ -201,7 +202,8 @@ class AdminUserNotificationController extends Controller
         );
 
         $input['sent_at'] = ($input['sent_at'] != "") ? $input['sent_at'] : null;
-        $input['read'] = $request->get('read', 0);
+        $input['read']    = $request->get('read', 0);
+        $input['user_id'] = $request->get('user_id', 0);
 
         $this->adminUserNotificationRepository->update($model, $input);
 
