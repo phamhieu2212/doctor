@@ -35,10 +35,13 @@ class UserControllerTest extends TestCase
 
     public function testStoreModel()
     {
-        $user = factory(\App\Models\User::class)->make();
+        $user = factory(\App\Models\User::class)->make()->toArray();
+        $user['password'] = 'abc@123';
+        $user['re_password'] = $user['password'];
+
         $this->action('POST', 'Admin\UserController@store', [
                 '_token' => csrf_token(),
-            ] + $user->toArray());
+            ] + $user);
         $this->assertResponseStatus(302);
     }
 

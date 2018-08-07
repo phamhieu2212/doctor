@@ -35,10 +35,13 @@ class AdminUserControllerTest extends TestCase
 
     public function testStoreModel()
     {
-        $adminUser = factory(\App\Models\AdminUser::class)->make();
+        $adminUser = factory(\App\Models\AdminUser::class)->make()->toArray();
+        $adminUser['password'] = 'abc@123';
+        $adminUser['re_password'] = $adminUser['password'];
+
         $this->action('POST', 'Admin\AdminUserController@store', [
                 '_token' => csrf_token(),
-            ] + $adminUser->toArray());
+            ] + $adminUser);
         $this->assertResponseStatus(302);
     }
 

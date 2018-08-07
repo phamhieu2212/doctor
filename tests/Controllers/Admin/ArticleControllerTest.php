@@ -35,10 +35,10 @@ class ArticleControllerTest extends TestCase
 
     public function testStoreModel()
     {
-        $article = factory(\App\Models\Article::class)->make();
+        $article = factory(\App\Models\Article::class)->make()->toArray();
         $this->action('POST', 'Admin\ArticleController@store', [
                 '_token' => csrf_token(),
-            ] + $article->toArray());
+            ] + $article);
         $this->assertResponseStatus(302);
     }
 
