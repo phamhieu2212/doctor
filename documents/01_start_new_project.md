@@ -29,6 +29,8 @@
 
 `composer install`
 
+`npm install` & `npm run dev`
+
 Update command may cause issue on the first time.
 
 
