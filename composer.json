@@ -9,30 +9,33 @@
   "type": "project",
   "require": {
     "php": ">=5.6.4",
-    "laravel/framework": "5.4.*",
+    "laravel/framework": "5.6.*",
     "predis/predis": "1.*",
     "aws/aws-sdk-php": "3.12.*",
     "facebook/graph-sdk": "5.3.*",
     "abraham/twitteroauth": "0.6.*",
     "maknz/slack": "^1.7",
     "icanboogie/inflector": "^1.4",
-    "laravel/socialite": "^2.0",
-    "google/apiclient": "^2.0",
+    "laravel/socialite": "^3.0.12",
+    "google/apiclient": "^2.2.2",
     "dusterio/laravel-aws-worker": "^0.1.5",
-    "cviebrock/eloquent-sluggable": "^4.0",
-    "laravel/passport": "^4.0"
+    "cviebrock/eloquent-sluggable": "^4.5.1",
+    "laravel/passport": "^4.0",
+    "laravel/tinker": "^1.0",
+    "fideloper/proxy": "~4.0"
   },
   "require-dev": {
-    "mockery/mockery": "0.9.*",
-    "phpunit/phpunit": "~5.0",
-    "fzaninotto/faker": "^1.5",
-    "phpspec/phpspec": "~2.1",
-    "barryvdh/laravel-debugbar": "~2.1",
+    "mockery/mockery": "1.1.0",
+    "phpunit/phpunit": "~7.3.0",
+    "fzaninotto/faker": "^1.8.0",
+    "phpspec/phpspec": "~5.0.0",
+    "barryvdh/laravel-debugbar": "~3.1.5",
     "barryvdh/laravel-ide-helper": "^2.1",
-    "symfony/css-selector": "3.1.*",
-    "symfony/dom-crawler": "3.1.*",
-    "doctrine/dbal": "~2.3",
-    "laravel/browser-kit-testing": "^2.0"
+    "symfony/css-selector": "4.0.*",
+    "symfony/dom-crawler": "4.0.*",
+    "doctrine/dbal": "~2.8.0",
+    "laravel/browser-kit-testing": "^4.0.0",
+    "filp/whoops": "^2.2"
   },
   "autoload": {
     "classmap": [
@@ -54,13 +57,9 @@
     "post-create-project-cmd": [
       "php artisan key:generate"
     ],
-    "post-install-cmd": [
-      "Illuminate\\Foundation\\ComposerScripts::postInstall",
-      "php artisan optimize"
-    ],
-    "post-update-cmd": [
-      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "php artisan optimize"
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover"
     ]
   },
   "config": {
