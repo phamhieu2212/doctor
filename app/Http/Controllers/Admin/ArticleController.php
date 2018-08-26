@@ -245,7 +245,7 @@ class ArticleController extends Controller
                 [
                     'entity_type' => 'article_cover_image',
                     'entity_id'   => $article->id,
-                    'title'       => $request->input('name', ''),
+                    'title'       => $request->input('title', ''),
                 ]
             );
 

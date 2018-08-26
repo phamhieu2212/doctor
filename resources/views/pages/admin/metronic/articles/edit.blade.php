@@ -115,7 +115,7 @@
                 </div>
             @endif
 
-            <form class="m-form m-form--fit" action="@if($isNew){!! action('Admin\ArticleController@store') !!}@else{!! action('Admin\ArticleController@update', [$article->id]) !!}@endif" method="POST">
+            <form class="m-form m-form--fit" action="@if($isNew){!! action('Admin\ArticleController@store') !!}@else{!! action('Admin\ArticleController@update', [$article->id]) !!}@endif" method="POST" enctype="multipart/form-data">
                 @if( !$isNew ) <input type="hidden" name="_method" value="PUT"> @endif
                 {!! csrf_field() !!}
 
@@ -132,7 +132,7 @@
                                          src="{!! \URLHelper::asset('img/no_image.jpg', 'common') !!}" alt=""
                                          class="margin"/>
                                 @endif
-                                <input type="file" style="display: none;" id="cover-image" name="cover-image">
+                                <input type="file" style="display: none;" id="cover-image" name="cover_image">
                                 <p class="help-block"
                                    style="font-weight: bolder; display: block; width: 100%; text-align: center;">
                                     @lang('admin.pages.articles.columns.cover_image_id')
