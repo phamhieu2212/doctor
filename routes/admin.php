@@ -19,11 +19,11 @@
 
             \Route::resource('site-configurations', 'Admin\SiteConfigurationController');
 
-            \Route::resource('articles', 'Admin\ArticleController');
             \Route::post('articles/preview', 'Admin\ArticleController@preview');
             \Route::get('articles/images', 'Admin\ArticleController@getImages');
             \Route::post('articles/images', 'Admin\ArticleController@postImage');
             \Route::delete('articles/images', 'Admin\ArticleController@deleteImage');
+            \Route::resource('articles', 'Admin\ArticleController');
 
             \Route::delete('images/delete', 'Admin\ImageController@deleteByUrl');
             \Route::resource('images', 'Admin\ImageController');

@@ -59,20 +59,22 @@ class ArticleController extends Controller
         $paginate[ 'direction' ] = $request->direction();
         $paginate[ 'baseUrl' ]   = action( 'Admin\ArticleController@index' );
 
-        $count = $this->articleRepository->count();
-        $articles = $this->articleRepository->get(
-            $paginate[ 'order' ],
-            $paginate[ 'direction' ],
-            $paginate[ 'offset' ],
-            $paginate[ 'limit' ]
-        );
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
+
+        $count = $this->articleRepository->countByFilter($filter);
+        $articles = $this->articleRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
 
         return view(
             'pages.admin.' . config('view.admin') . '.articles.index',
             [
-                'models'   => $articles,
+                'articles' => $articles,
                 'count'    => $count,
                 'paginate' => $paginate,
+                'keyword'  => $keyword
             ]
         );
     }
@@ -115,7 +117,7 @@ class ArticleController extends Controller
         );
 
         $input['is_enabled']         = $request->get('is_enabled', 0);
-        $input['locale']             = $request->get('locale', 'ja');
+        $input['locale']             = $request->get('locale', 'vi');
         $input['publish_started_at'] = ($input['publish_started_at'] != "") ? $input['publish_started_at'] : null;
         $input['publish_ended_at']   = ($input['publish_ended_at'] != "") ? $input['publish_ended_at'] : null;
 
@@ -126,6 +128,14 @@ class ArticleController extends Controller
                 ->back()
                 ->withErrors(trans('admin.errors.general.save_failed'));
         }
+
+        $imageIds = $this->articleService->getImageIdsFromSession();
+        $images = $this->imageRepository->allByIds($imageIds);
+        foreach ($images as $image) {
+            $image->entity_id = $model->id;
+            $image->save();
+        }
+        $this->articleService->resetImageIdSession();
 
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');
@@ -215,7 +225,7 @@ class ArticleController extends Controller
         );
 
         $input['is_enabled'] = $request->get('is_enabled', 0);
-        $input['locale']     = $request->get('locale', 'ja');
+        $input['locale']     = $request->get('locale', 'vi');
         if ($request->get('publish_started_at') != "") {
             $input['publish_started_at'] = $request->get('publish_started_at');
         }
@@ -319,8 +329,9 @@ class ArticleController extends Controller
         foreach ($models as $model) {
             $result[] = [
                 'id'    => $model->id,
-                'url'   => $model->url,
-                'thumb' => $model->getThumbnailUrl(400, 300),
+                'url'   => $model->present()->url(),
+                'thumb' => '',
+                'tag'   => ''
             ];
         }
 
@@ -345,7 +356,7 @@ class ArticleController extends Controller
         $file = $request->file('file');
 
         $image = $this->fileUploadService->upload(
-            'article_cover_image',
+            'article_image',
             $file,
             [
                 'entity_type' => $type,
@@ -362,7 +373,7 @@ class ArticleController extends Controller
         return response()->json(
             [
                 'id'   => $image->id,
-                'link' => $image->getUrl(),
+                'link' => $image->present()->url(),
             ]
         );
     }
@@ -373,6 +384,7 @@ class ArticleController extends Controller
         if (empty($url)) {
             abort(400, 'No URL Given');
         }
+        $url = basename($url);
 
         /** @var \App\Models\Image|null $image */
         $image = $this->imageRepository->findByUrl($url);

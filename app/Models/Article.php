@@ -79,7 +79,7 @@ class Article extends Base
      */
     protected $hidden = [];
 
-    protected $dates = ['publish_started_at', 'publish_ended_at', 'deleted_at'];
+    protected $dates = ['deleted_at'];
 
     public static function boot()
     {

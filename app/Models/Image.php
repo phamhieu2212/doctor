@@ -52,7 +52,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Image extends Base
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     /**
      * The database table used by the model.

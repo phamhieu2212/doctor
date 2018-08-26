@@ -24,13 +24,6 @@ return [
             ],
             'size'        => [600, 400],
             'thumbnails'  => [
-                [400, 300],
-                [800, 600],
-                [640, 640],  // Instagram
-                [735, 1102], // Pinterest
-                [1024, 512], // Twitter Card
-                [1280, 628], // Facebook OGP
-                [1440, 900],
             ],
             'seed_prefix' => 'article_cover',
             'format'      => 'png',
@@ -44,10 +37,8 @@ return [
             'buckets'     => [
                 env('AWS_IMAGE_BUCKET'),
             ],
-            'size'        => [1440, 0],
-            'thumbnails'  => [
-                [400, 300],
-            ],
+            'size'        => [600, 400],
+            'thumbnails'  => [],
             'seed_prefix' => 'article',
             'format'      => 'png',
             'local_type'  => 'common',

@@ -124,8 +124,8 @@ $factory->define(
             'cover_image_id'     => 0,
             'locale'             => 'ja',
             'is_enabled'         => true,
-            'publish_started_at' => $faker->dateTime,
-            'publish_ended_at'   => $faker->dateTime,
+            'publish_started_at' => $faker->dateTime->format('Y-m-d H:i:s'),
+            'publish_ended_at'   => $faker->dateTime->format('Y-m-d H:i:s'),
         ];
     }
 );

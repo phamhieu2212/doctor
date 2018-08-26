@@ -56,26 +56,26 @@
                     <th style="width: 40px">{!! \PaginationHelper::sort('is_enabled', trans('admin.pages.common.label.is_enabled')) !!}</th>
                     <th style="width: 40px">@lang('admin.pages.common.label.actions')</th>
                 </tr>
-                @foreach( $models as $model )
+                @foreach( $articles as $article )
                     <tr>
-                        <td>{{ $model->id }}</td>
-                        <td>{{ $model->title }}</td>
-                        <td>{{ $model->slug }}</td>
-                        <td>{{ $model->publish_started_at }}</td>
-                        <td>{{ $model->publish_ended_at }}</td>
+                        <td>{{ $article->id }}</td>
+                        <td>{{ $article->title }}</td>
+                        <td>{{ $article->slug }}</td>
+                        <td>{{ $article->publish_started_at }}</td>
+                        <td>{{ $article->publish_ended_at }}</td>
 
                         <td>
-                            @if( $model->is_enabled )
+                            @if( $article->is_enabled )
                                 <span class="badge bg-green">@lang('admin.pages.common.label.is_enabled_true')</span>
                             @else
                                 <span class="badge bg-red">@lang('admin.pages.common.label.is_enabled_false')</span>
                             @endif
                         </td>
                         <td>
-                            <a href="{!! URL::action('Admin\ArticleController@show', $model->id) !!}"
+                            <a href="{!! URL::action('Admin\ArticleController@show', $article->id) !!}"
                                class="btn btn-block btn-primary btn-xs">@lang('admin.pages.common.buttons.edit')</a>
                             <a href="#" class="btn btn-block btn-danger btn-xs delete-button"
-                               data-delete-url="{!! action('Admin\ArticleController@destroy', $model->id) !!}">@lang('admin.pages.common.buttons.delete')</a>
+                               data-delete-url="{!! action('Admin\ArticleController@destroy', $article->id) !!}">@lang('admin.pages.common.buttons.delete')</a>
                         </td>
                     </tr>
                 @endforeach

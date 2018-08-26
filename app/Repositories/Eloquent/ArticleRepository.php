@@ -7,6 +7,8 @@ use App\Models\Article;
 
 class ArticleRepository extends SingleKeyModelRepository implements ArticleRepositoryInterface
 {
+    protected $querySearchTargets = ['slug', 'title', 'keywords', 'description', 'content'];
+
     public function getBlankModel()
     {
         return new Article();
