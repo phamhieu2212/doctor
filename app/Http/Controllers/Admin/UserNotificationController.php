@@ -1,22 +1,28 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Repositories\UserNotificationRepositoryInterface;
 use App\Http\Requests\Admin\UserNotificationRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Repositories\UserRepositoryInterface;
 
-class UserNotificationController extends Controller {
-
+class UserNotificationController extends Controller
+{
     /** @var \App\Repositories\UserNotificationRepositoryInterface */
     protected $userNotificationRepository;
 
+    /** @var \App\Repositories\UserRepositoryInterface */
+    protected $userRepository;
+
 
     public function __construct(
-        UserNotificationRepositoryInterface $userNotificationRepository
+        UserNotificationRepositoryInterface $userNotificationRepository,
+        UserRepositoryInterface             $userRepository
     ) {
-        $this->userNotificationRepository = $userNotificationRepository;
+        $this->userNotificationRepository   = $userNotificationRepository;
+        $this->userRepository               = $userRepository;
     }
 
     /**
@@ -33,20 +39,22 @@ class UserNotificationController extends Controller {
         $paginate[ 'direction' ] = $request->direction();
         $paginate[ 'baseUrl' ] = action( 'Admin\UserNotificationController@index' );
 
-        $count = $this->userNotificationRepository->count();
-        $models = $this->userNotificationRepository->get(
-            $paginate[ 'order' ],
-            $paginate[ 'direction' ],
-            $paginate[ 'offset' ],
-            $paginate[ 'limit' ]
-        );
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
+
+        $count = $this->userNotificationRepository->countByFilter($filter);
+        $notifications = $this->userNotificationRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
 
         return view(
             'pages.admin.' . config('view.admin') . '.user-notifications.index',
             [
-                'models'   => $models,
-                'count'    => $count,
-                'paginate' => $paginate,
+                'notifications' => $notifications,
+                'count'         => $count,
+                'paginate'      => $paginate,
+                'keyword'       => $keyword
             ]
         );
     }
@@ -62,6 +70,7 @@ class UserNotificationController extends Controller {
             [
                 'isNew'            => true,
                 'userNotification' => $this->userNotificationRepository->getBlankModel(),
+                'users'            => $this->userRepository->all()
             ]
         );
     }
@@ -73,7 +82,8 @@ class UserNotificationController extends Controller {
      *
      * @return \Response
      */
-    public function store( UserNotificationRequest $request ) {
+    public function store( UserNotificationRequest $request )
+    {
         $input = $request->only(
             [
                 'category_type',
@@ -85,8 +95,9 @@ class UserNotificationController extends Controller {
             ]
         );
 
-        $input[ 'sent_at' ] = ( $input[ 'sent_at' ] != "" ) ? $input[ 'sent_at' ] : null;
-        $input[ 'read' ]    = $request->get( 'read', 0 );
+        $input['sent_at'] = ($input['sent_at'] != "") ? $input['sent_at'] : null;
+        $input['read']    = $request->get('read', 0);
+        $input['user_id'] = $request->get('user_id', 0);
 
         $model = $this->userNotificationRepository->create( $input );
 
@@ -108,7 +119,8 @@ class UserNotificationController extends Controller {
      *
      * @return \Response
      */
-    public function show( $id ) {
+    public function show( $id )
+    {
         $model = $this->userNotificationRepository->find( $id );
         if( empty( $model ) ) {
             abort( 404 );
@@ -119,6 +131,7 @@ class UserNotificationController extends Controller {
             [
                 'isNew'            => false,
                 'userNotification' => $model,
+                'users'            => $this->userRepository->all()
             ]
         );
     }
@@ -142,12 +155,14 @@ class UserNotificationController extends Controller {
      *
      * @return \Response
      */
-    public function update( $id, UserNotificationRequest $request ) {
+    public function update( $id, UserNotificationRequest $request )
+    {
         /** @var \App\Models\UserNotification $model */
         $model = $this->userNotificationRepository->find( $id );
         if( empty( $model ) ) {
             abort( 404 );
         }
+
         $input = $request->only(
             [
                 'category_type',
@@ -159,8 +174,9 @@ class UserNotificationController extends Controller {
             ]
         );
 
-        $input[ 'sent_at' ] = ( $input[ 'sent_at' ] != "" ) ? $input[ 'sent_at' ] : null;
-        $input[ 'read' ]    = $request->get( 'read', 0 );
+        $input['sent_at'] = ($input['sent_at'] != "") ? $input['sent_at'] : null;
+        $input['read']    = $request->get('read', 0);
+        $input['user_id'] = $request->get('user_id', 0);
  
         $this->userNotificationRepository->update( $model, $input );
 

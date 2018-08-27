@@ -1,4 +1,4 @@
-@extends('pages.admin.metronic.layout.application',['menu' => 'admin-user-notifications'] )
+@extends('pages.admin.metronic.layout.application',['menu' => 'user-notifications'] )
 
 @section('metadata')
 @stop
@@ -26,18 +26,18 @@
 @stop
 
 @section('title')
-    AdminUserNotification | Admin | {{ config('site.name') }}
+    User Notifications | Admin | {{ config('site.name') }}
 @stop
 
 @section('header')
-    AdminUserNotification
+    User Notifications
 @stop
 
 @section('breadcrumb')
     <li class="m-nav__separator"> / </li>
     <li class="m-nav__item">
-        <a href="{!! action('Admin\AdminUserNotificationController@index') !!}" class="m-nav__link">
-            AdminUserNotification
+        <a href="{!! action('Admin\UserNotificationController@index') !!}" class="m-nav__link">
+            User Notifications
         </a>
     </li>
 
@@ -49,7 +49,7 @@
     @else
         <li class="m-nav__separator"> / </li>
         <li class="m-nav__item">
-            {{ $adminUserNotification->id }}
+            {{ $userNotification->id }}
         </li>
     @endif
 @stop
@@ -60,14 +60,14 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Create New Record
+                        @if( $isNew ) Create New Record @else Notify Detail @endif
                     </h3>
                 </div>
             </div>
             <div class="m-portlet__head-tools">
                 <ul class="m-portlet__nav">
                     <li class="m-portlet__nav-item">
-                        <a href="{!! action('Admin\AdminUserNotificationController@index') !!}" class="btn m-btn--pill m-btn--air btn-secondary btn-sm" style="width: 120px;">
+                        <a href="{!! action('Admin\UserNotificationController@index') !!}" class="btn m-btn--pill m-btn--air btn-secondary btn-sm" style="width: 120px;">
                             @lang('admin.pages.common.buttons.back')
                         </a>
                     </li>
@@ -91,9 +91,7 @@
                 </div>
             @endif
 
-            <form class="m-form m-form--fit"
-                  action="@if($isNew){!! action('Admin\AdminUserNotificationController@store') !!}@else{!! action('Admin\AdminUserNotificationController@update', [$adminUserNotification->id]) !!}@endif"
-                  method="POST">
+            <form class="m-form m-form--fit" action="@if($isNew){!! action('Admin\UserNotificationController@store') !!}@else{!! action('Admin\UserNotificationController@update', [$userNotification->id]) !!}@endif" method="POST">
                 @if( !$isNew ) <input type="hidden" name="_method" value="PUT"> @endif
                 {!! csrf_field() !!}
 
@@ -106,9 +104,9 @@
                                 <select class="form-control m-input" name="user_id" id="user_id" required>
                                     <option>Select a Receiver</option>
                                     <option value="{{\App\Models\Notification::BROADCAST_USER_ID}}">Send All</option>
-                                    @foreach( $adminUsers as $adminUser )
-                                        <option value="{!! $adminUser->id !!}" @if( (old('user_id') && old('user_id') == $adminUser->id) || ( $adminUserNotification->user_id === $adminUser->id) ) selected @endif >
-                                            {{ $adminUser->email }} ({{$adminUser->name}})
+                                    @foreach( $users as $user )
+                                        <option value="{!! $user->id !!}" @if( (old('user_id') && old('user_id') == $user->id) || ( $userNotification->user_id === $user->id) ) selected @endif >
+                                            {{ $user->email }} ({{$user->name}})
                                         </option>
                                     @endforeach
                                 </select>
@@ -121,7 +119,7 @@
                                 <?php $notifyCategories = \App\Models\Notification::CATEGORY_TYPE; ?>
                                 <select class="form-control m-input" name="category_type" id="category_type" required>
                                     @foreach( $notifyCategories as $key => $category )
-                                        <option value="{{ $key }}" @if( (old('category_type') && old('category_type') == $key) || ( $adminUserNotification->category_type == $key) ) selected @endif >
+                                        <option value="{{ $key }}" @if( (old('category_type') && old('category_type') == $key) || ( $userNotification->category_type == $key) ) selected @endif >
                                             {{ $category }}
                                         </option>
                                     @endforeach
@@ -135,7 +133,7 @@
                                 <?php $notifyTypes = \App\Models\Notification::TYPE; ?>
                                 <select class="form-control m-input" name="type" id="type" required>
                                     @foreach( $notifyTypes as $key => $notifyType )
-                                        <option value="{{ $key }}" @if( (old('type') && old('type') == $key) || ( $adminUserNotification->type == $key) ) selected @endif >
+                                        <option value="{{ $key }}" @if( (old('type') && old('type') == $key) || ( $userNotification->type == $key) ) selected @endif >
                                             {{ $notifyType }}
                                         </option>
                                     @endforeach
@@ -150,7 +148,7 @@
                                 <label for="locale">@lang('admin.pages.admin-user-notifications.columns.locale')</label>
                                 <select class="form-control m-input" name="locale" id="locale" style="margin-bottom: 15px;" required>
                                     @foreach( config('locale.languages') as $code => $locale )
-                                        <option value="{!! $code !!}" @if( (old('locale') && old('locale') == $code) || ( $adminUserNotification->locale === $code) ) selected @endif >
+                                        <option value="{!! $code !!}" @if( (old('locale') && old('locale') == $code) || ( $userNotification->locale === $code) ) selected @endif >
                                             {{ trans($locale['name']) }}
                                         </option>
                                     @endforeach
@@ -161,7 +159,7 @@
                             <div class="form-group m-form__group row  @if ($errors->has('sent_at')) has-danger @endif">
                                 <label for="sent_at">@lang('admin.pages.admin-user-notifications.columns.sent_at')</label>
                                 <input type="text" class="form-control m-input datetime-picker"
-                                       placeholder="Select date &amp; time" id="sent_at" name="sent_at" value="{{ old('sent_at') ? old('sent_at') : $adminUserNotification->sent_at }}">
+                                       placeholder="Select date &amp; time" id="sent_at" name="sent_at" value="{{ old('sent_at') ? old('sent_at') : $userNotification->sent_at }}">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -169,11 +167,11 @@
                                 <label for="read"
                                        class="label-switch">@lang('admin.pages.admin-user-notifications.columns.read')</label>
                                 <span class="m-switch m-switch--outline m-switch--icon m-switch--primary">
-                                    <label>
-                                        <input type="checkbox" id="read" name="read" value="1" @if( $adminUserNotification->read) checked @endif>
-                                        <span></span>
-                                    </label>
-                                </span>
+                                <label>
+                                    <input type="checkbox" id="read" name="read" value="1" @if( $userNotification->read) checked @endif>
+                                    <span></span>
+                                </label>
+                            </span>
                             </div>
                         </div>
                     </div>
@@ -183,7 +181,7 @@
                             <div class="form-group m-form__group row @if ($errors->has('data')) has-danger @endif">
                                 <label for="data">@lang('admin.pages.admin-user-notifications.columns.data')</label>
                                 <textarea name="data" id="data" class="form-control m-input" rows="5"
-                                          placeholder="@lang('admin.pages.admin-user-notifications.columns.data')">{{ old('data') ? old('data') : $adminUserNotification->data }}</textarea>
+                                          placeholder="@lang('admin.pages.admin-user-notifications.columns.data')">{{ old('data') ? old('data') : $userNotification->data }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -192,7 +190,7 @@
                             <div class="form-group m-form__group row @if ($errors->has('content')) has-danger @endif">
                                 <label for="content">@lang('admin.pages.admin-user-notifications.columns.content')</label>
                                 <textarea name="content" id="content" class="form-control m-input" rows="5"
-                                          placeholder="@lang('admin.pages.admin-user-notifications.columns.content')">{{ old('content') ? old('content') : $adminUserNotification->content }}</textarea>
+                                          placeholder="@lang('admin.pages.admin-user-notifications.columns.content')">{{ old('content') ? old('content') : $userNotification->content }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -202,14 +200,10 @@
                     <div class="m-form__actions m-form__actions">
                         <div class="row">
                             <div class="col-lg-9 ml-lg-auto">
-                                <a href="{!! action('Admin\AdminUserNotificationController@index') !!}"
-                                   class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-accent"
-                                   style="width: 120px;">
+                                <a href="{!! action('Admin\UserNotificationController@index') !!}" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-accent" style="width: 120px;">
                                     @lang('admin.pages.common.buttons.cancel')
                                 </a>
-                                <button type="submit"
-                                        class="btn m-btn--pill m-btn--air btn-primary m-btn m-btn--custom"
-                                        style="width: 120px;">
+                                <button type="submit" class="btn m-btn--pill m-btn--air btn-primary m-btn m-btn--custom" style="width: 120px;">
                                     @lang('admin.pages.common.buttons.save')
                                 </button>
                             </div>
