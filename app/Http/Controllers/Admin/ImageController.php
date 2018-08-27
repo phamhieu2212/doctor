@@ -33,20 +33,22 @@ class ImageController extends Controller {
         $paginate[ 'direction' ] = $request->direction();
         $paginate[ 'baseUrl' ] = action( 'Admin\ImageController@index' );
 
-        $count = $this->imageRepository->count();
-        $models = $this->imageRepository->get(
-            $paginate[ 'order' ],
-            $paginate[ 'direction' ],
-            $paginate[ 'offset' ],
-            $paginate[ 'limit' ]
-        );
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
+
+        $count = $this->imageRepository->countByFilter($filter);
+        $images = $this->imageRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
 
         return view(
             'pages.admin.' . config('view.admin') . '.images.index',
             [
-                'models' => $models,
-                'count' => $count,
+                'images'   => $images,
+                'count'    => $count,
                 'paginate' => $paginate,
+                'keyword'  => $keyword
             ]
         );
     }
