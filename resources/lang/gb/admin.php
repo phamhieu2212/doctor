@@ -87,17 +87,6 @@ return [
                 'reset_password'  => 'Please enter your e-mail address and new password',
             ],
         ],
-        'site-configurations'      => [
-            'columns' => [
-                'locale'                => 'Locale',
-                'name'                  => 'Name',
-                'title'                 => 'Title',
-                'keywords'              => 'Keywords',
-                'description'           => 'Descriptions',
-                'ogp_image_id'          => 'OGP Image',
-                'twitter_card_image_id' => 'Twitter Card Image',
-            ],
-        ],
         'articles'                 => [
             'columns' => [
                 'slug'               => 'Slug',

@@ -40,7 +40,6 @@
 
             @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
                 <li class="header">Backend</li>
-                <li @if( $menu=='site_configurations') class="active" @endif ><a href="{!! \URL::action('Admin\SiteConfigurationController@index') !!}"><i class="fa fa-cogs"></i> <span>@lang('admin.menu.site_configuration')</span></a></li>
                 <li @if( $menu=='oauth_clients') class="active" @endif ><a href="{!! \URL::action('Admin\OauthClientController@index') !!}"><i class="fa fa-key"></i> <span>OauthClients</span></a></li>
                 <li @if( $menu=='images') class="active" @endif ><a href="{!! \URL::action('Admin\ImageController@index') !!}"><i class="fa fa-file-image-o"></i> <span>@lang('admin.menu.images')</span></a></li>
                 <li @if( $menu=='logs') class="active" @endif ><a href="{!! \URL::action('Admin\LogController@index') !!}"><i class="fa fa-sticky-note-o"></i> <span>@lang('admin.menu.log_system')</span></a></li>

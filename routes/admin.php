@@ -17,8 +17,6 @@
             \Route::resource('users', 'Admin\UserController');
             \Route::resource('user-notifications', 'Admin\UserNotificationController');
 
-            \Route::resource('site-configurations', 'Admin\SiteConfigurationController');
-
             \Route::post('articles/preview', 'Admin\ArticleController@preview');
             \Route::get('articles/images', 'Admin\ArticleController@getImages');
             \Route::post('articles/images', 'Admin\ArticleController@postImage');

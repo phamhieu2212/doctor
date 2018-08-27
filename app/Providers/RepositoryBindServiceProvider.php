@@ -37,10 +37,6 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\Eloquent\ImageRepository::class
         );
         $this->app->singleton(
-            \App\Repositories\SiteConfigurationRepositoryInterface::class,
-            \App\Repositories\Eloquent\SiteConfigurationRepository::class
-        );
-        $this->app->singleton(
             \App\Repositories\UserServiceAuthenticationRepositoryInterface::class,
             \App\Repositories\Eloquent\UserServiceAuthenticationRepository::class
         );
@@ -55,14 +51,6 @@ class RepositoryBindServiceProvider extends ServiceProvider {
         $this->app->singleton(
             \App\Repositories\AdminPasswordResetRepositoryInterface::class,
             \App\Repositories\Eloquent\AdminPasswordResetRepository::class
-        );
-        $this->app->singleton(
-            \App\Repositories\SiteConfigurationRepositoryInterface::class,
-            \App\Repositories\Eloquent\SiteConfigurationRepository::class
-        );
-        $this->app->singleton(
-            \App\Repositories\SiteConfigurationRepositoryInterface::class,
-            \App\Repositories\Eloquent\SiteConfigurationRepository::class
         );
         $this->app->singleton(
             \App\Repositories\ArticleRepositoryInterface::class,

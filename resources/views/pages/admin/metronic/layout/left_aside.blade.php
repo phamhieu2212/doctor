@@ -107,19 +107,6 @@
                     <i class="m-menu__section-icon flaticon-more-v3"></i>
                 </li>
 
-                <li class="m-menu__item @if( $menu=='site_configurations') m-menu__item--active @endif" aria-haspopup="true">
-                    <a href="{!! \URL::action('Admin\SiteConfigurationController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-cogs"></i>
-                        <span class="m-menu__link-title">
-                            <span class="m-menu__link-wrap">
-                                <span class="m-menu__link-text">
-                                    @lang('admin.menu.site_configuration')
-                                </span>
-                            </span>
-                        </span>
-                    </a>
-                </li>
-
                 <li class="m-menu__item @if( $menu=='oauth_clients') m-menu__item--active @endif" aria-haspopup="true">
                     <a href="{!! \URL::action('Admin\OauthClientController@index') !!}" class="m-menu__link">
                         <i class="m-menu__link-icon la la-key"></i>
