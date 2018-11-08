@@ -62,7 +62,8 @@ class QuickbloxController extends Controller
         curl_close($curl);
         if ($responce) {
 
-            return $responce . "\n";
+
+            return $responce;
         } else {
             $error = curl_error($curl). '(' .curl_errno($curl). ')';
             return $error . "\n";
@@ -73,6 +74,8 @@ class QuickbloxController extends Controller
 
     public function signUp(QuickBloxRequest $request)
     {
+        $dataToken = json_decode($this->getTokenAuth(),true);
+        $token = $dataToken['session']['token'];
         $input = $request->only(
             [
                 'username',
@@ -88,7 +91,7 @@ class QuickbloxController extends Controller
             ]
         );
         // Quickblox endpoints
-        DEFINE('QB_API_ENDPOINT', "https://api.quickblox.com/users.json");
+        DEFINE('QB_API_USER', "https://api.quickblox.com/users.json");
 
         // Build post body
         $post_body = [
@@ -106,14 +109,13 @@ class QuickbloxController extends Controller
             ]
         ];
         $post_body = json_encode($post_body);
-        DEFINE('QB_TOKEN', "Qb-Token:".$input['token']);
-
+        DEFINE('QB_TOKEN', "Qb-Token:".$token);
 
 
         // Configure cURL
         $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_URL, QB_API_ENDPOINT);
+        curl_setopt($curl, CURLOPT_URL, QB_API_USER);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $post_body);
         curl_setopt($curl, CURLOPT_POST, 1);
@@ -132,10 +134,15 @@ class QuickbloxController extends Controller
         curl_close($curl);
         if ($responce) {
 
-            return $responce . "\n";
+            $user = json_decode($responce,true);
+
+            return [
+                'data'=>$user,
+                'quickbloxInfo'=> config('quickblox.auth')
+            ];
         } else {
             $error = curl_error($curl). '(' .curl_errno($curl). ')';
-            return $error . "\n";
+            return \GuzzleHttp\json_decode($error,true);
         }
     }
 
