@@ -25,8 +25,8 @@ class QuickBloxRequest extends FormRequest
     {
         return [
             'username'          => 'required|string',
+            'email'          => 'required|email',
             'password'      => 'required|min:8',
-            'token'    => 'required',
         ];
     }
 
