@@ -8,6 +8,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('signin', 'AuthController@signIn');
             Route::post('quickblox/getTokenAuth', 'QuickbloxController@getTokenAuth');
             Route::post('quickblox/signup', 'QuickbloxController@signUp');
+            Route::post('quickblox/signin', 'QuickbloxController@signIn');
             Route::post('signup', 'AuthController@signUp');
             Route::post('token/refresh', 'AuthController@refreshToken');
         });
