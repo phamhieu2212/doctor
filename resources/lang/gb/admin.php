@@ -218,6 +218,11 @@ return [
                 'phone' => 'Phone',
             ],
         ],
+        'specialties'   => [
+            'columns'  => [
+                'name' => 'Name',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

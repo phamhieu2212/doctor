@@ -47,6 +47,7 @@
         \Route::post('signout', 'Admin\AuthController@postSignOut');
 
         \Route::resource('hospitals', 'Admin\HospitalController');
+        \Route::resource('specialties', 'Admin\SpecialtyController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });

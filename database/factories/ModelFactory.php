@@ -186,4 +186,11 @@ $factory->define(App\Models\Hospital::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\Specialty::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'name' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

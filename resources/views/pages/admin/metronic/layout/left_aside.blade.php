@@ -69,6 +69,18 @@
                     </span>
                     </a>
                 </li>
+                <li class="m-menu__item @if( $menu=='specialties') m-menu__item--active @endif" aria-haspopup="true">
+                    <a href="{!! \URL::action('Admin\SpecialtyController@index') !!}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                Quản lý chuyên khoa
+                            </span>
+                        </span>
+                    </span>
+                    </a>
+                </li>
 
             @endif
 
