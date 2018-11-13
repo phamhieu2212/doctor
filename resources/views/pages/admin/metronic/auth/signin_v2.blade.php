@@ -35,7 +35,7 @@
                                 {!! csrf_field() !!}
 
                                 <div class="form-group m-form__group">
-                                    <input class="form-control m-input" type="email" placeholder="Email" name="email" autocomplete="off">
+                                    <input class="form-control m-input" type="text" placeholder="Tên đăng nhập" name="username" autocomplete="off">
                                 </div>
                                 <div class="form-group m-form__group">
                                     <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password">

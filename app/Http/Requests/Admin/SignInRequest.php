@@ -24,7 +24,7 @@ class SignInRequest extends BaseRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required',
         ];
     }
@@ -32,8 +32,7 @@ class SignInRequest extends BaseRequest
     public function messages()
     {
         return [
-            'email.required' => '',
-            'email.email' => '',
+            'username.required' => '',
             'password.required' => '',
         ];
     }
