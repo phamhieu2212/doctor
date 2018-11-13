@@ -177,4 +177,13 @@ $factory->define(
     }
 );
 
+$factory->define(App\Models\Hospital::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'name' => '',
+        'address' => '',
+        'phone' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

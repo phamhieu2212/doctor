@@ -211,6 +211,13 @@ return [
                 'revoked'                => 'Revoked',
             ],
         ],
+        'hospitals'   => [
+            'columns'  => [
+                'name' => 'Name',
+                'address' => 'Address',
+                'phone' => 'Phone',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [
