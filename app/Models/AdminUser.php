@@ -57,7 +57,7 @@ class AdminUser extends AuthenticatableBase
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name','username','phone',
         'email',
         'password',
         'locale',
@@ -92,6 +92,11 @@ class AdminUser extends AuthenticatableBase
     public function roles()
     {
         return $this->hasMany('App\Models\AdminUserRole', 'admin_user_id', 'id');
+    }
+
+    public function doctor()
+    {
+        return $this->hasOne('App\Models\Doctor');
     }
 
     // Utility Functions

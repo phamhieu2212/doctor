@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\AdminUserRepositoryInterface;
 use App\Http\Requests\Admin\AdminUserRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Repositories\HospitalRepositoryInterface;
+use App\Repositories\SpecialtyRepositoryInterface;
 use App\Services\FileUploadServiceInterface;
 use App\Repositories\ImageRepositoryInterface;
 use App\Repositories\AdminUserRoleRepositoryInterface;
@@ -25,17 +27,24 @@ class AdminUserController extends Controller
     /** @var ImageRepositoryInterface $imageRepository */
     protected $imageRepository;
 
+    protected $hospitalRepository;
+    protected $specialtyRepository;
+
     public function __construct(
         AdminUserRepositoryInterface $adminUserRepository,
         FileUploadServiceInterface $fileUploadService,
         ImageRepositoryInterface $imageRepository,
-        AdminUserRoleRepositoryInterface $adminUserRoleRepository
+        AdminUserRoleRepositoryInterface $adminUserRoleRepository,
+        HospitalRepositoryInterface $hospitalRepository,
+        SpecialtyRepositoryInterface $specialtyRepository
     )
     {
         $this->adminUserRepository = $adminUserRepository;
         $this->fileUploadService = $fileUploadService;
         $this->imageRepository = $imageRepository;
         $this->adminUserRoleRepository = $adminUserRoleRepository;
+        $this->hospitalRepository = $hospitalRepository;
+        $this->specialtyRepository = $specialtyRepository;
     }
 
     /**
@@ -83,6 +92,8 @@ class AdminUserController extends Controller
         return view(
             'pages.admin.' . config('view.admin') . '.admin-users.edit',
             [
+                'hospitals' => $this->hospitalRepository->all(),
+                'specialties' => $this->specialtyRepository->all(),
                 'isNew'     => true,
                 'adminUser' => $this->adminUserRepository->getBlankModel(),
             ]
