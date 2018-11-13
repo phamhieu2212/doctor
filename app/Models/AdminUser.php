@@ -57,7 +57,7 @@ class AdminUser extends AuthenticatableBase
      * @var array
      */
     protected $fillable = [
-        'name','username',
+        'name','username','phone',
         'email',
         'password',
         'locale',

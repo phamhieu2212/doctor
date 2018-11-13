@@ -17,7 +17,6 @@ class CreatedoctorsTable extends Migration
             $table->unsignedInteger('admin_user_id')->comment('id tai khoan');
             $table->unsignedInteger('hospital_id')->comment('id tai khoan');
             $table->smallInteger('gender')->default(1);     // 1 = Male, 0 = Female
-            $table->string('telephone')->nullable()->default('');
             $table->date('birthday')->nullable()->default(null);
 
             $table->string('address')->nullable()->default('');
