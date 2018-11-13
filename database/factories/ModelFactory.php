@@ -193,4 +193,28 @@ $factory->define(App\Models\Specialty::class, function (Faker\Generator $faker) 
     ];
 });
 
+$factory->define(App\Models\Doctor::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'admin_user_id' => '',
+        'hospital_id' => '',
+        'gender' => '',
+        'telephone' => '',
+        'birthday' => '',
+        'address' => '',
+        'city' => '',
+        'position' => '',
+        'experience' => '',
+        'description' => '',
+    ];
+});
+
+$factory->define(App\Models\DoctorSpecialty::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'admin_user_id' => '',
+        'specialty_id' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */
