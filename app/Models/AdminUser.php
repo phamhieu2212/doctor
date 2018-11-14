@@ -145,6 +145,7 @@ class AdminUser extends AuthenticatableBase
             'hospital_id' => $this->doctor->hospital_id,
             'hospital_name' => $this->doctor->hospital->name,
             'address' => $this->doctor->address,
+            'gender' => ($this->doctor->gender == 1)?'Nam':'Nữ',
             'birthday' => $this->doctor->birthday,
             'city' => $this->doctor->city,
             'position' => $this->doctor->position,
