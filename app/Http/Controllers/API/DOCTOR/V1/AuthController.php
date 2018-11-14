@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\DOCTOR\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\PsrServerRequest;
@@ -70,43 +70,4 @@ class AuthController extends Controller
         return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
     }
 
-    public function signUp(SignUpRequest $request)
-    {
-        $data = $request->only(
-            [
-                'name',
-                'email',
-                'password',
-                'grant_type',
-                'client_id',
-                'client_secret',
-                'telephone',
-                'birthday',
-                'locale',
-            ]
-        );
-
-        $check = $this->userService->checkClient($request);
-        if( !$check ) {
-            return Response::response(40101);
-        }
-
-        $userDeleted = $this->userRepository->findByEmail($data['email'], true);
-        if (!empty($userDeleted)) {
-            return Response::response(40002);
-        }
-
-        $serverRequest = PsrServerRequest::createFromRequest($request, $data);
-
-        $response = $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
-        return $response->withStatus(201);
-    }
-
-    public function refreshToken(RefreshTokenRequest $request)
-    {
-        $this->userService->checkClient($request);
-        $serverRequest = PsrServerRequest::createFromRequest($request);
-
-        return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
-    }
 }
