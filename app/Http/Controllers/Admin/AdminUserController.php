@@ -3,9 +3,12 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Doctor;
+use App\Models\DoctorSpecialty;
 use App\Repositories\AdminUserRepositoryInterface;
 use App\Http\Requests\Admin\AdminUserRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Repositories\DoctorRepositoryInterface;
 use App\Repositories\HospitalRepositoryInterface;
 use App\Repositories\SpecialtyRepositoryInterface;
 use App\Services\FileUploadServiceInterface;
@@ -17,6 +20,7 @@ class AdminUserController extends Controller
 
     /** @var \App\Repositories\AdminUserRepositoryInterface */
     protected $adminUserRepository;
+    protected $doctorRepository;
 
     /** @var \App\Repositories\AdminUserRoleRepositoryInterface */
     protected $adminUserRoleRepository;
@@ -36,7 +40,8 @@ class AdminUserController extends Controller
         ImageRepositoryInterface $imageRepository,
         AdminUserRoleRepositoryInterface $adminUserRoleRepository,
         HospitalRepositoryInterface $hospitalRepository,
-        SpecialtyRepositoryInterface $specialtyRepository
+        SpecialtyRepositoryInterface $specialtyRepository,
+        DoctorRepositoryInterface $doctorRepository
     )
     {
         $this->adminUserRepository = $adminUserRepository;
@@ -45,6 +50,7 @@ class AdminUserController extends Controller
         $this->adminUserRoleRepository = $adminUserRoleRepository;
         $this->hospitalRepository = $hospitalRepository;
         $this->specialtyRepository = $specialtyRepository;
+        $this->doctorRepository = $doctorRepository;
     }
 
     /**
@@ -111,36 +117,40 @@ class AdminUserController extends Controller
     {
         $input = $request->only(
             [
+                'username',
                 'name',
                 'email',
                 'password',
                 're_password',
-                'locale',
+                'role','phone'
             ]
         );
-        $exist = $this->adminUserRepository->findByEmail($input['email']);
-        if (!empty($exist)) {
-            return redirect()
-                ->back()
-                ->withErrors(['error' => 'This Email Is Already In Use'])
-                ->withInput();
-        }
-        if ($input['password'] == '' || $input['password'] != $input['re_password']) {
-            return redirect()
-                ->back()
-                ->withErrors(['error' => 'Error, Confirm password is invalid !!!'])
-                ->withInput();
-        }
-
         $adminUser = $this->adminUserRepository->create($input);
-
         if (empty($adminUser)) {
             return redirect()
                 ->back()
                 ->withErrors(trans('admin.errors.general.save_failed'));
         }
 
+        if($input['role'][0] == 'admin')
+        {
+            $inputDoctor = $request->only(
+                [
+                    'experience','description','gender','city','address','hospital_id','position','birthday'
+                ]
+            );
+            $inputDoctor['admin_user_id'] = $adminUser->id;
+            $doctor = $this->doctorRepository->create($inputDoctor);
+            if (empty($doctor)) {
+                return redirect()
+                    ->back()
+                    ->withErrors(trans('admin.errors.general.save_failed'));
+            }
+
+        }
+
         $this->adminUserRoleRepository->setAdminUserRoles($adminUser->id, $request->input('role', []));
+        $adminUser->specialties()->sync($request->input('specialty_id'));
 
         if ($request->hasFile('profile_image')) {
             $file       = $request->file('profile_image');
@@ -182,6 +192,8 @@ class AdminUserController extends Controller
         return view(
             'pages.admin.' . config('view.admin') . '.admin-users.edit',
             [
+                'hospitals' => $this->hospitalRepository->all(),
+                'specialties' => $this->specialtyRepository->all(),
                 'isNew'     => false,
                 'adminUser' => $adminUser,
             ]
@@ -215,15 +227,46 @@ class AdminUserController extends Controller
         if (empty($adminUser)) {
             \App::abort(404);
         }
+        $doctor = Doctor::where('admin_user_id',$id)->first();
         $input = $request->only(
             [
+                'username',
                 'name',
                 'email',
-                'locale',
+                'password',
+                're_password',
+                'role','phone'
             ]
         );
+        if($input['password'] == null)
+        {
+            unset($input['password']);
+        }
 
         $adminUser = $this->adminUserRepository->update($adminUser, $input);
+        if($input['role'][0] == 'super_user')
+        {
+            $doctor->delete();
+            $doctor->save();
+            $specialties = DoctorSpecialty::where('admin_user_id',$adminUser)->get();
+            foreach($specialties as $row)
+            {
+                $row->delete();
+                $row->save();
+            }
+        }
+        if($input['role'][0] == 'admin')
+        {
+            $inputDoctor = $request->only(
+                [
+                    'experience','description','gender','city','address','hospital_id','position','birthday'
+                ]
+            );
+            $inputDoctor['admin_user_id'] = $adminUser->id;
+            $doctor = $this->doctorRepository->update($doctor,$inputDoctor);
+            $adminUser->specialties()->sync($request->input('specialty_id'));
+
+        }
         $this->adminUserRoleRepository->setAdminUserRoles($id, $request->input('role', []));
 
         if ($request->hasFile('profile_image')) {
