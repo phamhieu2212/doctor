@@ -246,14 +246,22 @@ class AdminUserController extends Controller
         $adminUser = $this->adminUserRepository->update($adminUser, $input);
         if($input['role'][0] == 'super_user')
         {
-            $doctor->delete();
-            $doctor->save();
-            $specialties = DoctorSpecialty::where('admin_user_id',$adminUser)->get();
-            foreach($specialties as $row)
+            if(!empty($doctor))
             {
-                $row->delete();
-                $row->save();
+                $doctor->delete();
+                $doctor->save();
             }
+
+            $specialties = DoctorSpecialty::where('admin_user_id',$adminUser)->get();
+            if(!empty($specialties))
+            {
+                foreach($specialties as $row)
+                {
+                    $row->delete();
+                    $row->save();
+                }
+            }
+
         }
         if($input['role'][0] == 'admin')
         {

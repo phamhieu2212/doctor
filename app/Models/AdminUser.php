@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Laravel\Passport\HasApiTokens;
+
 /**
  * App\Models\AdminUser.
  *
@@ -40,7 +42,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class AdminUser extends AuthenticatableBase
 {
-    use SoftDeletes;
+    use SoftDeletes,HasApiTokens;
 
     /**
      * The database table used by the model.
