@@ -226,7 +226,7 @@ return [
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [
-        'super_user' => 'Super User',
-        'admin'      => 'Administrator',
+        'super_user' => 'Admin',
+        'admin'      => 'Bác sĩ',
     ],
 ];

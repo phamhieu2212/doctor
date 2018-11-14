@@ -216,7 +216,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group m-form__group row">
                                             <label for="exampleSelect1">Giới tính</label>
-                                            <select name="role[]" class="form-control m-input" id="formRole">
+                                            <select name="gender" class="form-control m-input" id="formRole">
                                                 <option {{(@$adminUser->doctor->gender == 1)?'selected':''}} value="1">Nam</option>
                                                 <option {{(@$adminUser->doctor->gender == 0)?'selected':''}} value="0">Nữ</option>
                                             </select>

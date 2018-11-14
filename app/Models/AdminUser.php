@@ -98,6 +98,10 @@ class AdminUser extends AuthenticatableBase
     {
         return $this->hasOne('App\Models\Doctor');
     }
+    public function specialties()
+    {
+        return $this->belongsToMany(Specialty::class,'doctor_specialties');
+    }
 
     // Utility Functions
 
