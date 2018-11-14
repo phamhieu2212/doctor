@@ -98,7 +98,7 @@ class AdminUser extends AuthenticatableBase
 
     public function doctor()
     {
-        return $this->hasOne('App\Models\Doctor');
+        return $this->hasOne('App\Models\Doctor','admin_user_id');
     }
     public function specialties()
     {
@@ -134,5 +134,24 @@ class AdminUser extends AuthenticatableBase
         }
 
         return false;
+    }
+    public function toAPIArray()
+    {
+        return [
+            'name' => $this->name,
+            'username' => $this->username,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'hospital_id' => $this->doctor->hospital_id,
+            'hospital_name' => $this->doctor->hospital->name,
+            'address' => $this->doctor->address,
+            'birthday' => $this->doctor->birthday,
+            'city' => $this->doctor->city,
+            'position' => $this->doctor->position,
+            'experience' => $this->doctor->experience,
+            'description' => $this->doctor->description,
+            'profile_image_id' => $this->profile_image_id,
+            'image_link' => (!empty($this->present()->profileImage()))?$this->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
+        ];
     }
 }
