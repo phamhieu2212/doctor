@@ -31,8 +31,8 @@
                     $("#formDoctor").css({display: "none"});
                 }
             });
-            $('#profile-image').change(function (event) {
-                $('#profile-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
+            $('#cover-image').change(function (event) {
+                $('#cover-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
             });
 
             $('.datetime-picker').datetimepicker({
@@ -139,7 +139,7 @@
                                     @else
                                         <img id="cover-image-preview" style="max-width: 100%;" src="{!! \URLHelper::asset('img/no_image.jpg', 'common') !!}" alt="" class="margin"/>
                                     @endif
-                                    <input type="file" style="display: none;" id="cover-image" name="profile_image_id">
+                                    <input type="file" style="display: none;" id="cover-image" name="profile_image">
                                     <p class="help-block" style="font-weight: bolder; display: block; width: 100%; text-align: center;">
                                         Ảnh Logo
                                         <label for="cover-image" style="font-weight: 100; color: #549cca; margin-left: 10px; cursor: pointer;">Upload</label>

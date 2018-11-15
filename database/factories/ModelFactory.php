@@ -217,4 +217,14 @@ $factory->define(App\Models\DoctorSpecialty::class, function (Faker\Generator $f
     ];
 });
 
+$factory->define(App\Models\Clinic::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'admin_user_id' => '',
+        'name' => '',
+        'address' => '',
+        'status' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

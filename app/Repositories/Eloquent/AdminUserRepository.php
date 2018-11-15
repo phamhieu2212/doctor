@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Models\AdminUserRole;
 use App\Repositories\AdminUserRepositoryInterface;
 use App\Models\AdminUser;
 
@@ -24,5 +25,11 @@ class AdminUserRepository extends AuthenticatableRepository implements AdminUser
     {
         return [
         ];
+    }
+
+    public function getAllAdminUserByRole($role)
+    {
+        $listAdminId = AdminUserRole::where('role',$role)->pluck('admin_user_id');
+        return AdminUser::whereIn('id',$listAdminId)->get();
     }
 }

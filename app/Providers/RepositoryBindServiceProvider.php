@@ -108,6 +108,11 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\Eloquent\DoctorSpecialtyRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\ClinicRepositoryInterface::class,
+            \App\Repositories\Eloquent\ClinicRepository::class
+        );
+
         /* NEW BINDING */
     }
 }
