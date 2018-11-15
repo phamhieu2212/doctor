@@ -223,6 +223,14 @@ return [
                 'name' => 'Name',
             ],
         ],
+        'clinics'   => [
+            'columns'  => [
+                'admin_user_id' => 'Admin_user_id',
+                'name' => 'Name',
+                'address' => 'Address',
+                'status' => 'Status',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

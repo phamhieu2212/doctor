@@ -96,6 +96,10 @@ interface BaseRepositoryInterface
      */
     public function countByFilter($filter);
 
+    public function getByFilterWithAdminUser($adminUser,$filter, $order, $direction, $offset, $limit);
+
+    public function countByFilterWithAdminUser($adminUser,$filter);
+
     /**
      * @param array $filter
      *
