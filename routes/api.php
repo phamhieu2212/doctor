@@ -1,6 +1,16 @@
 <?php
 
 Route::group(['namespace' => 'API'], function () {
+    Route::group(['prefix' => 'v1', 'namespace' => 'V1'], function () {
+
+        Route::group(['middleware' => []], function () {
+            // Authentication
+            Route::post('quickblox/getTokenAuth', 'QuickbloxController@getTokenAuth');
+            Route::post('quickblox/signup', 'QuickbloxController@signUp');
+            Route::post('quickblox/signin', 'QuickbloxController@signIn');
+        });
+
+    });
     Route::group(['prefix' => 'doctor/v1', 'namespace' => 'DOCTOR\V1'], function () {
 
         Route::group(['middleware' => []], function () {
