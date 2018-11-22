@@ -21,15 +21,11 @@ class SignUpRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required|string',
-            'email'         => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+            'username'          => 'required|string',
             'password'      => 'required|min:6',
             'grant_type'    => 'required',
             'client_id'     => 'required',
             'client_secret' => 'required',
-            'telephone'     => 'string',
-            'birthday'      => 'date_format:Y-m-d',
-            'locale'        => 'string'
         ];
     }
 

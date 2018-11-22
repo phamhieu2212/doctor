@@ -33,4 +33,15 @@ class UserService extends AuthenticatableService implements UserServiceInterface
     {
         return 'web';
     }
+
+    public function signIn($input)
+    {
+        $rememberMe = (bool) array_get($input, 'remember_me', 0);
+        $guard = $this->getGuard();
+        if (!$guard->attempt(['telephone' => $input['username'], 'password' => $input['password']], $rememberMe, true)) {
+            return false;
+        }
+
+        return $guard->user();
+    }
 }

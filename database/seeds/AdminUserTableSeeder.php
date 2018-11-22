@@ -13,8 +13,8 @@ class AdminUserTableSeeder extends Seeder
     {
         $adminUser = factory( AdminUser::class )->create(
             [
-                'name'     => 'TestUser',
-                'email'    => 'test@example.com',
+                'name'     => 'admin',
+                'email'    => 'admin@gmail.com',
                 'username'    => 'admin',
                 'password' => '123',
             ]
