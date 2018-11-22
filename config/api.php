@@ -14,7 +14,7 @@ return [
         'httpStatusCode' => 400
     ],
     40002 => [
-        'message'        => 'Error, This email is already used !!!',
+        'message'        => 'Error, This username is already used !!!',
         'httpStatusCode' => 400
     ],
     40101 => [

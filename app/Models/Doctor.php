@@ -20,7 +20,7 @@ class Doctor extends Base
      * @var array
      */
     protected $fillable = [
-        'admin_user_id',
+        'admin_user_id','name',
         'hospital_id',
         'gender',
         'telephone',
@@ -71,10 +71,11 @@ class Doctor extends Base
     {
         return [
             'id' => $this->id,
-            'admin_user_id' => $this->admin_user_id,
+            'name' => $this->name,
             'hospital_id' => $this->hospital_id,
+            'hospital_name' => $this->hospital->name,
             'gender' => $this->gender,
-            'telephone' => $this->telephone,
+            'phone' => $this->adminUser->phone,
             'birthday' => $this->birthday,
             'address' => $this->address,
             'city' => $this->city,

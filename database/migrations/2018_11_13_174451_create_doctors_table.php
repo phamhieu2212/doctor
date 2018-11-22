@@ -14,6 +14,7 @@ class CreatedoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->unsignedInteger('admin_user_id')->comment('id tai khoan');
             $table->unsignedInteger('hospital_id')->comment('id tai khoan');
             $table->smallInteger('gender')->default(1);     // 1 = Male, 0 = Female

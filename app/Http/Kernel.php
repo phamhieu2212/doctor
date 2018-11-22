@@ -67,6 +67,8 @@ class Kernel extends HttpKernel
         'bindings'                  => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'auth'                      => \Illuminate\Auth\Middleware\Authenticate::class,
         'api.client'                => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
-        'api.user'                  => \App\Http\Middleware\API\V1\DetectUser::class
+        'api.user'                  => \App\Http\Middleware\API\V1\DetectUser::class,
+        'api.provider.doctor' => \App\Http\Middleware\API\V1\SetPassportAdminProvider::class,
+        'api.provider.patient' => \App\Http\Middleware\API\V1\SetPassportWebProvider::class,
     ];
 }
