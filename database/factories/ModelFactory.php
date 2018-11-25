@@ -227,4 +227,16 @@ $factory->define(App\Models\Clinic::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\Plan::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'admin_user_id' => '',
+        'user_id' => '',
+        'price' => '',
+        'status' => '',
+        'started_at' => '',
+        'ended_at' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

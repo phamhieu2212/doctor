@@ -28,6 +28,12 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'clinics'], function () {
                 Route::post('/store', 'ClinicController@store');
             });
+            Route::group(['prefix' => 'plans'], function () {
+                Route::get('/{day}', 'PlanController@index');
+                Route::get('/create/{day}', 'PlanController@create');
+                Route::post('/store', 'PlanController@store');
+
+            });
 
             Route::post('signout', 'AuthController@postSignOut');
         });
