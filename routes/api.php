@@ -52,6 +52,12 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'search-doctor'], function () {
                 Route::get('/', 'DoctorController@index');
             });
+            Route::group(['prefix' => 'plans'], function () {
+                Route::get('/{idDoctor}/{day}', 'PlanController@index');
+                Route::get('/order/{idDoctor}/{day}', 'PlanController@order');
+                Route::post('/update-order', 'PlanController@updateOrder');
+
+            });
             Route::post('signout', 'AuthController@postSignOut');
         });
     });
