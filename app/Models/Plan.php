@@ -74,6 +74,8 @@ class Plan extends Base
             'id' => $this->id,
             'admin_user_id' => $this->admin_user_id,
             'user_id' => $this->user_id,
+            'patient_name' => ($this->user_id != 0)?$this->user->name:'',
+            'patient_address' => ($this->user_id != 0)?$this->user->address:'',
             'clinic_id' => $this->clinic_id,
             'clinic_name' => $this->clinic->name,
             'price' => $this->price,
@@ -81,7 +83,7 @@ class Plan extends Base
             'started_at' => $this->started_at,
             'ended_at' => $this->ended_at,
             'startHour' => date("H:i", strtotime($this->started_at)),
-                'endHour' => date("H:i", strtotime($this->ended_at))
+            'endHour' => date("H:i", strtotime($this->ended_at))
         ];
     }
 

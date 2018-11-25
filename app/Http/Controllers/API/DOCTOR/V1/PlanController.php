@@ -10,6 +10,7 @@ use App\Repositories\PlanRepositoryInterface;
 use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 
 class PlanController extends Controller
 {
@@ -41,6 +42,28 @@ class PlanController extends Controller
 
         return Response::response(200,
             [
+                'plans'=> $plans
+            ]
+        );
+    }
+
+    public function order()
+    {
+        $doctor =  $this->adminUserService->getUser();
+        $now = Carbon::now();
+
+        $plans = Plan::where('admin_user_id',$doctor->id)->where('started_at','>=',$now)->where('status',1)->get();
+        $count = count($plans);
+        foreach($plans as $key=>$plan)
+        {
+            $plans[$key] = $plan->toAPIArray();
+
+        }
+
+
+        return Response::response(200,
+            [
+                'count' => $count,
                 'plans'=> $plans
             ]
         );
