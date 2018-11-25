@@ -29,7 +29,8 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/store', 'ClinicController@store');
             });
             Route::group(['prefix' => 'plans'], function () {
-                Route::get('/{day}', 'PlanController@index');
+                Route::get('/list/{day}', 'PlanController@index');
+                Route::get('/order', 'PlanController@order');
                 Route::get('/create/{day}', 'PlanController@create');
                 Route::post('/store', 'PlanController@store');
 
@@ -53,7 +54,7 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/', 'DoctorController@index');
             });
             Route::group(['prefix' => 'plans'], function () {
-                Route::get('/{idDoctor}/{day}', 'PlanController@index');
+                Route::get('/list/{idDoctor}/{day}', 'PlanController@index');
                 Route::get('/order/{idDoctor}/{day}', 'PlanController@order');
                 Route::post('/update-order', 'PlanController@updateOrder');
 
