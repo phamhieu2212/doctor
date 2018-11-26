@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\PATIENT\V1;
 
+use App\Http\Controllers\API\V1\QuickbloxController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\PsrServerRequest;
 use App\Http\Requests\API\V1\RefreshTokenRequest;
@@ -21,6 +22,7 @@ class AuthController extends Controller
 {
     /** @var \App\Services\UserServiceInterface */
     protected $userService;
+    protected $quickblox;
 
     /** @var \App\Repositories\UserRepositoryInterface */
     protected $userRepository;
@@ -31,13 +33,15 @@ class AuthController extends Controller
     public function __construct(
         UserServiceInterface        $userService,
         UserRepositoryInterface     $userRepository,
-        AuthorizationServer         $server
+        AuthorizationServer         $server,
+        QuickbloxController $quickblox
 
     )
     {
         $this->userService          = $userService;
         $this->userRepository       = $userRepository;
         $this->server               = $server;
+        $this->quickblox            = $quickblox;
 
     }
 
@@ -64,10 +68,18 @@ class AuthController extends Controller
         $data['email'] = $user->email;
         $data['username'] = $user->email;
 
+        $dataUser = [
+            'patient' => $user,
+            'accountQuick' => [
+                'username' => $user->telephone,
+                'password' => $data['password']
+            ]
+        ];
+
 
         $serverRequest = PsrServerRequest::createFromRequest($request, $data);
 
-        return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
+        return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);
     }
     public function signUp(SignUpRequest $request)
     {
@@ -92,10 +104,42 @@ class AuthController extends Controller
         }
         else
         {
+            $input = [
+            'username' => $data['username'],
+            'password' => $data['password'],
+            'email'    => '' ,
+            'external_user_id' => '',
+            'facebook_id' => '',
+            'twitter_id' => '',
+            'full_name'=> '' ,
+            'phone'    => $data['username'],
+            'website' => '',
+        ];
+
+        $userQuickblox = $this->quickblox->signUp($input);
+        if(isset($userQuickblox['errors']))
+        {
+            return [
+                'code' => 503,
+                'status'=> $userQuickblox['errors'],
+                'data'=>''
+
+            ];
+        }
             $dataUser['telephone'] = $data['username'];
             $dataUser['password'] = $data['password'];
             $user = $this->userRepository->create($dataUser);
-            return Response::response(200,['user'=>$user]);
+            $dataUser = [
+                'patient' => $user,
+                'accountQuick' => [
+                    'username' => $user->telephone,
+                    'password' => $data['password']
+                ]
+            ];
+
+            $serverRequest = PsrServerRequest::createFromRequest($request, $data);
+
+            return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);
         }
     }
 

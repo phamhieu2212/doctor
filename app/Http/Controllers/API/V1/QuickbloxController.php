@@ -72,24 +72,11 @@ class QuickbloxController extends Controller
 
     }
 
-    public function signUp(QuickBloxRequest $request)
+    public function signUp($input)
     {
         $dataToken = json_decode($this->getTokenAuth(),true);
         $token = $dataToken['session']['token'];
-        $input = $request->only(
-            [
-                'username',
-                'password',
-                'email',
-                'external_user_id',
-                'facebook_id',
-                'twitter_id',
-                'full_name',
-                'phone',
-                'website',
-                'token'
-            ]
-        );
+
         // Quickblox endpoints
         DEFINE('QB_API_USER', "https://api.quickblox.com/users.json");
 
@@ -134,14 +121,9 @@ class QuickbloxController extends Controller
         curl_close($curl);
         if ($responce) {
 
-            $user = json_decode($responce,true);
+             $user = json_decode($responce,true);
 
-            return [
-                'status'=> 200,
-                'message'=>'success',
-                'data'=>$user,
-
-            ];
+            return $user;
         } else {
             $error = curl_error($curl). '(' .curl_errno($curl). ')';
             return \GuzzleHttp\json_decode($error,true);
