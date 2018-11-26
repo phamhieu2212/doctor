@@ -35,6 +35,7 @@ class AdminUserRequest extends BaseRequest
         {
             return [
                 'username'=>'required|unique:admin_users,username,'.$this->route()->parameter('admin_user'),
+                'email'=>'required|email|unique:admin_users,email,'.$this->route()->parameter('admin_user'),
                 'name'=>'required',
                 'password' => 'confirmed',
             ];
@@ -45,8 +46,9 @@ class AdminUserRequest extends BaseRequest
         {
             return [
                 'username'=>'required|unique:admin_users',
+                'email'=>'required|email|unique:admin_users',
                 'name'=>'required',
-                'password' => 'required|min:6|confirmed',
+                'password' => 'required|min:8|confirmed',
             ];
         }
 
@@ -56,6 +58,7 @@ class AdminUserRequest extends BaseRequest
     {
         return [
             'name.required' => 'Vui lòng nhập tên người dùng',
+            'email.required' => 'Vui lòng nhập email người dùng',
             'password.required' => 'Vui lòng nhập mật khẩu',
             'password.min' => 'Mật khẩu phải có ít nhất 6 kí tự',
             'password.confirmed' => 'Mật khẩu không trùng khớp',
