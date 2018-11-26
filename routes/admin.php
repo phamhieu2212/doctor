@@ -49,6 +49,7 @@
         \Route::resource('hospitals', 'Admin\HospitalController');
         \Route::resource('specialties', 'Admin\SpecialtyController');
         \Route::resource('clinics', 'Admin\ClinicController');
+        \Route::resource('plans', 'Admin\PlanController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });

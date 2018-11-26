@@ -104,7 +104,18 @@
                     </span>
                     </a>
                 </li>
-
+                <li class="m-menu__item @if( $menu=='plans') m-menu__item--active @endif" aria-haspopup="true">
+                    <a href="{!! \URL::action('Admin\PlanController@index') !!}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                        <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                Đặt lịch
+                            </span>
+                        </span>
+                    </span>
+                    </a>
+                </li>
             @endif
 
             @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
@@ -129,6 +140,8 @@
                 </li>
 
             @endif
+
+
 
 
 
