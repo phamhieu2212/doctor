@@ -136,6 +136,8 @@ class AuthController extends Controller
                     'password' => $data['password']
                 ]
             ];
+            $data['email'] = $user->email;
+            $data['username'] = $user->email;
 
             $serverRequest = PsrServerRequest::createFromRequest($request, $data);
 
