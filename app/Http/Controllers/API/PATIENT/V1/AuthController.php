@@ -126,9 +126,9 @@ class AuthController extends Controller
 
             ];
         }
-            $dataUser['telephone'] = $data['username'];
-            $dataUser['password'] = $data['password'];
-            $user = $this->userRepository->create($dataUser);
+            $dataPatient['telephone'] = $data['username'];
+            $dataPatient['password'] = $data['password'];
+            $user = $this->userRepository->create($dataPatient);
             $dataUser = [
                 'patient' => $user,
                 'accountQuick' => [
