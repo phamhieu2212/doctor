@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\API\V1\QuickbloxController;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -22,6 +23,8 @@ class AdminUserController extends Controller
     protected $adminUserRepository;
     protected $doctorRepository;
 
+    protected $quickblox;
+
     /** @var \App\Repositories\AdminUserRoleRepositoryInterface */
     protected $adminUserRoleRepository;
 
@@ -41,7 +44,8 @@ class AdminUserController extends Controller
         AdminUserRoleRepositoryInterface $adminUserRoleRepository,
         HospitalRepositoryInterface $hospitalRepository,
         SpecialtyRepositoryInterface $specialtyRepository,
-        DoctorRepositoryInterface $doctorRepository
+        DoctorRepositoryInterface $doctorRepository,
+        QuickbloxController $quickblox
     )
     {
         $this->adminUserRepository = $adminUserRepository;
@@ -51,6 +55,7 @@ class AdminUserController extends Controller
         $this->hospitalRepository = $hospitalRepository;
         $this->specialtyRepository = $specialtyRepository;
         $this->doctorRepository = $doctorRepository;
+        $this->quickblox        = $quickblox;
     }
 
     /**
@@ -152,6 +157,19 @@ class AdminUserController extends Controller
         $this->adminUserRoleRepository->setAdminUserRoles($adminUser->id, $request->input('role', []));
         $adminUser->specialties()->sync($request->input('specialty_id'));
 
+        $inputQuickBlox = [
+            'username' => $adminUser->username,
+            'password' => $input['password'],
+            'email'    => $adminUser->email ,
+            'external_user_id' => '',
+            'facebook_id' => '',
+            'twitter_id' => '',
+            'full_name'=> $adminUser->name ,
+            'phone'    => $adminUser->phone,
+            'website' => '',
+        ];
+        $this->quickblox->signUp($inputQuickBlox);
+
         if ($request->hasFile('profile_image')) {
             $file       = $request->file('profile_image');
 
@@ -241,10 +259,14 @@ class AdminUserController extends Controller
         if($input['password'] == null)
         {
             unset($input['password']);
+            unset($input['re_password']);
         }
+        $inputDoctor = [
+            'name' => $input['name']
+        ];
 
         $adminUser = $this->adminUserRepository->update($adminUser, $input);
-        $doctor = $this->doctorRepository->update($doctor,$input['name']);
+        $doctor = $this->doctorRepository->update($doctor,$inputDoctor);
         if($input['role'][0] == 'super_user')
         {
             if(!empty($doctor))

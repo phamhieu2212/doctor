@@ -22,7 +22,7 @@ class SignUpRequest extends Request
     {
         return [
             'username'          => 'required|string',
-            'password'      => 'required|min:6',
+            'password'      => 'required|min:8',
             'grant_type'    => 'required',
             'client_id'     => 'required',
             'client_secret' => 'required',
