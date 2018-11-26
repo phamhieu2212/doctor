@@ -65,8 +65,8 @@ class AuthController extends Controller
         if (empty($user)) {
             return Response::response(40101);
         }
-        $data['email'] = $user->email;
         $data['username'] = $user->email;
+        $data['email'] = $user->email;
 
         $dataUser = [
             'patient' => $user,
@@ -107,7 +107,7 @@ class AuthController extends Controller
             $input = [
             'username' => $data['username'],
             'password' => $data['password'],
-            'email'    => '' ,
+            'email'    => $data['username'].'@gmail.com' ,
             'external_user_id' => '',
             'facebook_id' => '',
             'twitter_id' => '',
@@ -128,6 +128,7 @@ class AuthController extends Controller
         }
             $dataPatient['telephone'] = $data['username'];
             $dataPatient['password'] = $data['password'];
+            $dataPatient['email'] = $data['username'].'@gmail.com';
             $user = $this->userRepository->create($dataPatient);
             $dataUser = [
                 'patient' => $user,
