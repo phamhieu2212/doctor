@@ -91,7 +91,6 @@ class AuthController extends Controller
 //
 //            ];
 //        }
-
         $dataUser = [
             'doctor' => $adminUser,
             'accountQuick' => [
