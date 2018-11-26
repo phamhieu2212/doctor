@@ -27,8 +27,9 @@ class PlanController extends Controller
     }
     public function index($idDoctor,$day)
     {
-        $dateStart =  date("Y-m-d 00:00:00", strtotime($day.' this week'));
-        $dateEnd =  date("Y-m-d 24:00:00", strtotime($day.' this week'));
+        $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+        $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$day].' this week'));
+        $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$day].' this week'));
 
         $plans = Plan::where('admin_user_id',$idDoctor)->where('started_at','<=',$dateEnd)->where('started_at','>=',$dateStart)->get();
         foreach($plans as $key=>$plan)
@@ -47,8 +48,9 @@ class PlanController extends Controller
 
     public function order($idDoctor,$day)
     {
-        $dateStart =  date("Y-m-d 00:00:00", strtotime($day.' this week'));
-        $dateEnd =  date("Y-m-d 24:00:00", strtotime($day.' this week'));
+        $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+        $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$day].' this week'));
+        $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$day].' this week'));
 
         $plans = Plan::where('admin_user_id',$idDoctor)->where('started_at','<=',$dateEnd)->where('started_at','>=',$dateStart)->get();
         foreach($plans as $key=>$plan)
@@ -67,12 +69,13 @@ class PlanController extends Controller
 
     public function updateOrder(APIRequest $request)
     {
+        $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
         $data = $request->only([
             'day','hour','admin_user_id'
         ]);
-        $date =  date("Y-m-d", strtotime($data['day'].' this week'));
-        $dateStart =  date("Y-m-d 00:00:00", strtotime($data['day'].' this week'));
-        $dateEnd =  date("Y-m-d 24:00:00", strtotime($data['day'].' this week'));
+        $date =  date("Y-m-d", strtotime($arr[$data['day']].' this week'));
+        $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$data['day']].' this week'));
+        $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$data['day']].' this week'));
         $arrayDateTimes = [];
         $hours = explode(',',$data['hour']);
         foreach($hours as $hour)
