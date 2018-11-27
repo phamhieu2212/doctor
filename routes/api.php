@@ -59,7 +59,7 @@ Route::group(['namespace' => 'API'], function () {
             });
             Route::group(['prefix' => 'plans'], function () {
                 Route::get('/list/{idDoctor}/{day}', 'PlanController@index');
-                Route::get('/order/{idDoctor}/{day}', 'PlanController@order');
+                Route::get('/order', 'PlanController@order');
                 Route::post('/update-order', 'PlanController@updateOrder');
 
             });
