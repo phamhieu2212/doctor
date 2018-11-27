@@ -98,7 +98,7 @@ class Doctor extends Base
             'hospital_name' => $this->hospital->name,
             'experience' => $this->experience,
             'avatar' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
-            'plans' => $plans,
+            'plans' => [1,3,6],
             'status' => 1
         ];
     }
@@ -106,7 +106,7 @@ class Doctor extends Base
     public function getPlan($idDoctor)
     {
         $dateStart = date("Y-m-d 00:00:00", strtotime('monday this week'));
-        $dateEnd = date("Y-m-d 24:00:00", strtotime('sun this week'));
+        $dateEnd = date("Y-m-d 23:59:59", strtotime('sunday this week'));
 
         $plans =  Plan::where('admin_user_id',$idDoctor)->where('started_at','>=',$dateStart)
             ->where('started_at','<=',$dateEnd)
