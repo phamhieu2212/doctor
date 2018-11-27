@@ -22,6 +22,7 @@ Route::group(['namespace' => 'API'], function () {
         });
 
         Route::group(['middleware' => ['api.client', 'api.user']], function () {
+            Route::get('/detail', 'DoctorController@detail');
             Route::group(['prefix' => 'me'], function () {
                 Route::get('/', 'MeController@getMe');
                 Route::post('/update', 'MeController@update');
