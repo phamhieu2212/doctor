@@ -56,7 +56,7 @@ class PlanController extends Controller
             'data'=>
                 [
                     "count"=> 15,
-                    "plans"=>
+                    "plans"=>[
                         [
                             "patient_name" => "Hiếu",
                             "patient_address" =>"198 Trần Duy Hưng",
@@ -75,6 +75,7 @@ class PlanController extends Controller
                             "day"=> 2,
                             "hour"=> 8
                         ]
+                    ]
 
                 ]
 
