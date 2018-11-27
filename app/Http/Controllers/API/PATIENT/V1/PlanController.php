@@ -46,8 +46,20 @@ class PlanController extends Controller
         );
     }
 
-    public function order($idDoctor,$day)
+    public function order()
     {
+        return [
+            'code'=>200,
+            'status'=>'success',
+            'data'=>
+                [
+                    "files"=> [
+                        [ "id"=> 1, "name"=> "Bệnh án số 1" ],
+                        ["id"=> 2, "name"=> "Bệnh án số 2" ]
+                    ]
+                ]
+
+        ];
         $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
         $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$day].' this week'));
         $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$day].' this week'));
