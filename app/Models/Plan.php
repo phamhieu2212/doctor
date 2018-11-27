@@ -91,7 +91,6 @@ class Plan extends Base
     public function toAPIArraySearch()
     {
         return [
-            'status' => $this->status,
             'day'      =>  date("w", strtotime($this->started_at)),
         ];
     }
