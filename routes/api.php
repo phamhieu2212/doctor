@@ -8,6 +8,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('quickblox/getTokenAuth', 'QuickbloxController@getTokenAuth');
             Route::post('quickblox/signup', 'QuickbloxController@signUp');
             Route::post('quickblox/signin', 'QuickbloxController@signIn');
+            Route::get('nganluong', 'TestController@index');
         });
 
     });
@@ -52,6 +53,9 @@ Route::group(['namespace' => 'API'], function () {
         Route::group(['middleware' => ['api.client', 'api.user']], function () {
             Route::group(['prefix' => 'search-doctor'], function () {
                 Route::get('/', 'DoctorController@index');
+            });
+            Route::group(['prefix' => 'doctor'], function () {
+                Route::get('/detail/{idDoctor}', 'DoctorController@detail');
             });
             Route::group(['prefix' => 'plans'], function () {
                 Route::get('/list/{idDoctor}/{day}', 'PlanController@index');
