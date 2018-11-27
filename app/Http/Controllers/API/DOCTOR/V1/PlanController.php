@@ -56,13 +56,25 @@ class PlanController extends Controller
             'data'=>
                 [
                     "count"=> 15,
-                    "patient_name" => "Hiếu",
-                    "patient_address" =>"198 Trần Duy Hưng",
-                    "clinic_id"=> 1,
-                    "clinic_name"=> "phòng khám số 1",
-                    "date"=> "2018-12-11",
-                    "day"=> 2,
-                    "hour"=> 8
+                    "plans"=>
+                        [
+                            "patient_name" => "Hiếu",
+                            "patient_address" =>"198 Trần Duy Hưng",
+                            "clinic_id"=> 1,
+                            "clinic_name"=> "phòng khám số 1",
+                            "date"=> "2018-12-11",
+                            "day"=> 2,
+                            "hour"=> 8
+                        ],
+                        [
+                            "patient_name" => "Long",
+                            "patient_address" =>"198 Trần Duy Hưng",
+                            "clinic_id"=> 1,
+                            "clinic_name"=> "phòng khám số 1",
+                            "date"=> "2018-12-11",
+                            "day"=> 2,
+                            "hour"=> 8
+                        ]
 
                 ]
 
