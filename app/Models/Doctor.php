@@ -2,6 +2,9 @@
 
 
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 class Doctor extends Base
 {
 
@@ -83,6 +86,35 @@ class Doctor extends Base
             'experience' => $this->experience,
             'description' => $this->description,
         ];
+    }
+
+    public function toAPIArraySearch()
+    {
+        $idDoctor = $this->adminUser->id;
+        $plans = $this->getPlan($idDoctor);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'hospital_name' => $this->hospital->name,
+            'experience' => $this->experience,
+            'avatar' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
+            'plans' => $plans
+        ];
+    }
+
+    public function getPlan($idDoctor)
+    {
+        $dateStart = date("Y-m-d 00:00:00", strtotime('monday this week'));
+        $dateEnd = date("Y-m-d 24:00:00", strtotime('sun this week'));
+
+        $plans =  Plan::where('admin_user_id',$idDoctor)->where('started_at','>=',$dateStart)
+            ->where('started_at','<=',$dateEnd)
+            ->get();
+//
+        foreach( $plans as $key => $plan ) {
+            $plans[$key] = $plan->toAPIArraySearch();
+        }
+        return $plans;
     }
 
 }

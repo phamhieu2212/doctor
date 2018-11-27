@@ -43,14 +43,13 @@ class DoctorController extends Controller
         }
         $doctors = $this->doctorRepository->getByFilter($filter,$paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']); // change get() to geEnabled as requirement
         foreach( $doctors as $key => $doctor ) {
-            $doctors[$key] = $doctor->toAPIArray();
+            $doctors[$key] = $doctor->toAPIArraySearch();
         }
         $specialties = $this->specialtyRepository->all();
 
         return Response::response(200,
             [
-                'doctors'=> $doctors,
-                'specialties' => $specialties
+                'doctors'=> $doctors
             ]
             );
     }
