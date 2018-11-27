@@ -98,7 +98,8 @@ class Doctor extends Base
             'hospital_name' => $this->hospital->name,
             'experience' => $this->experience,
             'avatar' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
-            'plans' => $plans
+            'plans' => $plans,
+            'status' => 1
         ];
     }
 
@@ -109,7 +110,7 @@ class Doctor extends Base
 
         $plans =  Plan::where('admin_user_id',$idDoctor)->where('started_at','>=',$dateStart)
             ->where('started_at','<=',$dateEnd)
-            ->get();
+            ->distinct(DB::raw('Date(started_at)'))->get();
 //
         foreach( $plans as $key => $plan ) {
             $plans[$key] = $plan->toAPIArraySearch();
