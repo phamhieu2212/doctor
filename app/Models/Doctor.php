@@ -110,7 +110,7 @@ class Doctor extends Base
 
         $plans =  Plan::where('admin_user_id',$idDoctor)->where('started_at','>=',$dateStart)
             ->where('started_at','<=',$dateEnd)
-            ->distinct(DB::raw('Date(started_at)'))->get();
+            ->groupBy(DB::raw('Date(started_at)'))->get();
         foreach( $plans as $key => $plan ) {
             $plans[$key] = $plan->toAPIArraySearch();
         }
