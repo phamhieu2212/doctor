@@ -81,6 +81,28 @@ class PlanController extends Controller
 
     public function updateOrder(APIRequest $request)
     {
+        return [
+            'code'=>200,
+            'status'=>'success',
+            'data'=>
+                [
+                    "doctor_name" => "Cô giáo thảo",
+                    "hospital_id" =>1,
+                    "specialty_id"=> 1,
+                    "clinic_id"=> 1,
+                    "file_id"=> 1,
+                    "hospital_name" =>"Bệnh viện VĐ",
+                    "specialty_name"=> "Răng hàm mặt",
+                    "clinic_name"=> "phòng khám số 1",
+                    "file_name"=> "Bệnh án 1",
+                    "date"=> "2018-12-11",
+                    "day"=> 2,
+                    "hour"=> 8,
+                    'total_price'=>300000
+
+                ]
+
+        ];
         $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
         $data = $request->only([
             'day','hour','admin_user_id'
