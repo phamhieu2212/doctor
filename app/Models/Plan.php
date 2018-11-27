@@ -82,8 +82,17 @@ class Plan extends Base
             'status' => $this->status,
             'started_at' => $this->started_at,
             'ended_at' => $this->ended_at,
+            'day'      =>  date("w", strtotime($this->started_at)),
             'startHour' => date("H:i", strtotime($this->started_at)),
             'endHour' => date("H:i", strtotime($this->ended_at))
+        ];
+    }
+
+    public function toAPIArraySearch()
+    {
+        return [
+            'status' => $this->status,
+            'day'      =>  date("w", strtotime($this->started_at)),
         ];
     }
 
