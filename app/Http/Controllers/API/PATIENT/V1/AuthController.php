@@ -69,7 +69,7 @@ class AuthController extends Controller
         $data['email'] = $user->email;
 
         $dataUser = [
-            'patient' => $user,
+            'user' => $user,
             'accountQuick' => [
                 'username' => $user->telephone,
                 'password' => $data['password']
