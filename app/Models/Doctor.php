@@ -103,6 +103,19 @@ class Doctor extends Base
         ];
     }
 
+    public function toAPIArrayDetail()
+    {
+        $idDoctor = $this->adminUser->id;
+        $plans = $this->getPlan($idDoctor);
+        return [
+            'gender' => ($this->gender == 1)?'Nam':'Nữ',
+            'hospital_name' => $this->hospital->name,
+            'experience' => $this->experience,
+            'position' => $this->position,
+            'description' => $this->description,
+        ];
+    }
+
     public function getPlan($idDoctor)
     {
         $dateStart = date("Y-m-d 00:00:00", strtotime('monday this week'));

@@ -95,4 +95,16 @@ class Plan extends Base
         ];
     }
 
+    public function toAPIArrayDetail()
+    {
+        return [
+            'clinic_name'=>$this->clinic->name,
+            'price'=>$this->price,
+            'status'=>$this->status,
+            'day'=>intval(date("w", strtotime($this->started_at))),
+            'startHour'=>intval(date("H", strtotime($this->started_at))),
+            'endHour'=>intval(date("H", strtotime($this->started_at))) + 1,
+        ];
+    }
+
 }
