@@ -134,8 +134,8 @@ class AuthController extends Controller
                 'user' => $user,
 
                 'accountQuick' => [
-                    'username' => $user->telephone,
-                    'password' => $data['password']
+                    'username' => $userQuickblox['user']['login'],
+                    'password' => $userQuickblox['user']['login']
                 ]
             ];
             $data['email'] = $user->email;
