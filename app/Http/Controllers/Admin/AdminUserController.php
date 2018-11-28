@@ -159,7 +159,7 @@ class AdminUserController extends Controller
 
         $inputQuickBlox = [
             'username' => $adminUser->username,
-            'password' => $input['password'],
+            'password' => $adminUser->username,
             'email'    => $adminUser->email ,
             'external_user_id' => '',
             'facebook_id' => '',
