@@ -15,7 +15,7 @@ class TestController extends Controller
             'merchant_id' => MERCHANT_ID,
             'merchant_account' => RECEIVER,
             'order_code' => 'NL_'.time(),
-            'total_amount' => 1,
+            'total_amount' => 20000,
             'currency' => 'vnd',
             'language' => 'en',
             'return_url' => 'http://localhost/pay_success.html',
@@ -34,7 +34,7 @@ class TestController extends Controller
         if ($result['response_code'] == '00') {
             $checkout_url = $result['checkout_url'];
             header('Location:'.$checkout_url);
-            //echo $checkout_url;
+            echo $checkout_url;
         } else {
             var_dump($result);die();
         }
