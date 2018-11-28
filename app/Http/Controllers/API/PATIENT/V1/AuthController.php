@@ -132,6 +132,7 @@ class AuthController extends Controller
             $user = $this->userRepository->create($dataPatient);
             $dataUser = [
                 'user' => $user,
+
                 'accountQuick' => [
                     'username' => $user->telephone,
                     'password' => $data['password']
