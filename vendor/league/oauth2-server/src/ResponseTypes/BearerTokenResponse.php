@@ -48,7 +48,7 @@ class BearerTokenResponse extends AbstractResponseType
                 )
             );
 
-            $responseParams['refresh_token']['session'] = $refreshToken;
+            $responseParams['session']['refresh_token'] = $refreshToken;
         }
 
         $responseParams = array_merge($this->getExtraParams($this->accessToken), $responseParams);
