@@ -77,17 +77,17 @@ class PlanController extends Controller
         );
     }
 
-    public function create($day)
+    public function create()
     {
-        $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
         $doctor =  $this->adminUserService->getUser();
-        $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$day].' this week'));
-        $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$day].' this week'));
+        $dateStart = date("Y-m-d 00:00:00", strtotime('monday this week'));
+        $dateEnd = date("Y-m-d 23:59:59", strtotime('sunday this week'));
 
-         $plans = Plan::where('admin_user_id',$doctor->id)->where('started_at','<=',$dateEnd)->where('started_at','>=',$dateStart)->get();
+         $plans = Plan::where('admin_user_id',$doctor->id)->where('started_at','<=',$dateEnd)
+             ->where('started_at','>=',$dateStart)->get();
         foreach($plans as $key=>$plan)
         {
-            $plans[$key] = $plan->toAPIArray();
+            $plans[$key] = $plan->toAPIArrayDetail();
 
         }
 
@@ -109,13 +109,13 @@ class PlanController extends Controller
 
     public function store(APIRequest $request)
     {
-        $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+        $arr = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
         $data = $request->only([
             'day','hour','price','clinic_id'
         ]);
         $date =  date("Y-m-d", strtotime($arr[$data['day']].' this week'));
         $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$data['day']].' this week'));
-        $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$data['day']].' this week'));
+        $dateEnd =  date("Y-m-d 23:59:59", strtotime($arr[$data['day']].' this week'));
         $arrayDateTimes = [];
         $hours = explode(',',$data['hour']);
         foreach($hours as $hour)
@@ -144,7 +144,8 @@ class PlanController extends Controller
                 ]);
             }
         }
-        $planDelete = Plan::whereNotIn('started_at',$arrayDateTimes)->get();
+        $planDelete = Plan::where('started_at','>=',$dateStart)->where('started_at','<=',$dateEnd)
+            ->whereNotIn('started_at',$arrayDateTimes)->get();
         if(!empty($planDelete))
         {
             foreach($planDelete as $row)
@@ -155,25 +156,20 @@ class PlanController extends Controller
 
 
 
-        $plans = Plan::where('admin_user_id',$doctor->id)->where('started_at','<=',$dateEnd)->where('started_at','>=',$dateStart)->get();
-        foreach($plans as $key=>$plan)
-        {
-            $plans[$key] = $plan->toAPIArray();
+        $dateStart = date("Y-m-d 00:00:00", strtotime('monday this week'));
+        $dateEnd = date("Y-m-d 23:59:59", strtotime('sunday this week'));
 
+        $plans =  Plan::where('admin_user_id',$doctor->id)->where('started_at','>=',$dateStart)
+            ->where('started_at','<=',$dateEnd)
+            ->get();
+        foreach( $plans as $key => $plan ) {
+            $plans[$key] = $plan->toAPIArrayDetail();
         }
 
-        $clinics = Clinic::where('admin_user_id',$doctor->id)->get();
-
-        foreach($clinics as $key=>$clinic)
-        {
-            $clinics[$key] = $clinic->toAPIArray();
-
-        }
 
         return Response::response(200,
             [
-                'plans'=> $plans,
-                'clinics' => $clinics
+                'plans'=> $plans
             ]
         );
     }
