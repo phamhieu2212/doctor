@@ -107,4 +107,17 @@ class Plan extends Base
         ];
     }
 
+    public function toAPIArrayOrder()
+    {
+        return [
+            'patient_name'=>$this->user->name,
+            'patient_address'=>$this->user->address,
+            "clinic_id"=> $this->clinic_id,
+            "clinic_name"=> $this->clinic->name,
+            "date"=> date("Y-m-d", strtotime($this->started_at)),
+            'day'=>intval(date("w", strtotime($this->started_at))),
+            'hour'=>intval(date("H", strtotime($this->started_at))),
+        ];
+    }
+
 }

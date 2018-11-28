@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\DOCTOR\V1;
 
 use App\Http\Requests\APIRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Responses\API\V1\Response;
 use App\Models\Clinic;
 use App\Models\Plan;
@@ -48,54 +49,30 @@ class PlanController extends Controller
         );
     }
 
-    public function order()
+    public function order(PaginationRequest $request)
     {
-        return [
-            'code'=>200,
-            'status'=>'success',
-            'data'=>
-                [
-                    "count"=> 15,
-                    "plans"=>[
-                        [
-                            "patient_name" => "Hiếu",
-                            "patient_address" =>"198 Trần Duy Hưng",
-                            "clinic_id"=> 1,
-                            "clinic_name"=> "phòng khám số 1",
-                            "date"=> "2018-12-11",
-                            "day"=> 2,
-                            "hour"=> 8
-                        ],
-                        [
-                            "patient_name" => "Long",
-                            "patient_address" =>"198 Trần Duy Hưng",
-                            "clinic_id"=> 1,
-                            "clinic_name"=> "phòng khám số 1",
-                            "date"=> "2018-12-11",
-                            "day"=> 2,
-                            "hour"=> 8
-                        ]
-                    ]
+        $paginate['limit']      = $request->limit();
+        $paginate['offset']     = $request->offset();
+        $paginate['order']      = 'id';
+        $paginate['direction']  = 'desc';
 
-                ]
-
-        ];
-        $doctor =  $this->adminUserService->getUser();
-        $now = Carbon::now();
-
-        $plans = Plan::where('admin_user_id',$doctor->id)->where('started_at','>=',$now)->where('status',1)->get();
-        $count = count($plans);
+        $plans = $this->planRepository->getOrderByDoctor($this->adminUserService->getUser()->id,$paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
+        $count = $this->planRepository->countOrderByDoctor($this->adminUserService->getUser()->id);
         foreach($plans as $key=>$plan)
         {
-            $plans[$key] = $plan->toAPIArray();
+            $plans[$key] = $plan->toAPIArrayOrder();
 
         }
-
-
         return Response::response(200,
             [
-                'count' => $count,
-                'plans'=> $plans
+                'code'=>200,
+                'status'=>'success',
+                'data'=>
+                    [
+                        "count"=> $count,
+                        "plans"=>$plans
+
+                    ]
             ]
         );
     }
