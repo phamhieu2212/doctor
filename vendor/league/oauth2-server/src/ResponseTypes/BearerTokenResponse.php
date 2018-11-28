@@ -27,9 +27,11 @@ class BearerTokenResponse extends AbstractResponseType
         $jwtAccessToken = $this->accessToken->convertToJWT($this->privateKey);
 
         $responseParams = [
-            'token_type'   => 'Bearer',
-            'expires_in'   => $expireDateTime - (new \DateTime())->getTimestamp(),
-            'access_token' => (string) $jwtAccessToken,
+            'session'=>[
+                'token_type'   => 'Bearer',
+                'expires_in'   => $expireDateTime - (new \DateTime())->getTimestamp(),
+                'access_token' => (string) $jwtAccessToken,
+            ]
         ];
 
         if ($this->refreshToken instanceof RefreshTokenEntityInterface) {
