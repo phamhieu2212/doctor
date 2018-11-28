@@ -106,7 +106,7 @@ class AuthController extends Controller
         {
             $input = [
             'username' => $data['username'],
-            'password' => $data['password'],
+            'password' => random_str(10),
             'email'    => $data['username'].'@gmail.com' ,
             'external_user_id' => '',
             'facebook_id' => '',
