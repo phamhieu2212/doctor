@@ -131,7 +131,7 @@ class AuthController extends Controller
             $dataPatient['email'] = $data['username'].'@gmail.com';
             $user = $this->userRepository->create($dataPatient);
             $dataUser = [
-                'patient' => $user,
+                'user' => $user,
                 'accountQuick' => [
                     'username' => $user->telephone,
                     'password' => $data['password']

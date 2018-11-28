@@ -92,7 +92,7 @@ class AuthController extends Controller
 //            ];
 //        }
         $dataUser = [
-            'doctor' => $adminUser,
+            'user' => $adminUser,
             'accountQuick' => [
                 'username' => $adminUser->username,
                 'password' => $data['password']
