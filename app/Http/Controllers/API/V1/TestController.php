@@ -34,7 +34,6 @@ class TestController extends Controller
         if ($result['response_code'] == '00') {
             $checkout_url = $result['checkout_url'];
             header('Location:'.$checkout_url);
-            echo $checkout_url;
         } else {
             var_dump($result);die();
         }
