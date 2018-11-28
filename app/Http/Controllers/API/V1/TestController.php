@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 class TestController extends Controller
 {
@@ -33,7 +34,7 @@ class TestController extends Controller
         $result = $this->callURL(NGANLUONG_URL, $params);
         if ($result['response_code'] == '00') {
             $checkout_url = $result['checkout_url'];
-            header('Location:'.$checkout_url);
+            return Redirect::to($checkout_url);
         } else {
             var_dump($result);die();
         }
