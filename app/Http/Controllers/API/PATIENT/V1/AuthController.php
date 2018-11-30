@@ -72,7 +72,7 @@ class AuthController extends Controller
             'patient' => $user,
             'accountQuick' => [
                 'username' => $user->telephone,
-                'password' => $data['password']
+                'password' => $user->telephone
             ]
         ];
 

@@ -95,7 +95,7 @@ class AuthController extends Controller
             'user' => $adminUser,
             'accountQuick' => [
                 'username' => $adminUser->username,
-                'password' => $data['password']
+                'password' => $adminUser->username
             ]
         ];
 
