@@ -27,6 +27,9 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/', 'MeController@getMe');
                 Route::post('/update', 'MeController@update');
             });
+            Route::group(['prefix' => 'profile'], function () {
+                Route::get('/', 'ProfileController@index');
+            });
             Route::group(['prefix' => 'clinics'], function () {
                 Route::post('/store', 'ClinicController@store');
             });

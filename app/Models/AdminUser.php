@@ -155,4 +155,17 @@ class AdminUser extends AuthenticatableBase
             'image_link' => (!empty($this->present()->profileImage()))?$this->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
         ];
     }
+
+    public function toAPIArrayLogin()
+    {
+        return [
+            'name' => $this->name,
+            'vote' => 4,
+            'rate' => 100,
+            'money' => 1000000,
+            'status' => 0,
+            'profile_image_id' => $this->profile_image_id,
+            'image_link' => (!empty($this->present()->profileImage()))?$this->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
+        ];
+    }
 }
