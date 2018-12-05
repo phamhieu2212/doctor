@@ -52,9 +52,8 @@ class AuthController extends Controller
             [
                 'username',
                 'password',
-                'grant_type',
-                'client_id',
-                'client_secret'
+                'device_token',
+                'device_type','client_secret','grant_type','client_id'
             ]
         );
 
@@ -92,7 +91,7 @@ class AuthController extends Controller
 //            ];
 //        }
         $dataUser = [
-            'user' => $adminUser,
+            'user' => $adminUser->toAPIArrayLogin(),
             'accountQuick' => [
                 'username' => $adminUser->username,
                 'password' => $adminUser->username
