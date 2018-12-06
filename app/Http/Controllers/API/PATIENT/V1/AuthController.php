@@ -162,13 +162,18 @@ class AuthController extends Controller
         {
 
             return Response::response(200,
-                [false,'message'=>'This username is already used']);
+                [
+                    'status'=>false,
+                    'message'=>'This username is already used'
+                ]);
         }
         else
         {
 
             return Response::response(200,
-                true);
+                [
+                    'status'=>true
+                ]);
         }
 
     }
