@@ -34,9 +34,8 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/store', 'ClinicController@store');
             });
             Route::group(['prefix' => 'plans'], function () {
-                Route::get('/list/{day}', 'PlanController@index');
+                Route::get('/list/{month}', 'PlanController@index');
                 Route::get('/order', 'PlanController@order');
-                Route::get('/create', 'PlanController@create');
                 Route::post('/store', 'PlanController@store');
 
             });
@@ -51,6 +50,7 @@ Route::group(['namespace' => 'API'], function () {
             // Authentication
             Route::post('signin', 'AuthController@signIn');
             Route::post('signup', 'AuthController@signUp');
+            Route::post('check-signup', 'AuthController@checkSignUp');
             Route::post('token/refresh', 'AuthController@refreshToken');
         });
 

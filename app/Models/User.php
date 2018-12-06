@@ -123,6 +123,15 @@ class User extends AuthenticatableBase
             'birthday'  => $this->birthday,
             'locale'    => $this->locale,
             'address'   => $this->address,
+            'image_link'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
+        ];
+    }
+
+    public function toAPIArrayLogin()
+    {
+        return [
+            'name'      => $this->name,
+            'telephone' => $this->telephone,
             'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
     }

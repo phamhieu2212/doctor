@@ -27,8 +27,65 @@ class PlanController extends Controller
         $this->adminUserService = $APIUserService;
         $this->planRepository = $planRepository;
     }
-    public function index($day)
+    public function index($month)
     {
+        return Response::response(200,
+            [
+                'clinics'=>
+                    [
+                        [
+                            'id'=>1,
+                            'name'=>'Phòng khám số 1',
+                            'price'=>300000,
+                            'plans'=>
+                                [
+                                    [
+                                        'day'=>1544115600,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>1523123,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>15132131,
+                                        'hours'=>[7,9,11,13]
+                                    ]
+                                ]
+
+                        ],
+                        [
+                            'id'=>2,
+                            'name'=>'Phòng khám số 2',
+                            'price'=>300000,
+                            'plans'=>
+                                [
+                                    [
+                                        'day'=>1544115600,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>1523123,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>15132131,
+                                        'hours'=>[7,9,11,13]
+                                    ]
+                                ]
+
+                        ],
+                        [
+                            'id'=>3,
+                            'name'=>'Phòng khám số 3',
+                            'price'=>300000,
+                            'plans'=>[]
+
+                        ]
+                    ]
+
+            ]
+        );
         $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
         $doctor =  $this->adminUserService->getUser();
         $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$day].' this week'));
@@ -109,6 +166,63 @@ class PlanController extends Controller
 
     public function store(APIRequest $request)
     {
+        return Response::response(200,
+            [
+                'clinics'=>
+                    [
+                        [
+                            'id'=>1,
+                            'name'=>'Phòng khám số 1',
+                            'price'=>300000,
+                            'plans'=>
+                                [
+                                    [
+                                        'day'=>1544115600,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>1523123,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>15132131,
+                                        'hours'=>[7,9,11,13]
+                                    ]
+                                ]
+
+                        ],
+                        [
+                            'id'=>2,
+                            'name'=>'Phòng khám số 2',
+                            'price'=>300000,
+                            'plans'=>
+                                [
+                                    [
+                                        'day'=>1544115600,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>1523123,
+                                        'hours'=>[7,9,11,13]
+                                    ],
+                                    [
+                                        'day'=>15132131,
+                                        'hours'=>[7,9,11,13]
+                                    ]
+                                ]
+
+                        ],
+                        [
+                            'id'=>3,
+                            'name'=>'Phòng khám số 3',
+                            'price'=>300000,
+                            'plans'=>[]
+
+                        ]
+                    ]
+
+            ]
+        );
         $arr = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
         $data = $request->only([
             'day','hour','price','clinic_id'
