@@ -161,8 +161,8 @@ class AuthController extends Controller
         if($count >0 )
         {
 
-            return Response::response(40002,
-                false);
+            return Response::response(200,
+                [false,'message'=>'This username is already used']);
         }
         else
         {
