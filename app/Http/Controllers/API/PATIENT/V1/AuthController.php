@@ -8,12 +8,14 @@ use App\Http\Requests\API\V1\PsrServerRequest;
 use App\Http\Requests\API\V1\RefreshTokenRequest;
 use App\Http\Requests\API\V1\SignInRequest;
 use App\Http\Requests\API\V1\SignUpRequest;
+use App\Http\Requests\BaseRequest;
 use App\Models\AdminUser;
 use App\Models\User;
 use App\Services\AdminUserServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Services\APIUserServiceInterface;
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Support\Facades\Config;
 use League\OAuth2\Server\AuthorizationServer;
 use Zend\Diactoros\Response as Psr7Response;
 use App\Http\Responses\API\V1\Response;
@@ -53,7 +55,7 @@ class AuthController extends Controller
                 'password',
                 'grant_type',
                 'client_id',
-                'client_secret'
+                'client_secret','device_token','device_type'
             ]
         );
 
@@ -69,7 +71,7 @@ class AuthController extends Controller
         $data['email'] = $user->email;
 
         $dataUser = [
-            'user' => $user,
+            'user' => $user->toAPIArrayLogin(),
             'accountQuick' => [
                 'username' => $user->telephone,
                 'password' => $user->telephone
@@ -89,7 +91,7 @@ class AuthController extends Controller
                 'password',
                 'grant_type',
                 'client_id',
-                'client_secret',
+                'client_secret'
             ]
         );
 
@@ -131,7 +133,7 @@ class AuthController extends Controller
             $dataPatient['email'] = $data['username'].'@gmail.com';
             $user = $this->userRepository->create($dataPatient);
             $dataUser = [
-                'user' => $user,
+                'user' => $user->toAPIArrayLogin(),
 
                 'accountQuick' => [
                     'username' => $userQuickblox['user']['login'],
@@ -145,6 +147,30 @@ class AuthController extends Controller
 
             return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);
         }
+    }
+
+    public function checkSignup(BaseRequest $request)
+    {
+        $data = $request->only(
+            [
+                'username'
+            ]
+        );
+
+        $count = User::where('telephone',$data['username'])->count();
+        if($count >0 )
+        {
+
+            return Response::response(40002,
+                false);
+        }
+        else
+        {
+
+            return Response::response(200,
+                true);
+        }
+
     }
 
 }

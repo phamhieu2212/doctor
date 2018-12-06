@@ -23,6 +23,9 @@ class SignInRequest extends Request
         return [
             'username'         => 'required',
             'password'      => 'required|min:8',
+            'grant_type'    => 'required',
+            'client_id'     => 'required',
+            'client_secret' => 'required',
 
         ];
     }
