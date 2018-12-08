@@ -28,7 +28,7 @@ class ClinicController extends Controller
             [
                 'name',
                 'address',
-                'status',
+                'status','price'
             ]
         );
         $data['admin_user_id'] = $this->userService->getUser()->id;
