@@ -34,7 +34,7 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/store', 'ClinicController@store');
             });
             Route::group(['prefix' => 'plans'], function () {
-                Route::get('/list/{month}', 'PlanController@index');
+                Route::get('/list/{timestamp}', 'PlanController@index');
                 Route::get('/order', 'PlanController@order');
                 Route::post('/store', 'PlanController@store');
 

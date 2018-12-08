@@ -103,7 +103,7 @@ class Plan extends Base
         $times = Plan::where('started_at','>=',$dateStart)->where('ended_at','<=',$dateEnd)->pluck('started_at');
         foreach($times as $time)
         {
-            array_push($hours,intval(date('h',strtotime($time))));
+            array_push($hours,intval(date('H',strtotime($time))));
         }
         return [
             'day'=>strtotime(date('Y-m-d',strtotime($this->started_at))),
