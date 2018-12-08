@@ -114,7 +114,7 @@ class PlanController extends Controller
                 ]);
             }
         }
-        $planDelete = Plan::where('started_at','>=',$startDate)->where('started_at','<=',$endDate)
+        $planDelete = Plan::where('admin_user_id',$doctor->id)->where('started_at','>=',$startDate)->where('started_at','<=',$endDate)
             ->whereNotIn('started_at',$arrayDateTimes)->get();
         if(!empty($planDelete))
         {
