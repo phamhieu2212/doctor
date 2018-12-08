@@ -2,5 +2,6 @@
 {{--<link href="{!! \URLHelper::asset('libs/metronic/css/final.css', 'common') !!}" rel="stylesheet" type="text/css" />--}}
 {{--<link rel="stylesheet" type="text/css" href="{!! \URLHelper::asset('metronic/css/styles.css', 'admin') !!}">--}}
 <link rel="stylesheet" type="text/css" href="{!! \URLHelper::asset('metronic/css/compiled.css', 'admin') !!}">
+<link rel="stylesheet" type="text/css" href="{!! \URLHelper::asset('libs/plugins/select2/select2.css', 'admin') !!}">
 <!--end::Base Styles -->
 

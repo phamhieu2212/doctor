@@ -90,10 +90,11 @@ class ClinicController extends Controller
     {
         $input = $request->only(
             [
-                            'admin_user_id',
-                            'name',
-                            'address',
-                        ]
+                'admin_user_id',
+                'name',
+                'price',
+                'address',
+            ]
         );
         if(!isset($input['admin_user_id']))
         {
@@ -161,10 +162,11 @@ class ClinicController extends Controller
 
         $input = $request->only(
             [
-                            'admin_user_id',
-                            'name',
-                            'address',
-                        ]
+                'admin_user_id',
+                'name',
+                'price',
+                'address',
+            ]
         );
         if($input['admin_user_id'] == '')
         {
@@ -175,7 +177,7 @@ class ClinicController extends Controller
         $this->clinicRepository->update($clinic, $input);
 
         return redirect()->action('Admin\ClinicController@show', [$id])
-                    ->with('message-success', trans('admin.messages.general.update_success'));
+            ->with('message-success', trans('admin.messages.general.update_success'));
     }
 
     /**
@@ -194,7 +196,7 @@ class ClinicController extends Controller
         $this->clinicRepository->delete($clinic);
 
         return redirect()->action('Admin\ClinicController@index')
-                    ->with('message-success', trans('admin.messages.general.delete_success'));
+            ->with('message-success', trans('admin.messages.general.delete_success'));
     }
 
 }

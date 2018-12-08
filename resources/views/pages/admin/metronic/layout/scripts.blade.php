@@ -1,4 +1,5 @@
 <script src="{!! \URLHelper::asset('metronic/js/compiled.js', 'admin') !!}"></script>
+<script src="{!! \URLHelper::asset('libs/plugins/select2/select2.full.js', 'admin') !!}"></script>
 
 <script type="text/javascript">
     var Boilerplate = {
