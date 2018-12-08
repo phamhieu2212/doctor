@@ -105,35 +105,43 @@
 
                 <div class="m-portlet__body" style="padding-top: 0;">
                     @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group m-form__group row @if ($errors->has('admin_user_id')) has-danger @endif">
+                                    <label for="exampleSelect1">Bác sĩ</label>
+                                    <select class="form-control" name="admin_user_id"  id="formRole">
+                                        @foreach($doctors as $doctor)
+                                            <option {{($clinic->admin_user_id == $doctor->id)?'selected':''}}  value="{{$doctor->id}}">{{$doctor->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group m-form__group row @if ($errors->has('admin_user_id')) has-danger @endif">
-                                <label for="exampleSelect1">Bác sĩ</label>
-                                <select class="form-control" name="admin_user_id"  id="formRole">
-                                    @foreach($doctors as $doctor)
-                                        <option {{($clinic->admin_user_id == $doctor->id)?'selected':''}}  value="{{$doctor->id}}">{{$doctor->name}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group m-form__group row @if ($errors->has('name')) has-danger @endif">
+                                <label for="name">Tên</label>
+                                <input type="text" class="form-control m-input" name="name" id="name" required " value="{{ old('name') ? old('name') : $clinic->name }}">
                             </div>
                         </div>
                     </div>
-                    @endif
                     <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group m-form__group row @if ($errors->has('name')) has-danger @endif">
-                                        <label for="name">Tên</label>
-                                        <input type="text" class="form-control m-input" name="name" id="name" required " value="{{ old('name') ? old('name') : $clinic->name }}">
-                                    </div>
-                                </div>
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group row @if ($errors->has('address')) has-danger @endif">
+                                <label for="address">Địa chỉ</label>
+                                <input type="text" class="form-control m-input" name="address" id="address" required " value="{{ old('address') ? old('address') : $clinic->address }}">
                             </div>
+                        </div>
+                    </div>
                     <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group m-form__group row @if ($errors->has('address')) has-danger @endif">
-                                        <label for="address">Địa chỉ</label>
-                                        <input type="text" class="form-control m-input" name="address" id="address" required " value="{{ old('address') ? old('address') : $clinic->address }}">
-                                    </div>
-                                </div>
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group row @if ($errors->has('price')) has-danger @endif">
+                                <label for="price">Giá(VND)</label>
+                                <input type="number" min="0" class="form-control m-input" name="price" id="price" required placeholder="Giá" value="{{ old('price') ? old('price') : $clinic->price }}">
                             </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="m-portlet__foot m-portlet__foot--fit">

@@ -12,7 +12,7 @@
 @stop
 
 @section('title')
-     Quản lý phòng khám
+    Quản lý phòng khám
 @stop
 
 @section('header')
@@ -81,37 +81,39 @@
                     <div class="col-sm-12 wrap-index-table">
                         <table class="table table-striped- table-bordered table-hover table-checkable" id="index-table">
                             <thead>
-                                <tr>
-                                    <th style="width: 10px">{!! \PaginationHelper::sort('id', 'ID') !!}</th>
-                                    <th>{!! \PaginationHelper::sort('name', 'Tên') !!}</th>
-                                    <th>{!! \PaginationHelper::sort('address', 'Địa chỉ') !!}</th>
-                                    @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
+                            <tr>
+                                <th style="width: 10px">{!! \PaginationHelper::sort('id', 'ID') !!}</th>
+                                <th>{!! \PaginationHelper::sort('name', 'Tên') !!}</th>
+                                <th>{!! \PaginationHelper::sort('address', 'Địa chỉ') !!}</th>
+                                <th>{!! \PaginationHelper::sort('price', 'Giá') !!}</th>
+                                @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
                                     <th>{!! \PaginationHelper::sort('admin_user_id', 'Bác sĩ') !!}</th>
-                                    @endif
+                                @endif
 
-                                    <th style="width: 40px">Hành động</th>
-                                </tr>
+                                <th style="width: 40px">Hành động</th>
+                            </tr>
                             </thead>
 
                             <tbody>
-                                @foreach( $clinics as $clinic )
-                                    <tr>
-                                        <td>{{ $clinic->id }}</td>
-                                        <td>{{ $clinic->name }}</td>
-                                        <td>{{ $clinic->address }}</td>
-                                        @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
+                            @foreach( $clinics as $clinic )
+                                <tr>
+                                    <td>{{ $clinic->id }}</td>
+                                    <td>{{ $clinic->name }}</td>
+                                    <td>{{ $clinic->address }}</td>
+                                    <td>{{ $clinic->price }}</td>
+                                    @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
                                         <td>{{ @$clinic->adminUser->name }}</td>
-                                        @endif
-                                        <td>
-                                            <a href="{!! action('Admin\ClinicController@show', $clinic->id) !!}" class="btn m--font-primary m-btn--pill m-btn--air no-padding">
-                                                <i class="la la-edit"></i>
-                                            </a>
-                                            <a href="javascript:;" data-delete-url="{!! action('Admin\ClinicController@destroy', $clinic->id) !!}" class="btn m--font-danger m-btn--pill m-btn--air no-padding delete-button">
-                                                <i class="la la-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    @endif
+                                    <td>
+                                        <a href="{!! action('Admin\ClinicController@show', $clinic->id) !!}" class="btn m--font-primary m-btn--pill m-btn--air no-padding">
+                                            <i class="la la-edit"></i>
+                                        </a>
+                                        <a href="javascript:;" data-delete-url="{!! action('Admin\ClinicController@destroy', $clinic->id) !!}" class="btn m--font-danger m-btn--pill m-btn--air no-padding delete-button">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

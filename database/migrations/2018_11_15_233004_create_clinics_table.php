@@ -16,6 +16,7 @@ class CreateclinicsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('admin_user_id')->comment('id tai khoan');
             $table->string('name');
+            $table->integer('price');
             $table->string('address');
             $table->unsignedTinyInteger('status');
 

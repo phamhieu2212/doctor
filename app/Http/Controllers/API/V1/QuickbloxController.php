@@ -6,7 +6,7 @@ use App\Http\Requests\API\V1\QuickBloxRequest;
 use App\Http\Requests\APIRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+// (sac.doctor.oicsoft@gmail.com/oicsoft@123)
 class QuickbloxController extends Controller
 {
 
