@@ -67,4 +67,14 @@ class Clinic extends Base
         ];
     }
 
+    public function toAPIArrayList()
+    {
+        return [
+            'id'=>$this->id,
+            'name'=>$this->name,
+            "price"=> $this->price,
+
+        ];
+    }
+
 }
