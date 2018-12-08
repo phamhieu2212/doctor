@@ -22,6 +22,7 @@ class Clinic extends Base
     protected $fillable = [
         'admin_user_id',
         'name',
+        'price',
         'address',
         'status',
     ];
@@ -62,6 +63,7 @@ class Clinic extends Base
             'id' => $this->id,
             'admin_user_id' => $this->admin_user_id,
             'name' => $this->name,
+            'price'=>$this->price,
             'address' => $this->address,
             'status' => $this->status,
         ];

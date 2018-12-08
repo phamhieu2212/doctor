@@ -231,6 +231,17 @@ return [
                 'status' => 'Status',
             ],
         ],
+        'plans'   => [
+            'columns'  => [
+                'admin_user_id' => 'Admin_user_id',
+                'user_id' => 'User_id',
+                'clinic_id' => 'Clinic_id',
+                'price' => 'Price',
+                'status' => 'Status',
+                'started_at' => 'Started_at',
+                'ended_at' => 'Ended_at',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

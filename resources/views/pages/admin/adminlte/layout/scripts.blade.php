@@ -7,6 +7,7 @@
 <script src="{!! \URLHelper::asset('libs/bootstrap/js/bootstrap.min.js', 'admin') !!}"></script>
 <script src="{!! \URLHelper::asset('libs/adminlte/js/app.min.js', 'admin') !!}"></script>
 <script src="{!! \URLHelper::asset('libs/plugins/toastr/toastr.min.js', 'admin') !!}"></script>
+<script src="{!! \URLHelper::asset('libs/plugins/select2/select2.js', 'admin') !!}"></script>
 <script src="{!! \URLHelper::asset('libs/plugins/flagstrap/dist/js/jquery.flagstrap.min.js', 'admin') !!}"></script>
 <script src="{!! \URLHelper::asset('js/script.js', 'admin/adminlte') !!}"></script>
 
