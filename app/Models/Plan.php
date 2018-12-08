@@ -95,29 +95,22 @@ class Plan extends Base
         ];
     }
 
-    public function toAPIArrayDetail()
+    public function toAPIArrayListHourPlan()
     {
+        $hours = array();
+        $dateStart = date('Y-m-d 00:00:00 ',strtotime($this->started_at));
+        $dateEnd = date('Y-m-d 23:59:59 ',strtotime($this->started_at));
+        $times = Plan::where('started_at','>=',$dateStart)->where('ended_at','<=',$dateEnd)->pluck('started_at');
+        foreach($times as $time)
+        {
+            array_push($hours,intval(date('h',strtotime($time))));
+        }
         return [
-            'clinic_name'=>$this->clinic->name,
-            'price'=>$this->price,
-            'status'=>$this->status,
-            'day'=>intval(date("w", strtotime($this->started_at))),
-            'startHour'=>intval(date("H", strtotime($this->started_at))),
-            'endHour'=>intval(date("H", strtotime($this->started_at))) + 1,
+            'day'=>strtotime(date('Y-m-d',strtotime($this->started_at))),
+            'hours'=>$hours,
         ];
     }
 
-    public function toAPIArrayOrder()
-    {
-        return [
-            'patient_name'=>$this->user->name,
-            'patient_address'=>$this->user->address,
-            "clinic_id"=> $this->clinic_id,
-            "clinic_name"=> $this->clinic->name,
-            "date"=> date("Y-m-d", strtotime($this->started_at)),
-            'day'=>intval(date("w", strtotime($this->started_at))),
-            'hour'=>intval(date("H", strtotime($this->started_at))),
-        ];
-    }
+
 
 }

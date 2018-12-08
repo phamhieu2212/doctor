@@ -12,6 +12,7 @@ use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PlanController extends Controller
 {
@@ -27,81 +28,22 @@ class PlanController extends Controller
         $this->adminUserService = $APIUserService;
         $this->planRepository = $planRepository;
     }
-    public function index($month)
+    public function index($timestamp)
     {
-        return Response::response(200,
-            [
-                'clinics'=>
-                    [
-                        [
-                            'id'=>1,
-                            'name'=>'Phòng khám số 1',
-                            'price'=>300000,
-                            'plans'=>
-                                [
-                                    [
-                                        'day'=>1544115600,
-                                        'hours'=>[7,9,11,13]
-                                    ],
-                                    [
-                                        'day'=>1523123,
-                                        'hours'=>[7,9,11,13]
-                                    ],
-                                    [
-                                        'day'=>15132131,
-                                        'hours'=>[7,9,11,13]
-                                    ]
-                                ]
-
-                        ],
-                        [
-                            'id'=>2,
-                            'name'=>'Phòng khám số 2',
-                            'price'=>300000,
-                            'plans'=>
-                                [
-                                    [
-                                        'day'=>1544115600,
-                                        'hours'=>[7,9,11,13]
-                                    ],
-                                    [
-                                        'day'=>1523123,
-                                        'hours'=>[7,9,11,13]
-                                    ],
-                                    [
-                                        'day'=>15132131,
-                                        'hours'=>[7,9,11,13]
-                                    ]
-                                ]
-
-                        ],
-                        [
-                            'id'=>3,
-                            'name'=>'Phòng khám số 3',
-                            'price'=>300000,
-                            'plans'=>[]
-
-                        ]
-                    ]
-
-            ]
-        );
-        $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-        $doctor =  $this->adminUserService->getUser();
-        $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$day].' this week'));
-        $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$day].' this week'));
-
-        $plans = Plan::where('admin_user_id',$doctor->id)->where('started_at','<=',$dateEnd)->where('started_at','>=',$dateStart)->get();
-        foreach($plans as $key=>$plan)
+        $month =  date( 'Y-m', $timestamp);
+        $endDateOfMonth =  date('Y-m-t 23:59:59', strtotime($month));
+        $startDateOfMonth =  date('Y-m-01 00:00:00', strtotime($month));
+        $clinics = Clinic::where('admin_user_id',$this->adminUserService->getUser()->id)->get();
+        foreach($clinics as $key=>$clinic)
         {
-            $plans[$key] = $plan->toAPIArray();
-
+                $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($this->adminUserService->getUser()->id,$startDateOfMonth,$endDateOfMonth);
         }
 
-
         return Response::response(200,
             [
-                'plans'=> $plans
+                'clinics'=>$clinics
+
+
             ]
         );
     }

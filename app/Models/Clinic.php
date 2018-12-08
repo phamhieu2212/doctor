@@ -2,6 +2,8 @@
 
 
 
+use Illuminate\Support\Facades\DB;
+
 class Clinic extends Base
 {
 
@@ -69,14 +71,21 @@ class Clinic extends Base
         ];
     }
 
-    public function toAPIArrayList()
+    public function toAPIArrayListPlanDoctor($idDoctor,$startDateOfMonth,$endDateOfMonth)
     {
+        $plans = Plan::where('admin_user_id',$idDoctor)->where('clinic_id',$this->id)->where('started_at','>=',$startDateOfMonth)
+                ->where('ended_at','<=',$endDateOfMonth)->groupBy(DB::raw('Date(started_at)'))->get();
+        foreach($plans as $key=>$plan)
+        {
+            $plans[$key] = $plan->toAPIArrayListHourPlan();
+        }
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            "price"=> $this->price,
-
+            'price'=>$this->price,
+            'plans'=>$plans
         ];
+
     }
 
 }
