@@ -26,7 +26,7 @@ class ClinicController extends Controller
     }
     public function index()
     {
-        $clinics = Clinic::where('admin_user_id',$this->userService->getUser()->id)->get();
+        $clinics = Clinic::where('admin_user_id',$this->userService->getUser()->id)->where('status','!=',3)->get();
         foreach( $clinics as $key => $clinic ) {
             $clinics[$key] = $clinic->toAPIArray();
         }
