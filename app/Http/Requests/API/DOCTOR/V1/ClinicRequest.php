@@ -25,8 +25,7 @@ class ClinicRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'address'=>'required',
-            'status'=>'required'
+            'address'=>'required'
         ];
     }
 }

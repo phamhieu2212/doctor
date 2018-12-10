@@ -25,23 +25,22 @@ class PlanController extends Controller
         $this->userService = $APIUserService;
         $this->planRepository = $planRepository;
     }
-    public function index($idDoctor,$day)
+    public function index($idDoctor,$timestamp)
     {
-        $arr = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
-        $dateStart =  date("Y-m-d 00:00:00", strtotime($arr[$day].' this week'));
-        $dateEnd =  date("Y-m-d 24:00:00", strtotime($arr[$day].' this week'));
-
-        $plans = Plan::where('admin_user_id',$idDoctor)->where('started_at','<=',$dateEnd)->where('started_at','>=',$dateStart)->get();
-        foreach($plans as $key=>$plan)
+        $month =  date( 'Y-m', $timestamp);
+        $endDateOfMonth =  date('Y-m-t 23:59:59', strtotime($month));
+        $startDateOfMonth =  date('Y-m-01 00:00:00', strtotime($month));
+        $clinics = Clinic::where('admin_user_id',$idDoctor)->get();
+        foreach($clinics as $key=>$clinic)
         {
-            $plans[$key] = $plan->toAPIArray();
-
+            $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($idDoctor,$startDateOfMonth,$endDateOfMonth);
         }
-
 
         return Response::response(200,
             [
-                'plans'=> $plans
+                'clinics'=>$clinics
+
+
             ]
         );
     }
