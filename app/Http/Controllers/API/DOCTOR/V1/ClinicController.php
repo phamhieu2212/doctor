@@ -38,7 +38,7 @@ class ClinicController extends Controller
         $data = $request->only(
             [
                 'name',
-                'address'
+                'address','price'
             ]
         );
         $data['admin_user_id'] = $this->userService->getUser()->id;
@@ -71,7 +71,7 @@ class ClinicController extends Controller
         $data = $request->only(
             [
                 'name',
-                'address'
+                'address','price'
             ]
         );
 

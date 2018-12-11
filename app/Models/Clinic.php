@@ -64,6 +64,7 @@ class Clinic extends Base
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'price' => $this->price,
             'address' => $this->address,
             'status' => intval($this->status),
         ];

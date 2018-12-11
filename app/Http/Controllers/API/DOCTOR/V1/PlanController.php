@@ -125,7 +125,12 @@ class PlanController extends Controller
                 $this->planRepository->delete($row);
             }
         }
-        return $this->index($bodyRequests['day']);
+        return Response::response(200,
+            [
+                'code'=>200,
+                'status'=>'success'
+            ]
+        );
 
     }
 }
