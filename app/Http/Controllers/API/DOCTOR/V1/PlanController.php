@@ -33,7 +33,8 @@ class PlanController extends Controller
         $month =  date( 'Y-m', $timestamp);
         $endDateOfMonth =  date('Y-m-t 23:59:59', strtotime($month));
         $startDateOfMonth =  date('Y-m-01 00:00:00', strtotime($month));
-        $clinics = Clinic::where('admin_user_id',$this->adminUserService->getUser()->id)->get();
+        $clinics = Clinic::where('admin_user_id',$this->adminUserService->getUser()->id)
+            ->where('status',1)->get();
         foreach($clinics as $key=>$clinic)
         {
                 $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($this->adminUserService->getUser()->id,$startDateOfMonth,$endDateOfMonth);
@@ -79,41 +80,42 @@ class PlanController extends Controller
 
     public function store(APIRequest $request)
     {
-        $data = $request->only([
-            'day','hours','price','clinic_id'
-        ]);
-        $date = date( 'Y-m-d', $data['day']);
-        $startDate =  date( 'Y-m-d 00:00:00', $data['day']);
-        $endDate =  date( 'Y-m-d 23:59:59', $data['day']);
+        $bodyRequests = $request->all();
+        $date = date( 'Y-m-d', $bodyRequests['day']);
+        $startDate =  date( 'Y-m-d 00:00:00', $bodyRequests['day']);
+        $endDate =  date( 'Y-m-d 23:59:59', $bodyRequests['day']);
         $arrayDateTimes = [];
-        $hours = explode(',',$data['hours']);
-        foreach($hours as $hour)
+
+        foreach($bodyRequests['clinics'] as $bodyRequest)
         {
-            array_push($arrayDateTimes,date('Y-m-d H:i:s',strtotime($date. $hour.':00:00')));
+            $doctor =  $this->adminUserService->getUser();
+            foreach($bodyRequest['hours'] as $hour)
+            {
+                $time = date('Y-m-d H:i:s',strtotime($date. $hour.':00:00'));
+                array_push($arrayDateTimes,$time);
+                $plan = Plan::where('admin_user_id',$doctor->id)
+                    ->where('started_at',$time)->first();
+                if(empty($plan))
+                {
+                    $this->planRepository->create([
+                        'admin_user_id' => $doctor->id,
+                        'clinic_id'     => $bodyRequest['id'],
+                        'price'         => 0,
+                        'started_at'    => $time,
+                        'ended_at'      => date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($time)))
+                    ]);
+                }
+                else
+                {
+                    $this->planRepository->update($plan,[
+                        'clinic_id'     => $bodyRequest['id'],
+                        'price'         => 0
+                    ]);
+                }
+            }
+
         }
 
-        $doctor =  $this->adminUserService->getUser();
-        foreach($arrayDateTimes as $arrayDateTime)
-        {
-            $plan = Plan::where('admin_user_id',$doctor->id)->where('started_at',$arrayDateTime)->first();
-            if(empty($plan))
-            {
-                $this->planRepository->create([
-                    'admin_user_id' => $doctor->id,
-                    'clinic_id'     => $data['clinic_id'],
-                    'price'         => $data['price'],
-                    'started_at'    => $arrayDateTime,
-                    'ended_at'      => date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($arrayDateTime)))
-                ]);
-            }
-            else
-            {
-                $this->planRepository->update($plan,[
-                    'clinic_id'     => $data['clinic_id'],
-                    'price'         => $data['price']
-                ]);
-            }
-        }
         $planDelete = Plan::where('admin_user_id',$doctor->id)->where('started_at','>=',$startDate)->where('started_at','<=',$endDate)
             ->whereNotIn('started_at',$arrayDateTimes)->get();
         if(!empty($planDelete))
@@ -123,7 +125,7 @@ class PlanController extends Controller
                 $this->planRepository->delete($row);
             }
         }
-        return $this->index($data['day']);
+        return $this->index($bodyRequests['day']);
 
     }
 }

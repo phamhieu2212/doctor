@@ -95,12 +95,13 @@ class Plan extends Base
         ];
     }
 
-    public function toAPIArrayListHourPlan()
+    public function toAPIArrayListHourPlan($idClinic)
     {
         $hours = array();
         $dateStart = date('Y-m-d 00:00:00 ',strtotime($this->started_at));
         $dateEnd = date('Y-m-d 23:59:59 ',strtotime($this->started_at));
-        $times = Plan::where('started_at','>=',$dateStart)->where('ended_at','<=',$dateEnd)->pluck('started_at');
+        $times = Plan::where('started_at','>=',$dateStart)->where('ended_at','<=',$dateEnd)
+            ->where('clinic_id',$idClinic)->pluck('started_at');
         foreach($times as $time)
         {
             array_push($hours,intval(date('H',strtotime($time))));
