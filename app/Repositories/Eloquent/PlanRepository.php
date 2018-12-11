@@ -29,7 +29,7 @@ class PlanRepository extends SingleKeyModelRepository implements PlanRepositoryI
         $model = $this->getModelClassName();
         $now = Carbon::now();
 
-        return $model::where('admin_user_id',$idDoctor)->where('started_at','>=',$now)->where('status',1)
+        return $model::where('admin_user_id',$idDoctor)->where('started_at','>=',$now)->where('status',0)
             ->orderBy($order, $direction)->skip($offset)->take($limit)->get();
 
 
@@ -39,7 +39,7 @@ class PlanRepository extends SingleKeyModelRepository implements PlanRepositoryI
     {
         $model = $this->getModelClassName();
         $now = Carbon::now();
-        return $model::where('admin_user_id',$idDoctor)->where('started_at','>=',$now)->where('status',1)->count();
+        return $model::where('admin_user_id',$idDoctor)->where('started_at','>=',$now)->where('status',0)->count();
     }
 
 }

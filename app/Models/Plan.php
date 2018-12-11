@@ -112,6 +112,20 @@ class Plan extends Base
         ];
     }
 
+    public function toAPIArrayOrder()
+    {
+        return [
+            "patient_avatar"=>\URLHelper::asset('img/no_image.jpg', 'common'),
+            "patient_name" => "Hiếu",
+            "patient_address" =>"198 Trần Duy Hưng",
+            "clinic_id"=> 1,
+            "clinic_name"=> "phòng khám số 1",
+            "date"=> "2018-12-11",
+            "hour"=> 8
+
+        ];
+    }
+
 
 
 }
