@@ -80,9 +80,9 @@ class Clinic extends Base
             $plans[$key] = $plan->toAPIArrayListHourPlan($this->id);
         }
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'price'=>$this->price,
+            'clinic_id'=>$this->id,
+            'clinic_name'=>$this->name,
+            'clinic_price'=>$this->price,
             'plans'=>$plans
         ];
 

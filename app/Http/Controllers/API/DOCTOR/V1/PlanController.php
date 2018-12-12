@@ -41,11 +41,7 @@ class PlanController extends Controller
         }
 
         return Response::response(200,
-            [
-                'clinics'=>$clinics
-
-
-            ]
+            $clinics
         );
     }
 

@@ -30,18 +30,14 @@ class PlanController extends Controller
         $month =  date( 'Y-m', $timestamp);
         $endDateOfMonth =  date('Y-m-t 23:59:59', strtotime($month));
         $startDateOfMonth =  date('Y-m-01 00:00:00', strtotime($month));
-        $clinics = Clinic::where('admin_user_id',$idDoctor)->get();
+        $clinics = Clinic::where('admin_user_id',$idDoctor)->where('status',1)->get();
         foreach($clinics as $key=>$clinic)
         {
             $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($idDoctor,$startDateOfMonth,$endDateOfMonth);
         }
 
         return Response::response(200,
-            [
-                'clinics'=>$clinics
-
-
-            ]
+            $clinics
         );
     }
 
