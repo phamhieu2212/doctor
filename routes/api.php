@@ -33,11 +33,11 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'clinics'], function () {
                 Route::post('/store', 'ClinicController@store');
                 Route::post('/update/{id}', 'ClinicController@update');
-                Route::get('', 'ClinicController@index');
+                Route::get('/edit/{id}/{timestamp}', 'ClinicController@edit');
                 Route::get('delete/{id}', 'ClinicController@delete');
             });
             Route::group(['prefix' => 'plans'], function () {
-                Route::get('/list/{timestamp}', 'PlanController@index');
+                Route::get('/list', 'PlanController@index');
                 Route::get('/order', 'PlanController@order');
                 Route::post('/store', 'PlanController@store');
 

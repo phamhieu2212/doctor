@@ -28,16 +28,16 @@ class PlanController extends Controller
         $this->adminUserService = $APIUserService;
         $this->planRepository = $planRepository;
     }
-    public function index($timestamp)
+    public function index()
     {
-        $month =  date( 'Y-m', $timestamp);
-        $endDateOfMonth =  date('Y-m-t 23:59:59', strtotime($month));
-        $startDateOfMonth =  date('Y-m-01 00:00:00', strtotime($month));
+        $now =  Carbon::now();
+        $endDate =  date('Y-m-d 23:59:59', strtotime($now));
+        $startDate =  date('Y-m-d 00:00:00', strtotime($now));
         $clinics = Clinic::where('admin_user_id',$this->adminUserService->getUser()->id)
             ->where('status',1)->get();
         foreach($clinics as $key=>$clinic)
         {
-                $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($this->adminUserService->getUser()->id,$startDateOfMonth,$endDateOfMonth);
+                $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($this->adminUserService->getUser()->id,$startDate,$endDate);
         }
 
         return Response::response(200,
@@ -74,59 +74,81 @@ class PlanController extends Controller
     }
 
 
-    public function store(APIRequest $request)
+    public function store($idDoctor,$idClinic,$plans)
     {
-        $bodyRequests = $request->all();
-        $date = date( 'Y-m-d', $bodyRequests['day']);
-        $startDate =  date( 'Y-m-d 00:00:00', $bodyRequests['day']);
-        $endDate =  date( 'Y-m-d 23:59:59', $bodyRequests['day']);
         $arrayDateTimes = [];
 
-        foreach($bodyRequests['clinics'] as $bodyRequest)
+        foreach($plans as $plan)
         {
-            $doctor =  $this->adminUserService->getUser();
-            foreach($bodyRequest['hours'] as $hour)
+
+            $day = date('Y-m-d',$plan['day']);
+            foreach($plan['hours'] as $hour)
             {
-                $time = date('Y-m-d H:i:s',strtotime($date. $hour.':00:00'));
+                $time = date('Y-m-d H:i:s',strtotime($day. $hour.':00:00'));
                 array_push($arrayDateTimes,$time);
-                $plan = Plan::where('admin_user_id',$doctor->id)
+
+                $this->planRepository->create([
+                    'admin_user_id' => $idDoctor,
+                    'clinic_id'     => $idClinic,
+                    'price'         => 0,
+                    'started_at'    => $time,
+                    'ended_at'      => date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($time)))
+                ]);
+            }
+
+        }
+        return true;
+
+
+
+    }
+
+    public function update($idDoctor,$idClinic,$plans)
+    {
+        $arrayDateTimes = [];
+
+        foreach($plans as $plan)
+        {
+
+            $day = date('Y-m-d',$plan['day']);
+            $startDate =  date( 'Y-m-d 00:00:00', $plan['day']);
+            $endDate =  date( 'Y-m-d 23:59:59', $plan['day']);
+
+            foreach($plan['hours'] as $hour)
+            {
+                $time = date('Y-m-d H:i:s',strtotime($day. $hour.':00:00'));
+                array_push($arrayDateTimes,$time);
+
+                $plan = Plan::where('admin_user_id',$idDoctor)->where('clinic_id',$idClinic)
                     ->where('started_at',$time)->first();
                 if(empty($plan))
                 {
                     $this->planRepository->create([
-                        'admin_user_id' => $doctor->id,
-                        'clinic_id'     => $bodyRequest['id'],
+                        'admin_user_id' => $idDoctor,
+                        'clinic_id'     => $idClinic,
                         'price'         => 0,
                         'started_at'    => $time,
                         'ended_at'      => date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($time)))
                     ]);
                 }
-                else
+
+            }
+            $planDelete = Plan::where('admin_user_id',$idDoctor)->where('clinic_id',$idClinic)
+                ->where('started_at','>=',$startDate)->where('started_at','<=',$endDate)
+                ->whereNotIn('started_at',$arrayDateTimes)->get();
+            if(!empty($planDelete))
+            {
+                foreach($planDelete as $row)
                 {
-                    $this->planRepository->update($plan,[
-                        'clinic_id'     => $bodyRequest['id'],
-                        'price'         => 0
-                    ]);
+                    $this->planRepository->delete($row);
                 }
             }
 
-        }
 
-        $planDelete = Plan::where('admin_user_id',$doctor->id)->where('started_at','>=',$startDate)->where('started_at','<=',$endDate)
-            ->whereNotIn('started_at',$arrayDateTimes)->get();
-        if(!empty($planDelete))
-        {
-            foreach($planDelete as $row)
-            {
-                $this->planRepository->delete($row);
-            }
         }
-        return Response::response(200,
-            [
-                'code'=>200,
-                'status'=>'success'
-            ]
-        );
+        return true;
+
+
 
     }
 }

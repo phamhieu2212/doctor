@@ -70,7 +70,27 @@ class Clinic extends Base
         ];
     }
 
-    public function toAPIArrayListPlanDoctor($idDoctor,$startDateOfMonth,$endDateOfMonth)
+    public function toAPIArrayListPlanDoctor($idDoctor,$startDate,$endDate)
+    {
+
+        $times = Plan::where('admin_user_id',$idDoctor)->where('clinic_id',$this->id)->where('started_at','>=',$startDate)
+            ->where('ended_at','<=',$endDate)->pluck('started_at');
+        $hours = array();
+        foreach($times as $time)
+        {
+            array_push($hours,intval(date('H',strtotime($time))));
+        }
+        return [
+            'clinic_id'=>$this->id,
+            'clinic_name'=>$this->name,
+            'clinic_price'=>$this->price,
+            'clinic_address'=>$this->address,
+            'hours'=>$hours
+        ];
+
+    }
+
+    public function toAPIArrayEditClinic($idDoctor,$startDateOfMonth,$endDateOfMonth)
     {
 
         $plans = Plan::where('admin_user_id',$idDoctor)->where('clinic_id',$this->id)->where('started_at','>=',$startDateOfMonth)
@@ -83,6 +103,7 @@ class Clinic extends Base
             'clinic_id'=>$this->id,
             'clinic_name'=>$this->name,
             'clinic_price'=>$this->price,
+            'clinic_address'=>$this->address,
             'plans'=>$plans
         ];
 

@@ -91,7 +91,7 @@ class AuthController extends Controller
 //            ];
 //        }
         $dataUser = [
-            'user' => $adminUser->toAPIArrayLogin(),
+            'user' => $adminUser->toAPIArrayLoginDoctor(),
             'accountQuick' => [
                 'username' => $adminUser->username,
                 'password' => $adminUser->username
