@@ -8,6 +8,7 @@ use App\Http\Requests\BaseRequest;
 use App\Models\Clinic;
 use App\Repositories\ClinicRepositoryInterface;
 use App\Services\APIUserServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Responses\API\V1\Response;
@@ -30,12 +31,19 @@ class ClinicController extends Controller
     }
     public function index()
     {
-        $clinics = Clinic::where('admin_user_id',$this->userService->getUser()->id)->where('status','!=',3)->get();
-        foreach( $clinics as $key => $clinic ) {
-            $clinics[$key] = $clinic->toAPIArray();
+        $now =  Carbon::now();
+        $endDate =  date('Y-m-d 23:59:59', strtotime($now));
+        $startDate =  date('Y-m-d 00:00:00', strtotime($now));
+        $clinics = Clinic::where('admin_user_id',$this->userService->getUser()->id)
+            ->where('status',1)->get();
+        foreach($clinics as $key=>$clinic)
+        {
+            $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($this->userService->getUser()->id,$startDate,$endDate);
         }
 
-        return Response::response(200, $clinics);
+        return Response::response(200,
+            $clinics
+        );
     }
     public function store(APIRequest $request)
     {

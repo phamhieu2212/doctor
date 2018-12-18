@@ -30,7 +30,11 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'profile'], function () {
                 Route::get('/', 'ProfileController@index');
             });
+            Route::group(['prefix' => 'price'], function () {
+                Route::post('/update', 'PriceController@update');
+            });
             Route::group(['prefix' => 'clinics'], function () {
+                Route::get('/', 'ClinicController@index');
                 Route::post('/store', 'ClinicController@store');
                 Route::post('/update/{id}', 'ClinicController@update');
                 Route::get('/edit/{id}/{timestamp}', 'ClinicController@edit');

@@ -28,7 +28,7 @@ class Doctor extends Base
         'gender',
         'telephone',
         'birthday',
-        'address',
+        'address','price_chat','price_call',
         'city',
         'position',
         'experience',
