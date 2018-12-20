@@ -65,8 +65,11 @@ class ClinicController extends Controller
             return Response::response(50002);
         }
         $plan = $this->planController->store($data['admin_user_id'],$clinic->id,$bodyRequests['plans']);
+        $now =  Carbon::now();
+        $endDate =  date('Y-m-d 23:59:59', strtotime($now));
+        $startDate =  date('Y-m-d 00:00:00', strtotime($now));
 
-        return Response::response(200
+        return Response::response(200,$clinic->toAPIArrayListPlanDoctor($this->userService->getUser()->id,$startDate,$endDate)
         );
 
     }
@@ -112,9 +115,12 @@ class ClinicController extends Controller
             return Response::response(50002);
         }
         $plan = $this->planController->update($data['admin_user_id'],$clinic->id,$bodyRequests['plans']);
+        $now =  Carbon::now();
+        $endDate =  date('Y-m-d 23:59:59', strtotime($now));
+        $startDate =  date('Y-m-d 00:00:00', strtotime($now));
 
 
-        return Response::response(200);
+        return Response::response(200,$clinic->toAPIArrayListPlanDoctor($this->userService->getUser()->id,$startDate,$endDate));
     }
 
     public function delete($id)
