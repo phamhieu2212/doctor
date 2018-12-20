@@ -90,16 +90,12 @@ class Doctor extends Base
 
     public function toAPIArraySearch()
     {
-        $idDoctor = $this->adminUser->id;
-        $plans = $this->getPlan($idDoctor);
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'hospital_name' => $this->hospital->name,
-            'experience' => $this->experience,
-            'avatar' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
-            'plans' => [1,3,6],
-            'status' => 1
+            'place' => "Khoa tim mạch"
         ];
     }
 
