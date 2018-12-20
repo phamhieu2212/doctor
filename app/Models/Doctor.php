@@ -92,21 +92,23 @@ class Doctor extends Base
     {
 
         return [
-            'id' => $this->id,
+            'id' => $this->adminUser->id,
             'name' => $this->name,
             'hospital_name' => $this->hospital->name,
-            'place' => "Khoa tim mạch"
+            'place' => "Khoa tim mạch",
+            'image_link' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
         ];
     }
 
     public function toAPIArrayDetail()
     {
-        $idDoctor = $this->adminUser->id;
-        $plans = $this->getPlan($idDoctor);
         return [
+            'vote' => 4,
+            'rate' => 100,
             'gender' => ($this->gender == 1)?'Nam':'Nữ',
-            'hospital_name' => $this->hospital->name,
             'experience' => $this->experience,
+            'address'=>$this->address,
+            'birthday'=>$this->birthday,
             'position' => $this->position,
             'description' => $this->description,
         ];

@@ -100,10 +100,21 @@ class Clinic extends Base
             $plans[$key] = $plan->toAPIArrayListHourPlan($this->id);
         }
         return [
-            'clinic_id'=>$this->id,
-            'clinic_name'=>$this->name,
-            'clinic_price'=>$this->price,
-            'clinic_address'=>$this->address,
+            'plans'=>$plans
+        ];
+
+    }
+
+    public function toAPIArrayListPlanForPatient($idDoctor,$startDateOfMonth,$endDateOfMonth)
+    {
+
+        $plans = Plan::where('admin_user_id',$idDoctor)->where('clinic_id',$this->id)->where('started_at','>=',$startDateOfMonth)
+            ->where('ended_at','<=',$endDateOfMonth)->groupBy(DB::raw('Date(started_at)'))->get();
+        foreach($plans as $key=>$plan)
+        {
+            $plans[$key] = $plan->toAPIArrayListHourPlan($this->id);
+        }
+        return [
             'plans'=>$plans
         ];
 

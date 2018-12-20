@@ -6,6 +6,7 @@ use App\Http\Requests\APIRequest;
 use App\Http\Responses\API\V1\Response;
 use App\Models\Clinic;
 use App\Models\Plan;
+use App\Repositories\ClinicRepositoryInterface;
 use App\Repositories\PlanRepositoryInterface;
 use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
@@ -15,30 +16,36 @@ class PlanController extends Controller
 {
     protected $userService;
     protected $planRepository;
+    protected $clinicRepository;
 
     public function __construct
     (
         APIUserServiceInterface $APIUserService,
-        PlanRepositoryInterface $planRepository
+        PlanRepositoryInterface $planRepository,
+        ClinicRepositoryInterface $clinicRepository
     )
     {
         $this->userService = $APIUserService;
         $this->planRepository = $planRepository;
+        $this->clinicRepository = $clinicRepository;
     }
-    public function index($idDoctor,$timestamp)
+    public function index($idClinic,$timestamp)
     {
+        if( !is_numeric($idClinic) || ($idClinic <= 0) ) {
+            return Response::response(40001);
+        }
+
+        $clinic = $this->clinicRepository->find($idClinic);
+        if( empty($clinic) ) {
+            return Response::response(20004);
+        }
         $month =  date( 'Y-m', $timestamp);
         $endDateOfMonth =  date('Y-m-t 23:59:59', strtotime($month));
         $startDateOfMonth =  date('Y-m-01 00:00:00', strtotime($month));
-        $clinics = Clinic::where('admin_user_id',$idDoctor)->where('status',1)->get();
-        foreach($clinics as $key=>$clinic)
-        {
-            $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($idDoctor,$startDateOfMonth,$endDateOfMonth);
-        }
 
-        return Response::response(200,
-            $clinics
-        );
+
+        return Response::response(200, $clinic->toAPIArrayListPlanForPatient($clinic->admin_user_id,$startDateOfMonth,$endDateOfMonth));
+
     }
 
     public function order()

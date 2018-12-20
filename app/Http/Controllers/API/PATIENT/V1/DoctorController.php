@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API\PATIENT\V1;
 
 use App\Http\Responses\API\V1\Response;
+use App\Models\Clinic;
+use App\Models\Doctor;
 use App\Repositories\DoctorRepositoryInterface;
 use App\Repositories\SpecialtyRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaginationRequest;
@@ -56,52 +59,24 @@ class DoctorController extends Controller
 
     public function detail($idDoctor)
     {
-        return [
-            'code'=>200,
-            'status'=>'success',
-            'data'=>
-                    [
-
-                  "status"=> 0|1|2,
-                  "avatar"=> "abc.com",
-                  "rate"=> 2,
-                  "count_rate"=> 100,
-                  "doctor"=> [
-                    "hospital_name"=> "Bệnh viện Vđ",
-                    "gender"=> "Nam",
-                    "experience"=> "30 năm kinh nghiệm",
-                    "position"=> "Giám đốc",
-                    "description"=> "Mô tả"
-                  ],
-                  "plans"=> [
-                    [ "clinic_name"=> "tên phòng khám",
-                      "price"=> 300000,
-                      "status"=> 1,
-                      "day"=> 0-6,
-                      "startHour" => 8,
-                      "endHour" => 9,
-
-                    ],
-                      [ "clinic_name"=> "tên phòng khám",
-                          "price"=> 300000,
-                          "status"=> 1,
-                          "day"=> 0-6,
-                          "startHour" => 8,
-                          "endHour" => 9,
-
-                      ],
-                  ],
-                  "specialties"=> [
-                    [ "id"=> 1, "name"=> "Răng hàm mặt" ],
-                    ["id"=> 2, "name"=> "Đỡ đẻ" ]
-                  ],
-                  "clinics"=> [
-                    [ "id"=> 1, "name"=> "phong kham 1" ],
-                    ["id"=> 2, "name"=> "phong kham 2" ]
-                  ]
-                ]
-
+        $now =  Carbon::now();
+        $endDate =  date('Y-m-d 23:59:59', strtotime($now));
+        $startDate =  date('Y-m-d 00:00:00', strtotime($now));
+        $clinics = Clinic::where('admin_user_id',$idDoctor)
+            ->where('status',1)->get();
+        $doctor = Doctor::where('admin_user_id',$idDoctor)->first();
+        foreach($clinics as $key=>$clinic)
+        {
+            $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($idDoctor,$startDate,$endDate);
+        }
+        $data= [
+            'doctor'=>$doctor->toAPIArrayDetail(),
+            'clinics'=> $clinics
         ];
+
+        return Response::response(200,
+            $data
+        );
 
     }
 }

@@ -72,9 +72,8 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/detail/{idDoctor}', 'DoctorController@detail');
             });
             Route::group(['prefix' => 'plans'], function () {
-                Route::get('/list/{idDoctor}/{timestamp}', 'PlanController@index');
+                Route::get('/list/{idClinic}/{timestamp}', 'PlanController@index');
                 Route::get('/order', 'PlanController@order');
-                Route::post('/update-order', 'PlanController@updateOrder');
 
             });
             Route::post('signout', 'AuthController@postSignOut');
