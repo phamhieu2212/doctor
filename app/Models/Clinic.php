@@ -99,9 +99,7 @@ class Clinic extends Base
         {
             $plans[$key] = $plan->toAPIArrayListHourPlan($this->id);
         }
-        return [
-            $plans
-        ];
+        return $plans;
 
     }
 
@@ -114,9 +112,7 @@ class Clinic extends Base
         {
             $plans[$key] = $plan->toAPIArrayListHourPlan($this->id);
         }
-        return [
-            $plans
-        ];
+        return $plans;
 
     }
 
