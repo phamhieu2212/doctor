@@ -100,7 +100,7 @@ class Clinic extends Base
             $plans[$key] = $plan->toAPIArrayListHourPlan($this->id);
         }
         return [
-            'plans'=>$plans
+            $plans
         ];
 
     }
@@ -115,7 +115,7 @@ class Clinic extends Base
             $plans[$key] = $plan->toAPIArrayListHourPlan($this->id);
         }
         return [
-            'plans'=>$plans
+            $plans
         ];
 
     }
