@@ -50,10 +50,7 @@ class DoctorController extends Controller
         }
         $specialties = $this->specialtyRepository->all();
 
-        return Response::response(200,
-            [
-                'doctors'=> $doctors
-            ]
+        return Response::response(200,$doctors
             );
     }
 

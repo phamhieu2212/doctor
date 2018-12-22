@@ -107,8 +107,8 @@ class Doctor extends Base
             'rate' => 100,
             'gender' => ($this->gender == 1)?'Nam':'Nữ',
             'experience' => $this->experience,
-            'address'=>$this->address,
-            'birthday'=>$this->birthday,
+            'address'=>($this->address)?$this->address:"",
+            'birthday'=>$this->birthday?$this->birthday:"",
             'position' => $this->position,
             'description' => $this->description,
         ];
