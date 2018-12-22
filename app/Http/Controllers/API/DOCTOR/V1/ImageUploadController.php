@@ -61,6 +61,7 @@ class ImageUploadController extends Controller
                 $this->adminUserRepository->update($adminUser, ['profile_image_id' => $newImage->id]);
             }
         }
+        $adminUser = $this->adminUserRepository->find($idDoctor);
 
         return Response::response(200, $adminUser->toAPIArrayUploadAvatar());
 
