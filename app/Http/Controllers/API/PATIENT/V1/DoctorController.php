@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\PATIENT\V1;
 
+use App\Http\Controllers\API\V1\QuickbloxController;
 use App\Http\Responses\API\V1\Response;
 use App\Models\Clinic;
 use App\Models\Doctor;
@@ -18,12 +19,16 @@ class DoctorController extends Controller
 
     protected $specialtyRepository;
 
+    protected $quickblox;
+
     public function __construct(
         DoctorRepositoryInterface $doctorRepository,
-        SpecialtyRepositoryInterface $specialtyRepository
+        SpecialtyRepositoryInterface $specialtyRepository,
+        QuickbloxController $quickblox
     ){
         $this->doctorRepository = $doctorRepository;
         $this->specialtyRepository = $specialtyRepository;
+        $this->quickblox = $quickblox;
     }
     public function index(PaginationRequest $request)
     {
@@ -66,8 +71,10 @@ class DoctorController extends Controller
         {
             $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($idDoctor,$startDate,$endDate);
         }
+        $quickBlocDoctor = $this->quickblox->getUser($doctor->adminUser->username);
+        $idQuick = $quickBlocDoctor['user']['id'];
         $data= [
-            'doctor'=>$doctor->toAPIArrayDetail(),
+            'doctor'=>$doctor->toAPIArrayDetail($idQuick),
             'clinics'=> $clinics
         ];
 

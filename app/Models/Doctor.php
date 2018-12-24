@@ -100,9 +100,10 @@ class Doctor extends Base
         ];
     }
 
-    public function toAPIArrayDetail()
+    public function toAPIArrayDetail($idQuickBlox)
     {
         return [
+            'idQuickBlox' => $idQuickBlox,
             'vote' => 4,
             'rate' => 100,
             'gender' => ($this->gender == 1)?'Nam':'Nữ',
