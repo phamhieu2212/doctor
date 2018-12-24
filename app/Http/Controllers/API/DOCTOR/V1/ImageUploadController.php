@@ -29,7 +29,6 @@ class ImageUploadController extends Controller
     }
     public function avatar(APIRequest $request)
     {
-        dd($request->all());
         $idDoctor = $this->adminUserService->getUser()->id;
         if( !is_numeric($idDoctor) || ($idDoctor <= 0) ) {
             return Response::response(40001);
@@ -41,6 +40,7 @@ class ImageUploadController extends Controller
         }
 
         if ($request->hasFile('profile_image')) {
+            return 'nhan dc file roiii';
             $file = $request->file('profile_image');
 
             $newImage = $this->fileUploadService->upload(
