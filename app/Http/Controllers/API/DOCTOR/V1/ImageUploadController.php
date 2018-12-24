@@ -40,7 +40,7 @@ class ImageUploadController extends Controller
         }
 
         if ($request->hasFile('profile_image')) {
-            return 'nhan dc file roiii';
+
             $file = $request->file('profile_image');
 
             $newImage = $this->fileUploadService->upload(
@@ -58,6 +58,7 @@ class ImageUploadController extends Controller
                 if (!empty($oldImage)) {
                     $this->fileUploadService->delete($oldImage);
                 }
+                return $newImage->url;
 
                 $this->adminUserRepository->update($adminUser, ['profile_image_id' => $newImage->id]);
             }
