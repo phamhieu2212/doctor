@@ -29,6 +29,7 @@ class ImageUploadController extends Controller
     }
     public function avatar(APIRequest $request)
     {
+        dd($request->all());
         $idDoctor = $this->adminUserService->getUser()->id;
         if( !is_numeric($idDoctor) || ($idDoctor <= 0) ) {
             return Response::response(40001);
