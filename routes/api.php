@@ -77,6 +77,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'call-history'], function () {
                 Route::post('/create', 'CallHistoryController@store');
                 Route::post('/update-endtime', 'CallHistoryController@updateEndtime');
+                Route::post('/update-type', 'CallHistoryController@updateType');
             });
             Route::group(['prefix' => 'plans'], function () {
                 Route::get('/list/{idClinic}/{timestamp}', 'PlanController@index');

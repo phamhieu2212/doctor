@@ -87,4 +87,25 @@ class CallHistoryController extends Controller
         return Response::response(200,['point'=>$pointPatient['point']]);
 
     }
+
+    public function updateType(\App\Http\Requests\API\V1\Request $request)
+    {
+        $input = $request->only(
+            [
+                'call_id',
+                'type'
+            ]
+        );
+        $dataCallHistory = ['type'=>$input['type']];
+        $callHistory = $this->callHistoryRepository->find($input['call_id']);
+        if( empty( $callHistory ) ) {
+            return Response::response(50002);
+        }
+        try {
+            $this->callHistoryRepository->update($callHistory,$dataCallHistory);
+        } catch (\Exception $e) {
+            return Response::response(50002);
+        }
+        return Response::response(200);
+    }
 }
