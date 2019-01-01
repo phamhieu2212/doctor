@@ -71,6 +71,9 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'doctor'], function () {
                 Route::get('/detail/{idDoctor}', 'DoctorController@detail');
             });
+            Route::group(['prefix' => 'call'], function () {
+                Route::get('/getTime', 'CallController@getTimeCall');
+            });
             Route::group(['prefix' => 'plans'], function () {
                 Route::get('/list/{idClinic}/{timestamp}', 'PlanController@index');
                 Route::get('/order', 'PlanController@order');
