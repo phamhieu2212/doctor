@@ -11,6 +11,7 @@ use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CallHistoryController extends Controller
 {
@@ -75,16 +76,26 @@ class CallHistoryController extends Controller
         $timeNow = Carbon::now()->timestamp;
         $dataCallHistory = ['end_time'=>$timeNow];
         $timeCall = (int)date('i',$timeNow - $callHistory['end_time']->timestamp);
-        $callHistory = $this->callHistoryRepository->update($callHistory,$dataCallHistory);
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
         $dataPointPatient = [
             'point'=>$pointPatient['point']-$doctor['price_call']*$timeCall
         ];
+        try {
+            DB::beginTransaction();
 
-        $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
-        return Response::response(200,['point'=>$pointPatient['point']]);
+            $this->callHistoryRepository->update($callHistory,$dataCallHistory);
+
+            $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
+            return Response::response(200,['point'=>$pointPatient['point']]);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return Response::response(200,false);
+        }
+
 
     }
 
