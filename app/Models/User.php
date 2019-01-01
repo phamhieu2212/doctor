@@ -107,6 +107,11 @@ class User extends AuthenticatableBase
         return $this->belongsTo(\App\Models\Image::class, 'profile_image_id', 'id');
     }
 
+    public function patientPoint()
+    {
+        return $this->hasOne(\App\Models\PointPatient::class, 'user_id', 'id');
+    }
+
     /*
      * API Presentation
      */
