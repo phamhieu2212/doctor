@@ -21,7 +21,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('token/refresh', 'AuthController@refreshToken');
         });
 
-        Route::group(['middleware' => ['api.client', 'api.user']], function () {
+        Route::group(['middleware' => ['api.client', 'api.user','api.provider.doctor']], function () {
             Route::get('/detail', 'DoctorController@detail');
             Route::group(['prefix' => 'me'], function () {
                 Route::get('/', 'MeController@getMe');
@@ -64,7 +64,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('token/refresh', 'AuthController@refreshToken');
         });
 
-        Route::group(['middleware' => ['api.client', 'api.user']], function () {
+        Route::group(['middleware' => ['api.client', 'api.user','api.provider.patient']], function () {
             Route::group(['prefix' => 'search-doctor'], function () {
                 Route::get('/', 'DoctorController@index');
             });
@@ -76,6 +76,8 @@ Route::group(['namespace' => 'API'], function () {
             });
             Route::group(['prefix' => 'call-history'], function () {
                 Route::post('/create', 'CallHistoryController@store');
+                Route::post('/update-endtime', 'CallHistoryController@updateEndtime');
+                Route::post('/update-type', 'CallHistoryController@updateType');
             });
             Route::group(['prefix' => 'plans'], function () {
                 Route::get('/list/{idClinic}/{timestamp}', 'PlanController@index');
