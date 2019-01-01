@@ -85,11 +85,12 @@ Route::group(['namespace' => 'API'], function () {
 
             });
             Route::group(['prefix' => 'point'], function() {
-                Route::post('add', 'PatientController@addPoint');
+                Route::post('add', 'ChatController@addPoint');
             });
 
             Route::group(['prefix' => 'chat'], function() {
-                Route::get('check-state/{doctor_id}', 'PatientController@checkChatState');
+                Route::get('check-state/{doctor_id}', 'ChatController@checkChatState');
+                Route::get('start-chat/{doctor_id}', 'ChatController@startChat');
             });
 
             Route::post('signout', 'AuthController@postSignOut');
