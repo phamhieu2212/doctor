@@ -11,16 +11,12 @@ class ChatHistoryRepository extends SingleKeyModelRepository implements ChatHist
         return new ChatHistory();
     }
 
-    public function rules()
+    public function getLastSession($doctorId, $patientId)
     {
-        return [
-        ];
-    }
+        $lastSession = $this->getBlankModel()->where('user_id', '=', $patientId)->where('admin_user_id', '=', $doctorId)
+                            ->orderBy('id', 'desc')->first();
 
-    public function messages()
-    {
-        return [
-        ];
+        return $lastSession;
     }
 
 }

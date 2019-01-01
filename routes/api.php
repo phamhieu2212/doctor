@@ -87,6 +87,10 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('add', 'PatientController@addPoint');
             });
 
+            Route::group(['prefix' => 'chat'], function() {
+                Route::get('check-state/{doctor_id}', 'PatientController@checkChatState');
+            });
+
             Route::post('signout', 'AuthController@postSignOut');
         });
     });

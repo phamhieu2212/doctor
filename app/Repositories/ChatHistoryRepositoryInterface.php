@@ -2,4 +2,5 @@
 
 interface ChatHistoryRepositoryInterface extends SingleKeyModelRepositoryInterface
 {
+    public function getLastSession($doctorId, $patientId);
 }
