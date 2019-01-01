@@ -239,4 +239,40 @@ $factory->define(App\Models\Plan::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\PointDoctor::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'admin_user_id' => '',
+        'point' => '',
+    ];
+});
+
+$factory->define(App\Models\PointPatient::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'user_id' => '',
+        'point' => '',
+    ];
+});
+
+$factory->define(App\Models\ChatHistory::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'user_id' => '',
+        'admin_user_id' => '',
+    ];
+});
+
+$factory->define(App\Models\CallHistory::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'user_id' => '',
+        'admin_user_id' => '',
+        'start_time' => '',
+        'end_time' => '',
+        'type' => '',
+        'is_read' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

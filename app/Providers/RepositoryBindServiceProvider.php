@@ -118,6 +118,26 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\Eloquent\PlanRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\PointDoctorRepositoryInterface::class,
+            \App\Repositories\Eloquent\PointDoctorRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\PointPatientRepositoryInterface::class,
+            \App\Repositories\Eloquent\PointPatientRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\ChatHistoryRepositoryInterface::class,
+            \App\Repositories\Eloquent\ChatHistoryRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\CallHistoryRepositoryInterface::class,
+            \App\Repositories\Eloquent\CallHistoryRepository::class
+        );
+
         /* NEW BINDING */
     }
 }
