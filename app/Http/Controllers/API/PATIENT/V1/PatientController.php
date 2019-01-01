@@ -30,9 +30,9 @@ class PatientController extends Controller {
         if (empty($patientPoint)) {
             $patientPoint = $this->pointPatientRepository->create(["user_id" => $currentPatient->id, "point" => $point]);
         } else {
-            $this->pointPatientRepository->update($patientPoint, ["point" => $point]);
+            $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point + $point]);
         }
         
-        return Response::response(200, $point); 
+        return Response::response(200, $patientPoint->point); 
     }
 }
