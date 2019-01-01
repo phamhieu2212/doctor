@@ -47,6 +47,8 @@ class CallController extends Controller
             }
 
         }
-        return Response::response(200, $pointPatient['point']/$price);
+        return Response::response(200, [
+            'time'=>$pointPatient['point']/$price
+        ]);
     }
 }

@@ -41,7 +41,9 @@ class ChatController extends Controller {
             $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point + $point]);
         }
         
-        return Response::response(200, $patientPoint->point); 
+        return Response::response(200, [
+            'point'=>$patientPoint->point
+        ]);
     }
 
     public function checkChatState($adminUserId)
