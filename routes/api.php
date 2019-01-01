@@ -82,6 +82,10 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/order', 'PlanController@order');
 
             });
+            Route::group(['prefix' => 'point'], function() {
+                Route::post('add', 'PatientController@addPoint');
+            });
+
             Route::post('signout', 'AuthController@postSignOut');
         });
     });
