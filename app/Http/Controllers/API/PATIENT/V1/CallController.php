@@ -40,7 +40,12 @@ class CallController extends Controller
                 'user_id'=>$patient->id,
                 'point'=>0
             ];
-            $this->pointPatientRepository->create($data);
+            try {
+                $pointPatient = $this->pointPatientRepository->create($data);
+            } catch (\Exception $e) {
+                return Response::response(50002);
+            }
+
         }
         return Response::response(200, $pointPatient['point']/$price);
     }
