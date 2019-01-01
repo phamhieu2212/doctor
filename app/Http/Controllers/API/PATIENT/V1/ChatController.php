@@ -55,11 +55,11 @@ class ChatController extends Controller {
             $deltaTimeStamp = 3 * 24 *60 * 60; // via seconds
             $compareDate =  $lastSession->created_at;
             if ((strtotime($compareDate) + $deltaTimeStamp) >= strtotime($timeNow)) {
-                return Response::response(200, true); 
+                return Response::response(200, ['status'=>true]);
             } 
         }
 
-        return Response::response(200, false);
+        return Response::response(200, ['status'=>false]);
     }
 
     public function startChat($adminUserId)
@@ -68,14 +68,14 @@ class ChatController extends Controller {
         $doctor = $this->doctorRepository->findByAdminUserId($adminUserId);
 
         if ($currentPatient->patientPoint->point < $doctor->price_chat) {
-            return Response::response(200, false); 
+            return Response::response(200, ['status'=>false]);
         }
 
         // create row on table patient_point and minus point user
         if ($this->pointPatientRepository->prepareForStart($currentPatient, $doctor)) {
-            return Response::response(200, true);
+            return Response::response(200, ['status'=>true]);
         }
 
-        return Response::response(200, false); 
+        return Response::response(200, ['status'=>false]);
     }
 }

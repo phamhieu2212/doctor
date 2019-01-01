@@ -93,7 +93,7 @@ class CallHistoryController extends Controller
         } catch (\Exception $ex) {
             DB::rollBack();
 
-            return Response::response(200,false);
+            return Response::response(200,['status'=>false]);
         }
 
 
