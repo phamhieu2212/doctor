@@ -58,7 +58,6 @@ class ImageUploadController extends Controller
                 if (!empty($oldImage)) {
                     $this->fileUploadService->delete($oldImage);
                 }
-                return $newImage->url;
 
                 $this->adminUserRepository->update($adminUser, ['profile_image_id' => $newImage->id]);
             }

@@ -52,6 +52,9 @@ class PriceController extends Controller
         }
 
 
-        return Response::response(200);
+        return Response::response(200,[
+            'price_chat'=> $data['price_chat'],
+            'price_call' => $data['price_call']
+        ]);
     }
 }

@@ -42,7 +42,9 @@ class ChatController extends Controller {
             $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point + $point]);
         }
         
-        return Response::response(200, $patientPoint->point); 
+        return Response::response(200, [
+            'point'=>$patientPoint->point
+        ]);
     }
 
     public function checkChatState($adminUserId)
@@ -84,14 +86,14 @@ class ChatController extends Controller {
         $doctor = $this->doctorRepository->findByAdminUserId($adminUserId);
 
         if ($currentPatient->patientPoint->point < $doctor->price_chat) {
-            return Response::response(200, false); 
+            return Response::response(200, ['status'=>false]);
         }
 
         // create row on table patient_point and minus point user
         if ($this->pointPatientRepository->prepareForStart($currentPatient, $doctor)) {
-            return Response::response(200, true);
+            return Response::response(200, ['status'=>true]);
         }
 
-        return Response::response(200, false); 
+        return Response::response(200, ['status'=>false]);
     }
 }

@@ -75,6 +75,8 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/getTime/{idDoctor}', 'CallController@getTimeCall');
             });
             Route::group(['prefix' => 'call-history'], function () {
+                Route::get('/', 'CallHistoryController@index');
+                Route::get('/check-read', 'CallHistoryController@checkRead');
                 Route::post('/create', 'CallHistoryController@store');
                 Route::post('/update-endtime', 'CallHistoryController@updateEndtime');
                 Route::post('/update-type', 'CallHistoryController@updateType');

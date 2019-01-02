@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\PATIENT\V1;
 
 use App\Http\Responses\API\V1\Response;
+use App\Models\CallHistory;
 use App\Models\Doctor;
 use App\Models\PointPatient;
 use App\Repositories\CallHistoryRepositoryInterface;
@@ -11,6 +12,8 @@ use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PaginationRequest;
 
 class CallHistoryController extends Controller
 {
@@ -27,6 +30,31 @@ class CallHistoryController extends Controller
         $this->callHistoryRepository = $callHistoryRepository;
         $this->userService = $APIUserService;
         $this->pointPatientRepository = $pointPatientRepository;
+    }
+
+    public function index(PaginationRequest $request)
+    {
+        $paginate['limit']      = $request->limit();
+        $paginate['offset']     = $request->offset();
+        $paginate['order']      = 'id';
+        $paginate['direction']  = 'desc';
+        $filter = [];
+        $keyword = $request->get('keyword');
+        if (!empty($keyword)) {
+            $filter['query'] = $keyword;
+        }
+
+        $callHistories = $this->callHistoryRepository->getByFilterWithPatient($this->userService->getUser()->id,$filter,$paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']); // change get() to geEnabled as requirement
+
+        foreach( $callHistories as $key => $callHistory ) {
+            $callHistory->is_read = 1;
+            $callHistory->save();
+            $callHistories[$key] = $callHistory->toAPIArrayList();
+        }
+
+
+        return Response::response(200,$callHistories
+        );
     }
     public function store(\App\Http\Requests\API\V1\Request $request)
     {
@@ -75,16 +103,26 @@ class CallHistoryController extends Controller
         $timeNow = Carbon::now()->timestamp;
         $dataCallHistory = ['end_time'=>$timeNow];
         $timeCall = (int)date('i',$timeNow - $callHistory['end_time']->timestamp);
-        $callHistory = $this->callHistoryRepository->update($callHistory,$dataCallHistory);
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
         $dataPointPatient = [
             'point'=>$pointPatient['point']-$doctor['price_call']*$timeCall
         ];
+        try {
+            DB::beginTransaction();
 
-        $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
-        return Response::response(200,['point'=>$pointPatient['point']]);
+            $this->callHistoryRepository->update($callHistory,$dataCallHistory);
+
+            $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
+            return Response::response(200,['point'=>$pointPatient['point']]);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return Response::response(200,['status'=>false]);
+        }
+
 
     }
 
@@ -107,5 +145,25 @@ class CallHistoryController extends Controller
             return Response::response(50002);
         }
         return Response::response(200);
+    }
+
+    public function checkRead()
+    {
+        $idPatient = $this->userService->getUser()->id;
+
+        $countRead = CallHistory::where('user_id',$idPatient)->where('is_read',0)->count();
+
+        if($countRead >0)
+        {
+            return Response::response(200,[
+                'status'=>true
+            ]);
+        }
+        else
+        {
+            return Response::response(200,[
+                'status'=>false
+            ]);
+        }
     }
 }
