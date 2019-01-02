@@ -100,6 +100,11 @@ class AdminUser extends AuthenticatableBase
     {
         return $this->hasOne('App\Models\Doctor','admin_user_id');
     }
+
+    public function point()
+    {
+        return $this->hasOne('App\Models\PointDoctor','admin_user_id');
+    }
     public function specialties()
     {
         return $this->belongsToMany(Specialty::class,'doctor_specialties');
@@ -162,7 +167,9 @@ class AdminUser extends AuthenticatableBase
             'name' => $this->name,
             'vote' => 4,
             'rate' => 100,
-            'money' => 1000000,
+            'money' => $this->point['point'],
+            'price_chat'=>$this->doctor->price_chat,
+            'price_call'=>$this->doctor->price_call,
             'status' => 0,
             'profile_image_id' => $this->profile_image_id,
             'image_link' => (!empty($this->present()->profileImage()))?$this->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
