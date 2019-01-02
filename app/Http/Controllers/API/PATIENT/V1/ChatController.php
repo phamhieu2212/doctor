@@ -7,6 +7,7 @@ use App\Http\Responses\API\V1\Response;
 use App\Services\APIUserServiceInterface;
 use \App\Repositories\ChatHistoryRepositoryInterface;
 use \App\Repositories\DoctorRepositoryInterface;
+use App\Models\ChatHistory;
 
 class ChatController extends Controller {
     protected $pointPatientRepository;
@@ -69,17 +70,27 @@ class ChatController extends Controller {
     public function checkChatState($adminUserId)
     {
         $currentPatient = $this->userService->getUser();
+        $doctor = $this->doctorRepository->findByAdminUserId($adminUserId);
         $lastSession = $this->chatHistoryRepository->getLastSession($adminUserId, $currentPatient->id);
+        $data = [
+            'user_point' => $currentPatient->patientPoint->point,
+            'is_enough' => $currentPatient->patientPoint->point >= $doctor->price_chat ? true : false
+        ];
+        
         if (!empty($lastSession)) {
             $timeNow = date('Y-m-d H:i:s');
             $deltaTimeStamp = 3 * 24 *60 * 60; // via seconds
             $compareDate =  $lastSession->created_at;
             if ((strtotime($compareDate) + $deltaTimeStamp) >= strtotime($timeNow)) {
-                return Response::response(200, ['status'=>true]);
+                $data['state'] = ChatHistory::CONTINUE;
+            } else {
+                $data['state'] = ChatHistory::FINISHED;
             } 
+        } else {
+            $data['state'] = ChatHistory::NEW;
         }
 
-        return Response::response(200, ['status'=>false]);
+        return Response::response(200, $data);
     }
 
     public function startChat($adminUserId)
