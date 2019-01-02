@@ -52,29 +52,22 @@ class ChatController extends Controller {
         $currentPatient = $this->userService->getUser();
         $doctor = $this->doctorRepository->findByAdminUserId($adminUserId);
         $lastSession = $this->chatHistoryRepository->getLastSession($adminUserId, $currentPatient->id);
+        $data = [
+            'user_point' => $currentPatient->patientPoint->point,
+            'is_enough' => $currentPatient->patientPoint->point >= $doctor->price_chat ? true : false
+        ];
+        
         if (!empty($lastSession)) {
             $timeNow = date('Y-m-d H:i:s');
             $deltaTimeStamp = 3 * 24 *60 * 60; // via seconds
             $compareDate =  $lastSession->created_at;
             if ((strtotime($compareDate) + $deltaTimeStamp) >= strtotime($timeNow)) {
-                $data = [
-                    'state'=> ChatHistory::CONTINUE,
-                    'user_point' => $currentPatient->patientPoint->point,
-                    'is_enough' => $currentPatient->patientPoint->point >= $doctor->price_chat ? true : false
-                ]; 
+                $data['state'] = ChatHistory::CONTINUE;
             } else {
-                $data = [
-                    'state'=> ChatHistory::FINISHED,
-                    'user_point' => $currentPatient->patientPoint->point,
-                    'is_enough' => $currentPatient->patientPoint->point >= $doctor->price_chat ? true : false
-                ]; 
+                $data['state'] = ChatHistory::FINISHED;
             } 
         } else {
-            $data = [
-                'state'=> ChatHistory::NEW,
-                'user_point' => $currentPatient->patientPoint->point,
-                'is_enough' => $currentPatient->patientPoint->point >= $doctor->price_chat ? true : false
-            ];
+            $data['state'] = ChatHistory::NEW;
         }
 
         return Response::response(200, $data);
