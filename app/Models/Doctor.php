@@ -103,6 +103,7 @@ class Doctor extends Base
     public function toAPIArrayDetail($idQuickBlox)
     {
         return [
+            'id' => $this->adminUser->id,
             'idQuickBlox' => $idQuickBlox,
             'vote' => 4,
             'rate' => 100,
