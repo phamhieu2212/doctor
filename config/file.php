@@ -10,6 +10,7 @@ return [
         ],
         'image' => [
             'image/png'  => 'png',
+            'image/*'  => 'png',
             'image/jpeg' => 'jpg',
             'image/gif'  => 'gif',
         ],

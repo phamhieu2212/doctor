@@ -2,4 +2,5 @@
 
 interface CallHistoryRepositoryInterface extends SingleKeyModelRepositoryInterface
 {
+    public function getByFilterWithPatient($idPatient,$filter, $order, $direction, $offset, $limit);
 }

@@ -76,4 +76,16 @@ class CallHistory extends Base
         ];
     }
 
+    public function toAPIArrayList()
+    {
+        return [
+            'doctor_name' =>$this->adminUser->name,
+            'start_time' => date('Y-m-d H:i:s',strtotime($this->start_time)),
+            'end_time' => date('Y-m-d H:i:s',strtotime($this->end_time)),
+            'type' => $this->type
+        ];
+
+
+    }
+
 }
