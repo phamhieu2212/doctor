@@ -186,7 +186,7 @@ class AdminUser extends AuthenticatableBase
             'price_call'=>$this->doctor->price_call,
             'vote' => 4,
             'rate' => 100,
-            'money' => 1000000,
+            'money' => $this->point['point'],
             'status' => 0,
             'profile_image_id' => $this->profile_image_id,
             'image_link' => (!empty($this->present()->profileImage()))?$this->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
