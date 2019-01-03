@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\PATIENT\V1;
 
 use App\Http\Requests\APIRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Responses\API\V1\Response;
 use App\Repositories\FilePatientImageRepositoryInterface;
 use App\Repositories\FilePatientRepositoryInterface;
@@ -27,6 +28,24 @@ class PatientFileController extends Controller
         $this->userService = $APIUserService;
         $this->filePatientRepository = $filePatientRepository;
         $this->filePatientImageRepository = $filePatientImageRepository;
+    }
+
+    public function index(PaginationRequest $request)
+    {
+        $paginate['limit']      = $request->limit();
+        $paginate['offset']     = $request->offset();
+        $paginate['order']      = 'id';
+        $paginate['direction']  = 'desc';
+        $filter = [];
+        $patient = $this->userService->getUser();
+
+        $filePatients = $this->filePatientRepository->getByFilterWithPatient($patient,$filter,$paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']); // change get() to geEnabled as requirement
+        foreach( $filePatients as $key => $filePatient ) {
+            $filePatients[$key] = $filePatient->toAPIArrayList();
+        }
+
+        return Response::response(200,[$filePatients]
+        );
     }
     public function store(APIRequest $request)
     {
