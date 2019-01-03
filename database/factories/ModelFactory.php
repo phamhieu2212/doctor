@@ -275,4 +275,24 @@ $factory->define(App\Models\CallHistory::class, function (Faker\Generator $faker
     ];
 });
 
+$factory->define(App\Models\FilePatient::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'name' => '',
+        'title' => '',
+        'user_id' => '',
+        'started_at' => '',
+        'description' => '',
+    ];
+});
+
+$factory->define(App\Models\FilePatientImage::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'file_patient_id' => '',
+        'image_id' => '',
+        'type' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

@@ -138,6 +138,16 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\Eloquent\CallHistoryRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\FilePatientRepositoryInterface::class,
+            \App\Repositories\Eloquent\FilePatientRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\FilePatientImageRepositoryInterface::class,
+            \App\Repositories\Eloquent\FilePatientImageRepository::class
+        );
+
         /* NEW BINDING */
     }
 }
