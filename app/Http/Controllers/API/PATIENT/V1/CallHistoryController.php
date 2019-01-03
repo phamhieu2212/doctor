@@ -115,6 +115,7 @@ class CallHistoryController extends Controller
             $this->callHistoryRepository->update($callHistory,$dataCallHistory);
 
             $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
+            DB::commit();
             return Response::response(200,['point'=>$pointPatient['point']]);
 
         } catch (\Exception $ex) {

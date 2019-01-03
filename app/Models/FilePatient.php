@@ -69,4 +69,15 @@ class FilePatient extends Base
         ];
     }
 
+    public function toAPIArrayList()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'title' => $this->title,
+            'started_at' => $this->started_at,
+            'description' => $this->description,
+        ];
+    }
+
 }
