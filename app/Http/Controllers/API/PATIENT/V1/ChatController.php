@@ -79,7 +79,7 @@ class ChatController extends Controller {
         
         if (!empty($lastSession)) {
             $timeNow = date('Y-m-d H:i:s');
-            $deltaTimeStamp = 3 * 24 *60 * 60; // via seconds
+            $deltaTimeStamp = 3 * 60; // via seconds
             $compareDate =  $lastSession->created_at;
             if ((strtotime($compareDate) + $deltaTimeStamp) >= strtotime($timeNow)) {
                 $data['state'] = ChatHistory::CONTINUE;
