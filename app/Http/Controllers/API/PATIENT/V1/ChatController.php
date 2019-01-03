@@ -119,12 +119,12 @@ class ChatController extends Controller {
             $deltaTimeStamp = 3 * 60; // via seconds
             $compareDate =  $lastSession->created_at;
             if ((strtotime($compareDate) + $deltaTimeStamp) >= strtotime($timeNow)) {
-                $data['state'] = ChatHistory::CONTINUE;
+                $data['state'] = ChatHistory::CONTINUECHAT;
             } else {
-                $data['state'] = ChatHistory::FINISHED;
+                $data['state'] = ChatHistory::FINISHEDCHAT;
             } 
         } else {
-            $data['state'] = ChatHistory::NEW;
+            $data['state'] = ChatHistory::NEWCHAT;
         }
 
         return Response::response(200, $data);

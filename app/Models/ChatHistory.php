@@ -5,9 +5,9 @@
 class ChatHistory extends Base
 {
 
-    const NEW = 1;
-    const CONTINUE = 2;
-    const FINISHED = 3;
+    const NEWCHAT = 1;
+    const CONTINUECHAT = 2;
+    const FINISHEDCHAT = 3;
 
     /**
      * The database table used by the model.
