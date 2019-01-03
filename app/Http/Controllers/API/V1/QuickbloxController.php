@@ -217,4 +217,33 @@ class QuickbloxController extends Controller
         return json_decode($result,true);
 
     }
+
+    public function getUserById($idQuick)
+    {
+        $dataToken = json_decode($this->getTokenAuth(),true);
+        $token = $dataToken['session']['token'];
+        DEFINE('QB_TOKEN', "Qb-Token:".$token);
+        // Quickblox endpoints
+
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "https://api.quickblox.com/users/".$idQuick.".json");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+
+
+        $headers = array();
+        $headers[] = "Quickblox-Rest-Api-Version: 0.1.0";
+        $headers[] = QB_TOKEN;
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close ($ch);
+        return json_decode($result,true);
+
+    }
 }
