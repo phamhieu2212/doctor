@@ -130,8 +130,35 @@ class ChatController extends Controller {
         return Response::response(200, $data);
     }
 
-    public function startChat($adminUserId)
+    public function startChat(Request $request)
     {
+        $idDoctor = $request->get('idDoctor');
+        if (!empty($idDoctor)) {
+            $adminUserId = $idDoctor;
+        }
+        else
+        {
+            $idQuickDoctor = $request->get('idQuickDoctor');
+            $userQuick = $this->quickBlox->getUserById($idQuickDoctor);
+            if( isset($userQuick['message']) and $userQuick['code'] == null)
+            {
+                return [
+                    'code' => 503,
+                    'status'=> $userQuick['message'],
+                    'data'=>''
+
+                ];
+            }
+            else
+            {
+                $username = $userQuick['user']['login'];
+                $adminUser = $this->adminUserRepository->findByUsername($username);
+                if( empty($adminUser) ) {
+                    return Response::response(20004);
+                }
+                $adminUserId = $adminUser['id'];
+            }
+        }
         $currentPatient = $this->userService->getUser();
         $doctor = $this->doctorRepository->findByAdminUserId($adminUserId);
 

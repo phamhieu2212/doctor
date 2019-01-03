@@ -93,7 +93,7 @@ Route::group(['namespace' => 'API'], function () {
 
             Route::group(['prefix' => 'chat'], function() {
                 Route::get('check-state', 'ChatController@checkChatState');
-                Route::get('start-chat/{doctor_id}', 'ChatController@startChat');
+                Route::get('start-chat', 'ChatController@startChat');
             });
 
             Route::post('signout', 'AuthController@postSignOut');
