@@ -9,6 +9,8 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('quickblox/signup', 'QuickbloxController@signUp');
             Route::post('quickblox/signin', 'QuickbloxController@signIn');
             Route::get('nganluong', 'TestController@index');
+            Route::get('provinces', 'StaticDataController@provinces');
+            Route::get('districts/{province_id}', 'StaticDataController@districts');
         });
 
     });
