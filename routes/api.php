@@ -102,6 +102,10 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('check-state', 'ChatController@checkChatState');
                 Route::get('start-chat', 'ChatController@startChat');
             });
+            
+            Route::get('profile', 'PatientController@show');
+           
+            Route::put('profile', 'PatientController@update');
 
             Route::post('signout', 'AuthController@postSignOut');
         });
