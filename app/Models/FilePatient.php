@@ -50,6 +50,7 @@ class FilePatient extends Base
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
 
+
     
 
     // Utility Functions
@@ -71,12 +72,18 @@ class FilePatient extends Base
 
     public function toAPIArrayList()
     {
+        $fileImages = FilePatientImage::where('file_patient_id',$this->id)->get();
+        foreach($fileImages as $key=>$fileImage )
+        {
+            $fileImages[$key] = $fileImage->toAPIArrayList();
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
             'title' => $this->title,
             'started_at' => $this->started_at,
             'description' => $this->description,
+            'images'=>$fileImages
         ];
     }
 
