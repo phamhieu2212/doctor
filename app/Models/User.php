@@ -140,4 +140,15 @@ class User extends AuthenticatableBase
             'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
     }
+
+    public function toAPIArrayContact()
+    {
+        return [
+            'name'      => $this->name,
+            'birthday'  => $this->birthday,
+            'address'   => $this->address,
+            'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
+        ];
+    }
+
 }

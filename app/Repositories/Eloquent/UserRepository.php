@@ -25,4 +25,13 @@ class UserRepository extends AuthenticatableRepository implements UserRepository
         return [
         ];
     }
+
+    public function getByFilterWithListId($idListUserContact,$filter, $order = 'id', $direction = 'asc', $offset = 0, $limit = 20)
+    {
+        $query = $this->buildQueryByFilter($this->getBlankModel(), $filter);
+        $query = $this->buildOrder($query, $filter, $order, $direction);
+
+        return $query->whereIn('id',$idListUserContact)->skip($offset)->take($limit)->get();
+
+    }
 }

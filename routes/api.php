@@ -50,6 +50,11 @@ Route::group(['namespace' => 'API'], function () {
 
             });
 
+            Route::group(['prefix' => 'contact'], function () {
+                Route::get('/', 'ContactController@index');
+
+            });
+
             Route::post('signout', 'AuthController@postSignOut');
         });
     });
