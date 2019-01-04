@@ -50,6 +50,11 @@ class FilePatient extends Base
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
 
+    public function images()
+    {
+        return $this->belongsToMany(Image::class,'file_patient_images');
+    }
+
 
     
 

@@ -47,10 +47,7 @@ class DoctorSpecialty extends Base
         return $this->belongsTo(\App\Models\AdminUser::class, 'admin_user_id', 'id');
     }
 
-    public function specialty()
-    {
-        return $this->belongsTo(\App\Models\Specialty::class, 'specialty_id', 'id');
-    }
+    w
 
     
 

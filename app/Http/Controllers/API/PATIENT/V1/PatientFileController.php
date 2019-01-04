@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\PATIENT\V1;
 use App\Http\Requests\APIRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Responses\API\V1\Response;
+use App\Models\FilePatientImage;
 use App\Repositories\FilePatientImageRepositoryInterface;
 use App\Repositories\FilePatientRepositoryInterface;
 use App\Services\APIUserServiceInterface;
@@ -83,6 +84,59 @@ class PatientFileController extends Controller
             return Response::response(200,['status'=>false]);
         }
 
+
+    }
+
+    public function update($id,APIRequest $request)
+    {
+        if( !is_numeric($id) || ($id <= 0) ) {
+            return Response::response(40001);
+        }
+
+        $filePatient = $this->filePatientRepository->find($id);
+        if( empty($filePatient) ) {
+            return Response::response(20004);
+        }
+
+        $data = array();
+        $dataFileImage = array();
+        $bodyRequests = $request->all();
+        $data['name'] = $bodyRequests['name'];
+        $data['title'] = $bodyRequests['title'];
+        $data['description'] = $bodyRequests['description'];
+        $data['started_at'] = $bodyRequests['started_at'];
+        $data['user_id'] = $this->userService->getUser()->id;
+        $imageArray = $bodyRequests['images'];
+        try {
+            DB::beginTransaction();
+            $filePatient = $this->filePatientRepository->update($filePatient,$data);
+            $filePatientImageDeletes = FilePatientImage::where('file_patient_id',$filePatient['id'])->get();
+            foreach($filePatientImageDeletes as $filePatientImageDelete)
+            {
+                $filePatientImageDelete->delete();
+            }
+
+            $dataFileImage['file_patient_id'] = $filePatient['id'];
+
+            foreach($imageArray as $key=>$images)
+            {
+                $dataFileImage['type'] = $key;
+                foreach($images as $imageId)
+                {
+                    $dataFileImage['image_id'] = $imageId;
+                    $this->filePatientImageRepository->create($dataFileImage);
+                }
+            }
+            DB::commit();
+
+
+            return Response::response(200,['filePatient'=>$filePatient->toAPIArrayList()]);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return Response::response(200,['status'=>false]);
+        }
 
     }
 }
