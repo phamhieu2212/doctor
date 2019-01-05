@@ -86,6 +86,7 @@ class CallHistory extends Base
     public function toAPIArrayList()
     {
         return [
+            'quick_id'=> $this->adminUser->quick_id,
             'doctor_id'=> $this->adminUser->id,
             'doctor_name' =>$this->adminUser->name,
             'start_time' => date('Y-m-d H:i:s',strtotime($this->start_time)),
