@@ -112,6 +112,11 @@ class User extends AuthenticatableBase
         return $this->hasOne(\App\Models\PointPatient::class, 'user_id', 'id');
     }
 
+    public function patient()
+    {
+        return $this->hasOne(\App\Models\Patient::class, 'user_id', 'id');
+    }
+
     /*
      * API Presentation
      */

@@ -295,4 +295,27 @@ $factory->define(App\Models\FilePatientImage::class, function (Faker\Generator $
     ];
 });
 
+$factory->define(App\Models\Patient::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'user_id' => '',
+        'full_name' => '',
+        'birth_day' => '',
+        'gender' => '',
+        'identification' => '',
+        'country' => '',
+        'nation' => '',
+        'job' => '',
+        'phone_number' => '',
+        'email' => '',
+        'province' => '',
+        'district' => '',
+        'ward' => '',
+        'address' => '',
+        'name_of_relatives' => '',
+        'relations' => '',
+        'phone_of_relatives' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */
