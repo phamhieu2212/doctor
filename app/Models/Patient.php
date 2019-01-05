@@ -85,7 +85,7 @@ class Patient extends Base
             'country' => $this->country,
             'nation' => $this->nation,
             'job' => $this->job,
-            'phone_number' => $this->phone_number,
+            'phone_number' => $this->user->telephone,
             'email' => $this->email,
             'province' => $this->province,
             'district' => $this->district,
