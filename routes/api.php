@@ -9,6 +9,8 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('quickblox/signup', 'QuickbloxController@signUp');
             Route::post('quickblox/signin', 'QuickbloxController@signIn');
             Route::get('nganluong', 'TestController@index');
+            Route::get('provinces', 'StaticDataController@provinces');
+            Route::get('districts/{province_id}', 'StaticDataController@districts');
         });
 
     });
@@ -105,6 +107,10 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('check-state', 'ChatController@checkChatState');
                 Route::get('start-chat', 'ChatController@startChat');
             });
+            
+            Route::get('profile', 'PatientController@show');
+           
+            Route::post('profile', 'PatientController@update');
 
             Route::post('signout', 'AuthController@postSignOut');
         });
