@@ -11,6 +11,7 @@ use App\Http\Requests\API\V1\SignUpRequest;
 use App\Http\Requests\BaseRequest;
 use App\Models\AdminUser;
 use App\Models\User;
+use App\Repositories\PatientRepositoryInterface;
 use App\Services\AdminUserServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Services\APIUserServiceInterface;
@@ -28,6 +29,7 @@ class AuthController extends Controller
 
     /** @var \App\Repositories\UserRepositoryInterface */
     protected $userRepository;
+    protected $patientRepository;
 
     /** @var AuthorizationServer */
     protected $server;
@@ -36,7 +38,8 @@ class AuthController extends Controller
         UserServiceInterface        $userService,
         UserRepositoryInterface     $userRepository,
         AuthorizationServer         $server,
-        QuickbloxController $quickblox
+        QuickbloxController $quickblox,
+        PatientRepositoryInterface $patientRepository
 
     )
     {
@@ -44,6 +47,7 @@ class AuthController extends Controller
         $this->userRepository       = $userRepository;
         $this->server               = $server;
         $this->quickblox            = $quickblox;
+        $this->patientRepository    = $patientRepository;
 
     }
 
@@ -131,6 +135,7 @@ class AuthController extends Controller
             $dataPatient['password'] = $data['password'];
             $dataPatient['email'] = $data['username'].'@gmail.com';
             $user = $this->userRepository->create($dataPatient);
+            $patient = $this->patientRepository->create(['user_id'=>$user['id']]);
             $dataUser = [
                 'user' => $user->toAPIArrayLogin(),
 
