@@ -110,7 +110,7 @@ Route::group(['namespace' => 'API'], function () {
             
             Route::get('profile', 'PatientController@show');
            
-            Route::put('profile', 'PatientController@update');
+            Route::post('profile', 'PatientController@update');
 
             Route::post('signout', 'AuthController@postSignOut');
         });

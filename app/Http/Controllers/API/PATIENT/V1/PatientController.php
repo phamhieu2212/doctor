@@ -44,7 +44,7 @@ class PatientController extends Controller {
         $data = $request->only(
             [
                 'full_name', 'birth_day', 'gender', 'identification',
-                'country', 'nation', 'job', 'phone_number', 'email',
+                'country', 'nation', 'job', 'email',
                 'province', 'district', 'ward', 'address', 'name_of_relatives',
                 'relationship', 'phone_of_relatives'
             ]
