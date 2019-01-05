@@ -15,6 +15,7 @@ use App\Repositories\SpecialtyRepositoryInterface;
 use App\Services\FileUploadServiceInterface;
 use App\Repositories\ImageRepositoryInterface;
 use App\Repositories\AdminUserRoleRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class AdminUserController extends Controller
 {
@@ -130,67 +131,84 @@ class AdminUserController extends Controller
                 'role','phone'
             ]
         );
-        $adminUser = $this->adminUserRepository->create($input);
-        if (empty($adminUser)) {
-            return redirect()
-                ->back()
-                ->withErrors(trans('admin.errors.general.save_failed'));
-        }
+        try {
+            DB::beginTransaction();
 
-        if($input['role'][0] == 'admin')
-        {
-            $inputDoctor = $request->only(
-                [
-                    'experience','description','gender','city','address','hospital_id','position','birthday','name'
-                ]
-            );
-            $inputDoctor['admin_user_id'] = $adminUser->id;
-            $doctor = $this->doctorRepository->create($inputDoctor);
-            if (empty($doctor)) {
+            $adminUser = $this->adminUserRepository->create($input);
+            if (empty($adminUser)) {
                 return redirect()
                     ->back()
                     ->withErrors(trans('admin.errors.general.save_failed'));
             }
 
-        }
+            if($input['role'][0] == 'admin')
+            {
+                $inputDoctor = $request->only(
+                    [
+                        'experience','description','gender','city','address','hospital_id','position','birthday','name'
+                    ]
+                );
+                $inputDoctor['admin_user_id'] = $adminUser->id;
+                $this->doctorRepository->create($inputDoctor);
 
-        $this->adminUserRoleRepository->setAdminUserRoles($adminUser->id, $request->input('role', []));
-        $adminUser->specialties()->sync($request->input('specialty_id'));
-
-        $inputQuickBlox = [
-            'username' => $adminUser->username,
-            'password' => $adminUser->username,
-            'email'    => $adminUser->email ,
-            'external_user_id' => '',
-            'facebook_id' => '',
-            'twitter_id' => '',
-            'full_name'=> $adminUser->name ,
-            'phone'    => $adminUser->phone,
-            'website' => '',
-        ];
-        $this->quickblox->signUp($inputQuickBlox);
-
-        if ($request->hasFile('profile_image')) {
-            $file       = $request->file('profile_image');
-
-            $image = $this->fileUploadService->upload(
-                'user_profile_image',
-                $file,
-                [
-                    'entity_type' => 'user_profile_image',
-                    'entity_id'   => $adminUser->id,
-                    'title'       => $request->input('name', ''),
-                ]
-            );
-
-            if (!empty($image)) {
-                $this->adminUserRepository->update($adminUser, ['profile_image_id' => $image->id]);
             }
+
+            $this->adminUserRoleRepository->setAdminUserRoles($adminUser->id, $request->input('role', []));
+            $adminUser->specialties()->sync($request->input('specialty_id'));
+
+
+            if ($request->hasFile('profile_image')) {
+                $file       = $request->file('profile_image');
+
+                $image = $this->fileUploadService->upload(
+                    'user_profile_image',
+                    $file,
+                    [
+                        'entity_type' => 'user_profile_image',
+                        'entity_id'   => $adminUser->id,
+                        'title'       => $request->input('name', ''),
+                    ]
+                );
+
+                if (!empty($image)) {
+                    $this->adminUserRepository->update($adminUser, ['profile_image_id' => $image->id]);
+                }
+            }
+            $inputQuickBlox = [
+                'username' => $adminUser->username,
+                'password' => $adminUser->username,
+                'email'    => $adminUser->email ,
+                'external_user_id' => '',
+                'facebook_id' => '',
+                'twitter_id' => '',
+                'full_name'=> $adminUser->name ,
+                'phone'    => $adminUser->phone,
+                'website' => '',
+            ];
+            $userQuick = $this->quickblox->signUp($inputQuickBlox);
+            if(isset($userQuick['errors']))
+            {
+                return redirect()
+                    ->back()
+                    ->withErrors(trans('admin.errors.general.save_failed'));
+            }
+            $idQuick = $userQuick['user']['id'];
+            $this->adminUserRepository->update($adminUser, ['quick_id' => $idQuick]);
+            DB::commit();
+
+            return redirect()
+                ->action('Admin\AdminUserController@index')
+                ->with('message-success', trans('admin.messages.general.create_success'));
+
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->withErrors(trans('admin.errors.general.save_failed'));
         }
 
-        return redirect()
-            ->action('Admin\AdminUserController@index')
-            ->with('message-success', trans('admin.messages.general.create_success'));
     }
 
     /**

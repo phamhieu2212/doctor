@@ -68,7 +68,7 @@ class User extends AuthenticatableBase
         'api_access_token',
         'profile_image_id',
         'last_notification_id',
-        'is_activated'
+        'is_activated','quick_id'
     ];
 
     /**

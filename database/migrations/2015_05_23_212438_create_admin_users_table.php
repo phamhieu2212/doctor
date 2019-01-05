@@ -23,6 +23,7 @@ class CreateAdminUsersTable extends Migration
             $table->string('locale')->default('');
 
             $table->bigInteger('last_notification_id')->default(0);
+            $table->bigInteger('quick_id')->default(0);
 
             $table->string('api_access_token')->default('');
 

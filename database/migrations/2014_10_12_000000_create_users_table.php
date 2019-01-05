@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password', 60);
 
+
             $table->smallInteger('gender')->default(1);     // 1 = Male, 0 = Female
             $table->string('telephone')->nullable()->default('');
             $table->date('birthday')->nullable()->default(null);
@@ -23,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable()->default('');
 
             $table->bigInteger('last_notification_id')->default(0);
+            $table->bigInteger('quick_id')->default(0);
 
             $table->string('api_access_token')->default('');
 

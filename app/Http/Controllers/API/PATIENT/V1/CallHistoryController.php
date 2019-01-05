@@ -67,6 +67,7 @@ class CallHistoryController extends Controller
         $data = [
             'admin_user_id'=> $input['doctor_id'],
             'user_id' => $this->userService->getUser()->id,
+            'caller'=>1,
             'start_time'=> $timeNow,
             'end_time'=>$timeNow,
             'type'=>0
