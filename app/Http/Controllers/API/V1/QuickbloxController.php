@@ -85,7 +85,6 @@ class QuickbloxController extends Controller
             'user'=>[
                 'login' => $input['username'],
                 'password' => $input['password'],
-                'email' => $input['email'],
                 'external_user_id' => $input['external_user_id'],
                 'facebook_id' => $input['facebook_id'],
                 'twitter_id' => $input['twitter_id'],
