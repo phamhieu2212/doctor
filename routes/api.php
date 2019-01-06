@@ -90,6 +90,9 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'doctor'], function () {
                 Route::get('/detail/{idDoctor}', 'DoctorController@detail');
             });
+            Route::group(['prefix' => 'specialty'], function () {
+                Route::get('/', 'SpecialtyController@index');
+            });
             Route::group(['prefix' => 'call'], function () {
                 Route::get('/getTime/{idDoctor}', 'CallController@getTimeCall');
             });
