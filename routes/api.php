@@ -11,6 +11,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::get('nganluong', 'TestController@index');
             Route::get('provinces', 'StaticDataController@provinces');
             Route::get('districts/{province_id}', 'StaticDataController@districts');
+            Route::post('device', 'DeviceController@register');
         });
 
     });
@@ -59,6 +60,13 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/', 'ContactController@index');
                 Route::get('/detail/{idPatient}', 'ContactController@detail');
 
+            });
+
+            Route::group(['prefix' => 'call'], function () {
+                Route::post('/', 'CallController@call');
+                Route::put('/update-state/{call_id}', 'CallController@update');
+                Route::get('/check-read', 'CallController@checkRead');
+                Route::get('/history', 'CallController@history');
             });
 
             Route::post('signout', 'AuthController@postSignOut');

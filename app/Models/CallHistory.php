@@ -6,9 +6,14 @@ use App\Http\Controllers\API\V1\QuickbloxController;
 
 class CallHistory extends Base
 {
-
+    const DOCTOR = 'doctor';
+    const PATIENT = 'patient';
+    const CANCEL = 1;
+    const MISS = 2;
+    const FINISHED = 3;
+    const NOT_YET_READ = 0;
+    const IS_READ = 1;
     
-
     /**
      * The database table used by the model.
      *
@@ -30,6 +35,7 @@ class CallHistory extends Base
         'end_time',
         'type',
         'is_read',
+        'caller',
     ];
 
     /**
@@ -70,10 +76,11 @@ class CallHistory extends Base
      */
     public function toAPIArray()
     {
-        $userQuick = $this->quickBlox->getUser($this->adminUser->username);
-        dd($userQuick);
+        // $userQuick = $this->quickBlox->getUser($this->adminUser->username);
+        // dd($userQuick);
         return [
             'id' => $this->id,
+            'caller' => $this->caller,
             'user_id' => $this->user_id,
             'admin_user_id' => $this->admin_user_id,
             'start_time' => $this->start_time,
