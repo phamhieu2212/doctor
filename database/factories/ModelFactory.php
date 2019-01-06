@@ -318,4 +318,13 @@ $factory->define(App\Models\Patient::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\Device::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'device_id' => '',
+        'type' => '',
+        'user_id' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */
