@@ -57,6 +57,13 @@ Route::group(['namespace' => 'API'], function () {
 
             });
 
+            Route::group(['prefix' => 'call'], function () {
+                Route::post('/', 'CallController@call');
+                Route::put('/update-state/{call_id}', 'CallController@update');
+                Route::get('/check-read', 'CallController@checkRead');
+                Route::get('/history', 'CallController@history');
+            });
+
             Route::post('signout', 'AuthController@postSignOut');
         });
     });
