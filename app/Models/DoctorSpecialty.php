@@ -47,7 +47,6 @@ class DoctorSpecialty extends Base
         return $this->belongsTo(\App\Models\AdminUser::class, 'admin_user_id', 'id');
     }
 
-    w
 
     
 

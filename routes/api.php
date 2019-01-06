@@ -51,9 +51,13 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/store', 'PlanController@store');
 
             });
+            Route::group(['prefix' => 'patient-file'], function () {
+                Route::get('/{idFilePatient}', 'ContactController@getFilePatient');
+            });
 
             Route::group(['prefix' => 'contact'], function () {
                 Route::get('/', 'ContactController@index');
+                Route::get('/detail/{idPatient}', 'ContactController@detail');
 
             });
 
@@ -106,6 +110,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'chat'], function() {
                 Route::get('check-state', 'ChatController@checkChatState');
                 Route::get('start-chat', 'ChatController@startChat');
+                Route::post('/send-file', 'ChatController@sendFile');
             });
             
             Route::get('profile', 'PatientController@show');

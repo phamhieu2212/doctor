@@ -7,6 +7,7 @@ use App\Http\Responses\API\V1\Response;
 use App\Models\CallHistory;
 use App\Models\ChatHistory;
 use App\Models\User;
+use App\Repositories\FilePatientRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
@@ -16,15 +17,18 @@ class ContactController extends Controller
 {
     protected $adminUserService;
     protected $userRepository;
+    protected $filePatientRepository;
 
     public function __construct
     (
         APIUserServiceInterface $APIUserService,
-        UserRepositoryInterface $userRepository
+        UserRepositoryInterface $userRepository,
+        FilePatientRepositoryInterface $filePatientRepository
     )
     {
         $this->adminUserService = $APIUserService;
         $this->userRepository = $userRepository;
+        $this->filePatientRepository = $filePatientRepository;
     }
     public function index(PaginationRequest $request)
     {
@@ -49,6 +53,43 @@ class ContactController extends Controller
 
 
         return Response::response(200,$contacts
+        );
+    }
+
+    public function detail($idPatient)
+    {
+        if( !is_numeric($idPatient) || ($idPatient <= 0) ) {
+            return Response::response(40001);
+        }
+        $adminUser  = $this->adminUserService->getUser();
+        $callHistories = CallHistory::where('admin_user_id',$adminUser->id)
+            ->where('user_id',$idPatient)->get();
+        $chatHistories = ChatHistory::where('admin_user_id',$adminUser->id)
+            ->where('user_id',$idPatient)->get();
+
+        $histories = $callHistories->concat($chatHistories);
+        $histories = $histories->sortByDesc('created_at')->values()->all();
+        foreach($histories as $key=>$history)
+        {
+            $histories[$key] = $history->toAPIArrayDetailPatient();
+
+        }
+
+        return Response::response(200,$histories
+        );
+    }
+
+    public function getFilePatient($idFilePatient)
+    {
+        if( !is_numeric($idFilePatient) || ($idFilePatient <= 0) ) {
+            return Response::response(40001);
+        }
+        $filePatient = $this->filePatientRepository->find($idFilePatient);
+        if( empty($filePatient) ) {
+            return Response::response(20004);
+        }
+
+        return Response::response(200,$filePatient->toAPIArrayDetail()
         );
     }
 }

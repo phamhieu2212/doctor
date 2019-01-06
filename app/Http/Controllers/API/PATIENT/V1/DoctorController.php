@@ -32,14 +32,20 @@ class DoctorController extends Controller
     }
     public function index(PaginationRequest $request)
     {
+        $date = ['sunday','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $paginate['limit']      = $request->limit();
         $paginate['offset']     = $request->offset();
         $paginate['order']      = 'id';
         $paginate['direction']  = 'desc';
         $filter = [];
         $keyword = $request->get('keyword');
+        $day = $request->get('day');
         if (!empty($keyword)) {
             $filter['query'] = $keyword;
+        }
+        if (!empty($day)) {
+            $filter['day_start'] = date("Y-m-d 00:00:00", strtotime($date[$day].' this week'));
+            $filter['day_end'] = date("Y-m-d 23:59:59", strtotime($date[$day].' this week'));
         }
         if($request->has('gender'))
         {

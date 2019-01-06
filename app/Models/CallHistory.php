@@ -98,4 +98,14 @@ class CallHistory extends Base
 
     }
 
+    public function toAPIArrayDetailPatient()
+    {
+        return [
+            'label' => 'call',
+            'time_call'=> (int)date('i',$this->end_time->timestamp - $this->start_time->timestamp),
+            'created_at'=>strtotime(date('Y-m-d H:i:s',strtotime($this->created_at))),
+
+        ];
+    }
+
 }

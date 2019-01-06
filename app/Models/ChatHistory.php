@@ -23,7 +23,7 @@ class ChatHistory extends Base
      */
     protected $fillable = [
         'user_id',
-        'admin_user_id',
+        'admin_user_id','file_patient_id'
     ];
 
     /**
@@ -54,6 +54,11 @@ class ChatHistory extends Base
         return $this->belongsTo(\App\Models\AdminUser::class, 'admin_user_id', 'id');
     }
 
+    public function filePatient()
+    {
+        return $this->belongsTo(\App\Models\FilePatient::class, 'file_patient_id', 'id');
+    }
+
     
 
     // Utility Functions
@@ -67,6 +72,18 @@ class ChatHistory extends Base
             'id' => $this->id,
             'user_id' => $this->user_id,
             'admin_user_id' => $this->admin_user_id,
+        ];
+    }
+
+    public function toAPIArrayDetailPatient()
+    {
+        $timeNow = strtotime(date('Y-m-d H:i:s'));
+        return [
+            'label' => 'chat',
+            'file_patient_id'=> $this->filePatient['id'],
+            'time_chat'=> (($timeNow - $this->created_at->timestamp) <= 180)?$timeNow-$this->created_at->timestamp:0,
+            'created_at'=>strtotime(date('Y-m-d H:i:s',strtotime($this->created_at))),
+
         ];
     }
 

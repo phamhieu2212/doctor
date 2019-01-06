@@ -173,4 +173,31 @@ class ChatController extends Controller {
 
         return Response::response(200, ['status'=>false]);
     }
+
+    public function sendFile(Request $request )
+    {
+        $input = $request->only(
+            [
+                'chat_id','file_patient_id'
+            ]
+        );
+        if( !is_numeric($input['chat_id']) || ($input['chat_id'] <= 0) ) {
+            return Response::response(40001);
+        }
+
+        $chatHistory = $this->chatHistoryRepository->find($input['chat_id']);
+        if( empty($chatHistory) ) {
+            return Response::response(20004);
+        }
+
+        try {
+            $this->chatHistoryRepository->update($chatHistory, ['file_patient_id'=>$input['file_patient_id']]);
+        } catch (\Exception $e) {
+            return Response::response(50002);
+        }
+
+        return Response::response(200, [
+            'status'=>true
+        ]);
+    }
 }
