@@ -46,4 +46,19 @@ class CallHistoryRepository extends SingleKeyModelRepository implements CallHist
 
     }
 
+    public function checkRead($doctorId)
+    {
+        return $this->getBlankModel()
+                    ->where('admin_user_id', '=', $doctorId)
+                    ->where('caller', '=', CallHistory::PATIENT)
+                    ->where('is_read', '=', CallHistory::NOT_YET_READ)
+                    ->where('type', '=', CallHistory::MISS)
+                    ->exists();
+    }
+
+    public function updateIsRead()
+    {
+        $this->getBlankModel()->where('is_read', '=', CallHistory::NOT_YET_READ)->update(["is_read" => CallHistory::IS_READ]);
+    }
+
 }
