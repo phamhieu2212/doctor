@@ -11,6 +11,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::get('nganluong', 'TestController@index');
             Route::get('provinces', 'StaticDataController@provinces');
             Route::get('districts/{province_id}', 'StaticDataController@districts');
+            Route::post('device', 'DeviceController@register');
         });
 
     });
