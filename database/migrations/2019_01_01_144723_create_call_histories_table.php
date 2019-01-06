@@ -16,6 +16,7 @@ class CreatecallHistoriesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id')->comment('id tai khoan benh nhan');
             $table->unsignedInteger('admin_user_id')->comment('id tai khoan bac si');
+            $table->string('caller')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->integer('type')->nullable();

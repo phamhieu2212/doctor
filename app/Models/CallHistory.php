@@ -91,7 +91,7 @@ class CallHistory extends Base
             'doctor_name' =>$this->adminUser->name,
             'start_time' => date('Y-m-d H:i:s',strtotime($this->start_time)),
             'end_time' => date('Y-m-d H:i:s',strtotime($this->end_time)),
-            'type' => ($this->type != 0)?$this->type:null,
+            'type' => ($this->caller == 'patient')?1:$this->type,
             'avatar' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
         ];
 
