@@ -68,6 +68,10 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/check-read', 'CallController@checkRead');
                 Route::get('/history', 'CallController@history');
             });
+            Route::group(['prefix' => 'call-history'], function () {
+                Route::get('/', 'CallHistoryController@index');
+                Route::get('/check-read', 'CallHistoryController@checkRead');
+            });
 
             Route::post('signout', 'AuthController@postSignOut');
         });

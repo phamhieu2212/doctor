@@ -52,7 +52,7 @@ class CallHistoryController extends Controller
                 $callHistory->is_read = 1;
                 $callHistory->save();
             }
-            $callHistories[$key] = $callHistory->toAPIArrayList();
+            $callHistories[$key] = $callHistory->toAPIArrayListForPatient();
         }
 
 

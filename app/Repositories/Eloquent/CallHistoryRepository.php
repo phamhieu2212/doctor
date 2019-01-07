@@ -2,6 +2,7 @@
 
 use App\Models\AdminUser;
 use App\Models\Doctor;
+use App\Models\User;
 use \App\Repositories\CallHistoryRepositoryInterface;
 use \App\Models\CallHistory;
 
@@ -41,6 +42,27 @@ class CallHistoryRepository extends SingleKeyModelRepository implements CallHist
             $query = $this->buildQueryByFilter($this->getBlankModel(), $filter);
             $query = $this->buildOrder($query, $filter, $order, $direction);
             return $query->where('user_id',$idPatient)->skip($offset)->take($limit)->get();
+        }
+
+
+    }
+
+    public function getByFilterWithDoctor($idDoctor,$filter, $order = 'id', $direction = 'asc', $offset = 0, $limit = 20)
+    {
+        if(isset($filter['query']))
+        {
+            $idUser = User::where('name','like', '%' . $filter['query'] . '%')->pluck('id');
+            unset($filter['query']);
+
+            $query = $this->buildQueryByFilter($this->getBlankModel(), $filter);
+            $query = $this->buildOrder($query, $filter, $order, $direction);
+            return $query->whereIn('user_id',$idUser)->where('admin_user_id',$idDoctor)->skip($offset)->take($limit)->get();
+        }
+        else
+        {
+            $query = $this->buildQueryByFilter($this->getBlankModel(), $filter);
+            $query = $this->buildOrder($query, $filter, $order, $direction);
+            return $query->where('admin_user_id',$idDoctor)->skip($offset)->take($limit)->get();
         }
 
 

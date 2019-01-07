@@ -90,7 +90,7 @@ class CallHistory extends Base
         ];
     }
 
-    public function toAPIArrayList()
+    public function toAPIArrayListForPatient()
     {
         return [
             'quick_id'=> $this->adminUser->quick_id,
@@ -100,6 +100,21 @@ class CallHistory extends Base
             'end_time' => date('Y-m-d H:i:s',strtotime($this->end_time)),
             'type' => ($this->caller == 'patient')?3:$this->type,
             'avatar' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
+        ];
+
+
+    }
+
+    public function toAPIArrayListForDoctor()
+    {
+        return [
+            'quick_id'=> $this->user->quick_id,
+            'patient_id'=> $this->user->id,
+            'patient_name' =>$this->user->name,
+            'start_time' => date('Y-m-d H:i:s',strtotime($this->start_time)),
+            'end_time' => date('Y-m-d H:i:s',strtotime($this->end_time)),
+            'type' => ($this->caller == 'doctor')?3:$this->type,
+            'avatar' => (!empty($this->user->present()->profileImage()))?$this->user->present()->profileImage()->present()->url: \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
 
 
