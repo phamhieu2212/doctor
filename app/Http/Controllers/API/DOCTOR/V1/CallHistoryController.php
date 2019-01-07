@@ -53,6 +53,38 @@ class CallHistoryController extends Controller
         );
     }
 
+    public function store(\App\Http\Requests\API\V1\Request $request)
+    {
+        $input = $request->only(
+            [
+                'patient_id'
+            ]
+        );
+
+        $data = [
+            'user_id'=> $input['patient_id'],
+            'admin_user_id' => $this->adminUserService->getUser()->id,
+            'caller'=>'doctor',
+            'type'=>3
+        ];
+
+
+        try {
+            $callHistory = $this->callHistoryRepository->create($data);
+        } catch (\Exception $e) {
+            return Response::response(50002);
+        }
+
+        if( empty( $callHistory ) ) {
+            return Response::response(50002);
+        }
+
+
+        return Response::response(200,[
+            'call_id'=>$callHistory->id
+        ]);
+    }
+
 
     public function checkRead()
     {

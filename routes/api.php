@@ -71,6 +71,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'call-history'], function () {
                 Route::get('/', 'CallHistoryController@index');
                 Route::get('/check-read', 'CallHistoryController@checkRead');
+                Route::post('/create', 'CallHistoryController@store');
             });
 
             Route::post('signout', 'AuthController@postSignOut');
