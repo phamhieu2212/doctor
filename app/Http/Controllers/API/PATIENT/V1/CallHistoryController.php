@@ -153,7 +153,8 @@ class CallHistoryController extends Controller
     {
         $idPatient = $this->userService->getUser()->id;
 
-        $countRead = CallHistory::where('user_id',$idPatient)->where('is_read',0)->count();
+        $countRead = CallHistory::where('user_id',$idPatient)->where('caller','doctor')
+            ->where('type',2)->where('is_read',0)->count();
 
         if($countRead >0)
         {
