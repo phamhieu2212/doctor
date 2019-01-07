@@ -47,8 +47,11 @@ class CallHistoryController extends Controller
         $callHistories = $this->callHistoryRepository->getByFilterWithPatient($this->userService->getUser()->id,$filter,$paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']); // change get() to geEnabled as requirement
 
         foreach( $callHistories as $key => $callHistory ) {
-            $callHistory->is_read = 1;
-            $callHistory->save();
+            if($callHistory->caller != 'doctor' and $callHistory->type != 2  )
+            {
+                $callHistory->is_read = 1;
+                $callHistory->save();
+            }
             $callHistories[$key] = $callHistory->toAPIArrayList();
         }
 
