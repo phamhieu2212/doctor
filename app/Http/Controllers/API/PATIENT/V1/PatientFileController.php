@@ -45,7 +45,7 @@ class PatientFileController extends Controller
             $filePatients[$key] = $filePatient->toAPIArrayList();
         }
 
-        return Response::response(200,[$filePatients]
+        return Response::response(200,$filePatients
         );
     }
     public function store(APIRequest $request)
