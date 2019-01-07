@@ -53,7 +53,7 @@ class CallController extends Controller
         }
         else
         {
-            $time = (int)$pointPatient['point']/$price;
+            $time = (int)floor($pointPatient['point']/$price);
         }
         return Response::response(200, [
             'time'=> $time
