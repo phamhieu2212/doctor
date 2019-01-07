@@ -106,12 +106,12 @@ class CallHistoryController extends Controller
         }
         $timeNow = Carbon::now()->timestamp;
         $dataCallHistory = ['end_time'=>$timeNow];
-        $timeCall = (int)date('i',$timeNow - $callHistory['end_time']->timestamp);
+        $timeCall = (int)$timeNow - $callHistory['end_time']->timestamp;
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
         $dataPointPatient = [
-            'point'=>$pointPatient['point']-$doctor['price_call']*$timeCall
+            'point'=>$pointPatient['point']-(floor($doctor['price_call']/60*$timeCall))
         ];
         try {
             DB::beginTransaction();
