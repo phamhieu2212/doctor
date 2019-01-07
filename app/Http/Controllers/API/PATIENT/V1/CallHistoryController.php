@@ -111,7 +111,7 @@ class CallHistoryController extends Controller
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
         $dataPointPatient = [
-            'point'=>$pointPatient['point']-(floor($doctor['price_call']/60*$timeCall))
+            'point'=>$pointPatient['point']-($doctor['price_call']/60*$timeCall)
         ];
         try {
             DB::beginTransaction();
