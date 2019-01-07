@@ -103,7 +103,7 @@ class CallHistoryController extends Controller
             return Response::response(50002);
         }
         $timeNow = Carbon::now();
-        if($callHistory['start_time'] == null)
+        if($callHistory->start_time == null)
         {
             $dataCallHistory = ['end_time'=>$timeNow,'start_time'=>$timeNow];
         }
