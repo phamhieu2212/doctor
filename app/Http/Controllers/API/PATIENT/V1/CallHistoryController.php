@@ -73,7 +73,7 @@ class CallHistoryController extends Controller
             'caller'=>'patient',
             'start_time'=> $timeNow,
             'end_time'=>$timeNow,
-            'type'=>0
+            'type'=>3
         ];
 
 
@@ -104,9 +104,9 @@ class CallHistoryController extends Controller
         if( empty( $callHistory ) ) {
             return Response::response(50002);
         }
-        $timeNow = Carbon::now()->timestamp;
+        $timeNow = Carbon::now();
         $dataCallHistory = ['end_time'=>$timeNow];
-        $timeCall = (int)$timeNow - $callHistory['end_time']->timestamp;
+        $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
@@ -139,17 +139,33 @@ class CallHistoryController extends Controller
                 'type'
             ]
         );
-        $dataCallHistory = ['type'=>$input['type']];
+        $timeNow = Carbon::now();
+        $dataCallHistory = ['end_time'=>$timeNow,'type'=>$input['type']];
         $callHistory = $this->callHistoryRepository->find($input['call_id']);
+        $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
+        $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
+        $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
+
+        $dataPointPatient = [
+            'point'=>(int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall))
+        ];
         if( empty( $callHistory ) ) {
             return Response::response(50002);
         }
         try {
+            DB::beginTransaction();
+
             $this->callHistoryRepository->update($callHistory,$dataCallHistory);
-        } catch (\Exception $e) {
-            return Response::response(50002);
+
+            $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
+            DB::commit();
+            return Response::response(200,['point'=>$pointPatient['point']]);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return Response::response(200,['status'=>false]);
         }
-        return Response::response(200);
     }
 
     public function checkRead()
