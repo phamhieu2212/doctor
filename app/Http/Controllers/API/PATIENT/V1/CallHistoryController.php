@@ -148,8 +148,15 @@ class CallHistoryController extends Controller
             ]
         );
         $timeNow = Carbon::now();
-        $dataCallHistory = ['end_time'=>$timeNow,'type'=>$input['type']];
         $callHistory = $this->callHistoryRepository->find($input['call_id']);
+        if($callHistory->type != 1 and $callHistory->type != 2)
+        {
+            $dataCallHistory = ['end_time'=>$timeNow,'type'=>$input['type']];
+        }
+        else
+        {
+            $dataCallHistory = [];
+        }
         $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();

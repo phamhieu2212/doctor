@@ -157,8 +157,16 @@ class CallHistoryController extends Controller
             ]
         );
         $timeNow = Carbon::now();
-        $dataCallHistory = ['end_time'=>$timeNow,'type'=>$input['type']];
+
         $callHistory = $this->callHistoryRepository->find($input['call_id']);
+        if($callHistory->type != 1 and $callHistory->type != 2)
+        {
+            $dataCallHistory = ['end_time'=>$timeNow,'type'=>$input['type']];
+        }
+        else
+        {
+            $dataCallHistory = [];
+        }
 
         if( empty( $callHistory ) ) {
             return Response::response(50002);
