@@ -66,13 +66,11 @@ class CallHistoryController extends Controller
                 'doctor_id'
             ]
         );
-        $timeNow = Carbon::now();
+
         $data = [
             'admin_user_id'=> $input['doctor_id'],
             'user_id' => $this->userService->getUser()->id,
             'caller'=>'patient',
-            'start_time'=> $timeNow,
-            'end_time'=>$timeNow,
             'type'=>3
         ];
 
@@ -105,7 +103,15 @@ class CallHistoryController extends Controller
             return Response::response(50002);
         }
         $timeNow = Carbon::now();
-        $dataCallHistory = ['end_time'=>$timeNow];
+        if($callHistory['start_time'] == null)
+        {
+            $dataCallHistory = ['end_time'=>$timeNow,'start_time'=>$timeNow];
+        }
+        else
+        {
+            $dataCallHistory = ['end_time'=>$timeNow];
+        }
+
         $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
