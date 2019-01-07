@@ -6,10 +6,12 @@ use App\Http\Responses\API\V1\Response;
 use App\Models\CallHistory;
 use App\Repositories\CallHistoryRepositoryInterface;
 use App\Services\APIUserServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\PaginationRequest;
+use Illuminate\Support\Facades\DB;
 
 class CallHistoryController extends Controller
 {
@@ -104,6 +106,74 @@ class CallHistoryController extends Controller
             return Response::response(200,[
                 'status'=>false
             ]);
+        }
+    }
+
+    public function updateEndtime(\App\Http\Requests\API\V1\Request $request)
+    {
+        $input = $request->only(
+            [
+                'call_id'
+            ]
+        );
+        $callHistory = $this->callHistoryRepository->find($input['call_id']);
+        if( empty( $callHistory ) ) {
+            return Response::response(50002);
+        }
+        $timeNow = Carbon::now();
+        if($callHistory->start_time == null)
+        {
+            $dataCallHistory = ['end_time'=>$timeNow,'start_time'=>$timeNow];
+        }
+        else
+        {
+            $dataCallHistory = ['end_time'=>$timeNow];
+        }
+
+
+        try {
+            DB::beginTransaction();
+
+            $this->callHistoryRepository->update($callHistory,$dataCallHistory);
+
+            DB::commit();
+            return Response::response(200,['status'=>true]);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return Response::response(200,['status'=>false]);
+        }
+
+
+    }
+
+    public function updateType(\App\Http\Requests\API\V1\Request $request)
+    {
+        $input = $request->only(
+            [
+                'call_id',
+                'type'
+            ]
+        );
+        $timeNow = Carbon::now();
+        $dataCallHistory = ['end_time'=>$timeNow,'type'=>$input['type']];
+        $callHistory = $this->callHistoryRepository->find($input['call_id']);
+
+        if( empty( $callHistory ) ) {
+            return Response::response(50002);
+        }
+        try {
+            DB::beginTransaction();
+
+            $this->callHistoryRepository->update($callHistory,$dataCallHistory);
+            DB::commit();
+            return Response::response(200,['status'=>true]);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return Response::response(200,['status'=>false]);
         }
     }
 }
