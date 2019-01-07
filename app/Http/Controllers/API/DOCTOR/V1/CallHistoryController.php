@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\DOCTOR\V1;
 
 use App\Http\Responses\API\V1\Response;
+use App\Models\CallHistory;
 use App\Repositories\CallHistoryRepositoryInterface;
 use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
@@ -55,9 +56,9 @@ class CallHistoryController extends Controller
 
     public function checkRead()
     {
-        $idPatient = $this->userService->getUser()->id;
+        $idDoctor = $this->adminUserService->getUser()->id;
 
-        $countRead = CallHistory::where('user_id',$idPatient)->where('caller','doctor')
+        $countRead = CallHistory::where('admin_user_id',$idDoctor)->where('caller','patient')
             ->where('type',2)->where('is_read',0)->count();
 
         if($countRead >0)
