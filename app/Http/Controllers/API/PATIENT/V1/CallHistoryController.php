@@ -157,7 +157,14 @@ class CallHistoryController extends Controller
         {
             $dataCallHistory = [];
         }
-        $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
+        if($callHistory->end_time == null)
+        {
+            $timeCall = 0;
+        }
+        else
+        {
+            $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
+        }
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
