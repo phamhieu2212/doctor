@@ -155,7 +155,7 @@ class CallHistoryController extends Controller
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
         $dataPointPatient = [
-            'point'=>(int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall))
+            'point'=>((int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall)) < 0)?0:(int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall))
         ];
         if( empty( $callHistory ) ) {
             return Response::response(50002);
