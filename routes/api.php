@@ -33,6 +33,7 @@ Route::group(['namespace' => 'API'], function () {
             });
             Route::group(['prefix' => 'profile'], function () {
                 Route::get('/', 'ProfileController@index');
+                Route::get('/list-data', 'ProfileController@listData');
                 Route::post('/update', 'ProfileController@update');
             });
             Route::group(['prefix' => 'price'], function () {

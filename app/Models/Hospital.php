@@ -60,4 +60,12 @@ class Hospital extends Base
         ];
     }
 
+    public function toAPIArrayListDataForProfileDoctor()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
+
 }
