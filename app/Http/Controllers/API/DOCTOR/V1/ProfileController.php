@@ -22,7 +22,7 @@ class ProfileController extends Controller
     {
         $doctor = $this->userService->getUser();
         $data = [
-            'user' => $doctor->toAPIArrayLogin(),
+            'user' => $doctor->toAPIArrayProfile(),
             'accountQuick' => [
                 'username' => $doctor->username,
                 'password' => $doctor->username

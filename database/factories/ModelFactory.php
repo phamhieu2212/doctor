@@ -327,4 +327,11 @@ $factory->define(App\Models\Device::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\Level::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'name' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */
