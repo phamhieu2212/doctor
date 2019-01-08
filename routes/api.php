@@ -61,6 +61,9 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/detail/{idPatient}', 'ContactController@detail');
 
             });
+            Route::group(['prefix' => 'chat'], function() {
+                Route::get('start-chat', 'ChatController@startChat');
+            });
 
             Route::group(['prefix' => 'call'], function () {
                 Route::post('/', 'CallController@call');
