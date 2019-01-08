@@ -62,7 +62,7 @@ class ContactController extends Controller
             return Response::response(40001);
         }
         $adminUser  = $this->adminUserService->getUser();
-        $callHistories = CallHistory::where('admin_user_id',$adminUser->id)
+        $callHistories = CallHistory::where('admin_user_id',$adminUser->id)->where('start_time','!=',null)
             ->where('user_id',$idPatient)->get();
         $chatHistories = ChatHistory::where('admin_user_id',$adminUser->id)
             ->where('user_id',$idPatient)->get();
