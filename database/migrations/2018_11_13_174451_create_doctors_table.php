@@ -16,7 +16,9 @@ class CreatedoctorsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedInteger('admin_user_id')->comment('id tai khoan');
-            $table->unsignedInteger('hospital_id')->comment('id tai khoan');
+            $table->unsignedInteger('hospital_id')->comment('id benh vien');
+            $table->unsignedInteger('level_id')->comment('id hoc ham');
+            $table->string('sub_phone')->nullable();
             $table->smallInteger('gender')->default(1);     // 1 = Male, 0 = Female
             $table->integer('price_chat')->default(0);
             $table->integer('price_call')->default(0);
@@ -25,6 +27,10 @@ class CreatedoctorsTable extends Migration
             $table->string('address')->nullable()->default('');
             $table->string('city')->nullable()->default('');
             $table->string('position')->nullable()->default('');
+            $table->string('bank_name')->nullable();
+            $table->string('bank_number')->nullable();
+            $table->string('bank_address')->nullable();
+            $table->string('bank_owner')->nullable();
             $table->text('experience')->nullable()->default('');
             $table->text('description')->nullable()->default('');
 

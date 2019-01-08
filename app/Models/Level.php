@@ -2,7 +2,7 @@
 
 
 
-class DoctorSpecialty extends Base
+class Level extends Base
 {
 
     
@@ -12,7 +12,7 @@ class DoctorSpecialty extends Base
      *
      * @var string
      */
-    protected $table = 'doctor_specialties';
+    protected $table = 'levels';
 
     /**
      * The attributes that are mass assignable.
@@ -20,8 +20,7 @@ class DoctorSpecialty extends Base
      * @var array
      */
     protected $fillable = [
-        'admin_user_id',
-        'specialty_id',
+        'name',
     ];
 
     /**
@@ -33,21 +32,15 @@ class DoctorSpecialty extends Base
 
     protected $dates  = [];
 
-    protected $presenter = \App\Presenters\DoctorSpecialtyPresenter::class;
+    protected $presenter = \App\Presenters\LevelPresenter::class;
 
     public static function boot()
     {
         parent::boot();
-        parent::observe(new \App\Observers\DoctorSpecialtyObserver);
+        parent::observe(new \App\Observers\LevelObserver);
     }
 
     // Relations
-    public function adminUser()
-    {
-        return $this->belongsTo(\App\Models\AdminUser::class, 'admin_user_id', 'id');
-    }
-
-
     
 
     // Utility Functions
@@ -59,8 +52,7 @@ class DoctorSpecialty extends Base
     {
         return [
             'id' => $this->id,
-            'admin_user_id' => $this->admin_user_id,
-            'specialty_id' => $this->specialty_id,
+            'name' => $this->name,
         ];
     }
 

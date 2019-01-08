@@ -54,9 +54,13 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/store', 'PlanController@store');
 
             });
+            Route::group(['prefix' => 'patient-file'], function () {
+                Route::get('/{idFilePatient}', 'ContactController@getFilePatient');
+            });
 
             Route::group(['prefix' => 'contact'], function () {
                 Route::get('/', 'ContactController@index');
+                Route::get('/detail/{idPatient}', 'ContactController@detail');
 
             });
 
@@ -65,6 +69,13 @@ Route::group(['namespace' => 'API'], function () {
                 Route::put('/update-state/{call_id}', 'CallController@update');
                 Route::get('/check-read', 'CallController@checkRead');
                 Route::get('/history', 'CallController@history');
+            });
+            Route::group(['prefix' => 'call-history'], function () {
+                Route::get('/', 'CallHistoryController@index');
+                Route::get('/check-read', 'CallHistoryController@checkRead');
+                Route::post('/create', 'CallHistoryController@store');
+                Route::post('/update-type', 'CallHistoryController@updateType');
+                Route::post('/update-endtime', 'CallHistoryController@updateEndtime');
             });
 
             Route::group(['prefix' => 'notification'], function() {
@@ -92,6 +103,9 @@ Route::group(['namespace' => 'API'], function () {
             });
             Route::group(['prefix' => 'doctor'], function () {
                 Route::get('/detail/{idDoctor}', 'DoctorController@detail');
+            });
+            Route::group(['prefix' => 'specialty'], function () {
+                Route::get('/', 'SpecialtyController@index');
             });
             Route::group(['prefix' => 'call'], function () {
                 Route::get('/getTime/{idDoctor}', 'CallController@getTimeCall');
@@ -121,6 +135,7 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'chat'], function() {
                 Route::get('check-state', 'ChatController@checkChatState');
                 Route::get('start-chat', 'ChatController@startChat');
+                Route::post('/send-file', 'ChatController@sendFile');
             });
 
             Route::group(['prefix' => 'notification'], function() {

@@ -176,6 +176,35 @@ class AdminUser extends AuthenticatableBase
         ];
     }
 
+    public function toAPIArrayProfile()
+    {
+        $specialties = $this->specialties;
+        foreach($specialties as $key=>$specialty)
+        {
+            $specialties[$key] = $specialty->toAPIArray();
+        }
+        return [
+            'name' => $this->name,
+            'position' => $this->doctor->position,
+            'hospital_id' => $this->doctor->hospital->id,
+            'hospital_name' => $this->doctor->hospital->name,
+            'birthday' => $this->doctor->birthday,
+            'gender' => $this->doctor->gender,
+            'phone' => $this->phone,
+            'sub_phone' => $this->doctor->sub_phone,
+            'email' => $this->email,
+            'specialties'=>$specialties,
+            'level_id' => ($this->doctor->level_id != 0)?$this->doctor->level->id:0,
+            'level_name' => ($this->doctor->level_id != 0)?$this->doctor->level->name:"",
+            'experience' => $this->doctor->experience,
+            'bank_name'=>$this->doctor->bank_name,
+            'bank_address'=>$this->doctor->bank_address,
+            'bank_number'=>$this->doctor->bank_number,
+            'bank_owner'=>$this->doctor->bank_owner,
+            'description'=>$this->doctor->description,
+        ];
+    }
+
     public function toAPIArrayLoginDoctor()
     {
         return [

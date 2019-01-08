@@ -16,6 +16,7 @@ class CreatechatHistoriesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id')->comment('id tai khoan benh nhan');
             $table->unsignedInteger('admin_user_id')->comment('id tai khoan bac si');
+            $table->unsignedInteger('file_patient_id')->comment('id benh an');
 
             // Add some more columns
 

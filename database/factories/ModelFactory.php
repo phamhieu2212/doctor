@@ -337,5 +337,10 @@ $factory->define(App\Models\FCMNotification::class, function (Faker\Generator $f
         'is_read' => '',
     ];
 });
-
+$factory->define(App\Models\Level::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'name' => '',
+    ];
+});
 /* NEW MODEL FACTORY */

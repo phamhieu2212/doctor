@@ -149,8 +149,11 @@ class User extends AuthenticatableBase
     public function toAPIArrayContact()
     {
         return [
+            'id'=>$this->id,
+            'quick_id'=> $this->quick_id,
+            'gender'=>$this->gender,
             'name'      => $this->name,
-            'birthday'  => $this->birthday,
+            'age'  => ($this->birthday != null)?date_diff(date_create($this->birthday), date_create('now'))->y:null,
             'address'   => $this->address,
             'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];

@@ -29,7 +29,7 @@ class Doctor extends Base
         'telephone',
         'birthday',
         'address','price_chat','price_call',
-        'city',
+        'city','sub_phone','bank_name','bank_address','bank_number','bank_owner',
         'position',
         'experience',
         'description',
@@ -61,6 +61,11 @@ class Doctor extends Base
     public function hospital()
     {
         return $this->belongsTo(\App\Models\Hospital::class, 'hospital_id', 'id');
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(\App\Models\Level::class, 'level_id', 'id');
     }
 
     

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API\PATIENT\V1;
 
+use App\Http\Requests\API\V1\Request;
 use App\Http\Responses\API\V1\Response;
 use App\Models\Doctor;
 use App\Models\PointPatient;
 use App\Repositories\PointPatientRepositoryInterface;
 use App\Services\APIUserServiceInterface;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CallController extends Controller
@@ -47,8 +47,18 @@ class CallController extends Controller
             }
 
         }
+        if($price == 0)
+        {
+            $time = -1;
+        }
+        else
+        {
+            $time = (int)floor($pointPatient['point']/$price);
+        }
         return Response::response(200, [
-            'time'=>$pointPatient['point']/$price
+            'time'=> $time
         ]);
     }
+
+
 }
