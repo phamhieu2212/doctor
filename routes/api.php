@@ -39,6 +39,10 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'price'], function () {
                 Route::post('/update', 'PriceController@update');
             });
+
+            Route::group(['prefix' => 'statistic'], function () {
+                Route::get('/', 'StatisticController@index');
+            });
             Route::group(['prefix' => 'image'], function () {
                 Route::post('/update-avatar', 'ImageUploadController@avatar');
             });

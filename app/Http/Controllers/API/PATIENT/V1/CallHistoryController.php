@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API\PATIENT\V1;
 use App\Http\Responses\API\V1\Response;
 use App\Models\CallHistory;
 use App\Models\Doctor;
+use App\Models\PointDoctor;
 use App\Models\PointPatient;
 use App\Repositories\CallHistoryRepositoryInterface;
+use App\Repositories\PointDoctorRepositoryInterface;
 use App\Repositories\PointPatientRepositoryInterface;
 use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
@@ -20,16 +22,19 @@ class CallHistoryController extends Controller
     protected $callHistoryRepository;
     protected $userService;
     protected $pointPatientRepository;
+    protected $pointDoctorRepository;
     public function __construct
     (
         CallHistoryRepositoryInterface $callHistoryRepository,
         APIUserServiceInterface $APIUserService,
-        PointPatientRepositoryInterface $pointPatientRepository
+        PointPatientRepositoryInterface $pointPatientRepository,
+        PointDoctorRepositoryInterface $pointDoctorRepository
     )
     {
         $this->callHistoryRepository = $callHistoryRepository;
         $this->userService = $APIUserService;
         $this->pointPatientRepository = $pointPatientRepository;
+        $this->pointDoctorRepository  = $pointDoctorRepository;
     }
 
     public function index(PaginationRequest $request)
@@ -116,10 +121,14 @@ class CallHistoryController extends Controller
 
 
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
+        $pointDoctor = PointDoctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
         $dataPointPatient = [
             'point'=>($pointPatient['point']-($doctor['price_call']/60*$timeCall) < 0)?0:$pointPatient['point']-($doctor['price_call']/60*$timeCall)
+        ];
+        $dataPointDoctor = [
+            'point'=>($pointDoctor['point']+($doctor['price_call']/60*$timeCall) < 0)?0:$pointPatient['point']-($doctor['price_call']/60*$timeCall)
         ];
         try {
             DB::beginTransaction();
@@ -127,6 +136,7 @@ class CallHistoryController extends Controller
             $this->callHistoryRepository->update($callHistory,$dataCallHistory);
 
             $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
+            $pointDoctor = $this->pointDoctorRepository->update($pointDoctor,$dataPointDoctor);
             DB::commit();
             return Response::response(200,['point'=>$pointPatient['point']]);
 
@@ -166,10 +176,14 @@ class CallHistoryController extends Controller
             $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
         }
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
+        $pointDoctor = PointDoctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
         $doctor = Doctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
 
         $dataPointPatient = [
             'point'=>((int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall)) < 0)?0:(int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall))
+        ];
+        $dataPointDoctor = [
+            'point'=>($pointDoctor['point']+($doctor['price_call']/60*$timeCall) < 0)?0:$pointPatient['point']-($doctor['price_call']/60*$timeCall)
         ];
         if( empty( $callHistory ) ) {
             return Response::response(50002);
@@ -180,6 +194,7 @@ class CallHistoryController extends Controller
             $this->callHistoryRepository->update($callHistory,$dataCallHistory);
 
             $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
+            $pointDoctor = $this->pointDoctorRepository->update($pointDoctor,$dataPointDoctor);
             DB::commit();
             return Response::response(200,['point'=>$pointPatient['point']]);
 
