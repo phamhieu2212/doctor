@@ -327,4 +327,15 @@ $factory->define(App\Models\Device::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\FCMNotification::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'user_id' => '',
+        'user_type' => '',
+        'data' => '',
+        'sent_at' => '',
+        'is_read' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

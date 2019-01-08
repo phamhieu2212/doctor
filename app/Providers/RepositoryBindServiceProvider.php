@@ -158,6 +158,11 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\Eloquent\DeviceRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\FCMNotificationRepositoryInterface::class,
+            \App\Repositories\Eloquent\FCMNotificationRepository::class
+        );
+
         /* NEW BINDING */
     }
 }

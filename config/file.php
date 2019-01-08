@@ -92,5 +92,22 @@ return [
             'local_type'  => 'common',
             'local_path'  => 'img/ogp/'
         ],
+        'image'  => [
+            'name'        => 'image',
+            'type'        => 'image',
+            'region'      => env('AWS_IMAGE_REGION'),
+            'buckets'     => [
+                env('AWS_IMAGE_BUCKET'),
+            ],
+            'size'        => [500, 500],
+            'thumbnails'  => [
+                [100, 100],
+                [200, 200]
+            ],
+            'seed_prefix' => 'image',
+            'format'      => 'png',
+            'local_type'  => 'common',
+            'local_path'  => 'img/'
+        ],
     ],
 ];

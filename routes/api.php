@@ -12,6 +12,8 @@ Route::group(['namespace' => 'API'], function () {
             Route::get('provinces', 'StaticDataController@provinces');
             Route::get('districts/{province_id}', 'StaticDataController@districts');
             Route::post('device', 'DeviceController@register');
+            Route::post('image/upload', 'ImageController@upload');
+            Route::delete('image/{id}', 'ImageController@delete');
         });
 
     });
@@ -65,6 +67,11 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/history', 'CallController@history');
             });
 
+            Route::group(['prefix' => 'notification'], function() {
+                Route::get('/list', 'NotificationController@list');
+                Route::get('/{id}', 'NotificationController@details');
+            });
+
             Route::post('signout', 'AuthController@postSignOut');
         });
     });
@@ -114,6 +121,11 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'chat'], function() {
                 Route::get('check-state', 'ChatController@checkChatState');
                 Route::get('start-chat', 'ChatController@startChat');
+            });
+
+            Route::group(['prefix' => 'notification'], function() {
+                Route::get('/list', 'NotificationController@list');
+                Route::get('/{id}', 'NotificationController@details');
             });
             
             Route::get('profile', 'PatientController@show');
