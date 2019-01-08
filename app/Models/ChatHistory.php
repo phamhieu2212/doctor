@@ -82,7 +82,9 @@ class ChatHistory extends Base
             'label' => 'chat',
             'file_patient_id'=> $this->filePatient['id'],
             'time_chat'=> (($timeNow - $this->created_at->timestamp) <= 180)?$timeNow-$this->created_at->timestamp:0,
-            'created_at'=>strtotime(date('Y-m-d H:i:s',strtotime($this->created_at))),
+            'start_time'=>(($timeNow - $this->created_at->timestamp) > 180)?date('Y-m-d H:i:s',strtotime($this->created_at)):"",
+            'end_time'=>(($timeNow - $this->created_at->timestamp) > 180)?date('Y-m-d H:i:s',strtotime($this->created_at. ' + 3 days')):"",
+
 
         ];
     }
