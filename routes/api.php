@@ -1,6 +1,8 @@
 <?php
 
 Route::group(['namespace' => 'API'], function () {
+//    Route::get('/nganluong', 'PATIENT\V1\PaymentController@index');
+//    Route::get('/patient/v1/payment/success', 'PATIENT\V1\PaymentController@success');
     Route::group(['prefix' => 'v1', 'namespace' => 'V1'], function () {
 
         Route::group(['middleware' => []], function () {
@@ -8,7 +10,6 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('quickblox/getTokenAuth', 'QuickbloxController@getTokenAuth');
             Route::post('quickblox/signup', 'QuickbloxController@signUp');
             Route::post('quickblox/signin', 'QuickbloxController@signIn');
-            Route::get('nganluong', 'TestController@index');
             Route::get('provinces', 'StaticDataController@provinces');
             Route::get('districts/{province_id}', 'StaticDataController@districts');
             Route::post('device', 'DeviceController@register');
@@ -132,6 +133,12 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('check-state', 'ChatController@checkChatState');
                 Route::get('start-chat', 'ChatController@startChat');
                 Route::post('/send-file', 'ChatController@sendFile');
+            });
+
+            Route::group(['prefix' => 'payment'], function() {
+                Route::post('/send-order', 'PaymentController@index');
+                Route::get('/success', 'PaymentController@success');
+
             });
             
             Route::get('profile', 'PatientController@show');
