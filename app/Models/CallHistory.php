@@ -124,7 +124,7 @@ class CallHistory extends Base
     {
         return [
             'label' => 'call',
-            'time_call'=> (int)date('i',$this->end_time->timestamp - $this->start_time->timestamp),
+            'duration'=> (int)date('i',$this->end_time->timestamp - $this->start_time->timestamp),
             'start_time'=>date('Y-m-d H:i:s',strtotime($this->created_at)),
 
         ];
