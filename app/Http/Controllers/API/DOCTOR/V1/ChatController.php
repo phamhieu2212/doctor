@@ -52,7 +52,7 @@ class ChatController extends Controller
             else
             {
                 $username = $userQuick['user']['login'];
-                $user = $this->userRepository->findByUsername($username);
+                $user = $this->userRepository->findByTelephone($username);
                 if( empty($user) ) {
                     return Response::response(20004);
                 }
