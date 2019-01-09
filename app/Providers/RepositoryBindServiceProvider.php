@@ -159,10 +159,14 @@ class RepositoryBindServiceProvider extends ServiceProvider {
         );
 
         $this->app->singleton(
+            \App\Repositories\FCMNotificationRepositoryInterface::class,
+            \App\Repositories\Eloquent\FCMNotificationRepository::class
+        );
+
+        $this->app->singleton(
             \App\Repositories\LevelRepositoryInterface::class,
             \App\Repositories\Eloquent\LevelRepository::class
         );
-
         /* NEW BINDING */
     }
 }
