@@ -68,6 +68,58 @@ class Patient extends Base
         return $this->belongsTo(\App\Models\Image::class, 'profile_image_id', 'id');
     }
 
+    private function getProvince($id)
+    {
+        $public_path = public_path();
+        $file = $public_path .'/static/location.json';
+        $masterData = json_decode(file_get_contents($file), true);
+        foreach($masterData as $p) {
+            if ($p["id"] == $id) {
+                unset($p["districts"]);
+    
+                return $p;
+            }
+        }
+
+        return null;
+    }
+
+    private function getDistrict($id)
+    {
+        $public_path = public_path();
+        $file = $public_path .'/static/location.json';
+        $masterData = json_decode(file_get_contents($file), true);
+        foreach($masterData as $p) {
+            foreach($p['districts'] as $d) {
+                if ($d["id"] == $id) {
+                    unset($d["wards"]);
+                    
+                    return $d;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function getWard($id)
+    {
+        $public_path = public_path();
+        $file = $public_path .'/static/location.json';
+        $masterData = json_decode(file_get_contents($file), true);
+        foreach($masterData as $p) {
+            foreach($p["districts"] as $d) {
+                foreach($d["wards"] as $w) {
+                    if ($w["id"] == $id) {
+                        return $w;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     // Utility Functions
 
     /*
@@ -76,7 +128,6 @@ class Patient extends Base
     public function toAPIArray()
     {
         return [
-            'id' => $this->id,
             'user_id' => $this->user_id,
             'full_name' => $this->full_name,
             'birth_day' => $this->birth_day,
@@ -87,9 +138,9 @@ class Patient extends Base
             'job' => $this->job,
             'phone_number' => $this->user->telephone,
             'email' => $this->email,
-            'province' => $this->province,
-            'district' => $this->district,
-            'ward' => $this->ward,
+            'province' => $this->getProvince($this->province),
+            'district' => $this->getDistrict($this->district),
+            'ward' => $this->getWard($this->ward),
             'address' => $this->address,
             'name_of_relatives' => $this->name_of_relatives,
             'relationship' => $this->relationship,
