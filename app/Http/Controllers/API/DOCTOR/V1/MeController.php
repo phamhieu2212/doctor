@@ -48,24 +48,13 @@ class MeController extends Controller
     {
         $adminUser = $this->userService->getUser();
 
-        $adminResponse = $adminUser->toAPIArray();
-        $adminResponse['id'] = $adminUser->id;
-        $idSpecialties = DoctorSpecialty::where('admin_user_id',$adminResponse['id'])->pluck('specialty_id');
-        $specialties = Specialty::whereIn('id',$idSpecialties)->get();
-
-        $clinics = Clinic::where('admin_user_id',$adminUser->id)->get();
-
-        foreach( $specialties as $key => $specialty ) {
-            $specialties[$key] = $specialty->toAPIArray();
-        }
-        foreach( $clinics as $key => $clinic ) {
-            $clinics[$key] = $clinic->toAPIArray();
-        }
         return Response::response(200,
             [
-                'doctor' => $adminResponse,
-                'clinics'     => $clinics,
-                'specialties' => $specialties,
+                'user' => $adminUser->toAPIArrayLoginDoctor(),
+                'accountQuick' => [
+                    'username' => $adminUser->username,
+                    'password' => $adminUser->username
+                ]
 
             ]);
     }
