@@ -30,7 +30,7 @@ class Doctor extends Base
         'birthday',
         'address','price_chat','price_call',
         'city','sub_phone','bank_name','bank_address','bank_number','bank_owner',
-        'position',
+        'position','level_id',
         'experience',
         'description',
     ];

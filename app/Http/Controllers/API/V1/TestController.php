@@ -13,8 +13,8 @@ class TestController extends Controller
         $params = array(
             'func' => 'sendOrder',
             'version' => '1.0',
-            'merchant_id' => MERCHANT_ID,
-            'merchant_account' => RECEIVER,
+            'merchant_id' => '123',
+            'merchant_account' => '123',
             'order_code' => 'NL_'.time(),
             'total_amount' => 20000,
             'currency' => 'vnd',

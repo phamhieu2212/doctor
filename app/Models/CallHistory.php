@@ -124,7 +124,19 @@ class CallHistory extends Base
     {
         return [
             'label' => 'call',
-            'duration'=> (int)date('i',$this->end_time->timestamp - $this->start_time->timestamp),
+            'duration'=> (int)date('s',$this->end_time->timestamp - $this->start_time->timestamp),
+            'start_time'=>date('Y-m-d H:i:s',strtotime($this->created_at)),
+
+        ];
+    }
+
+    public function toAPIArrayDetailDoctor()
+    {
+        return [
+            'doctor_name'=>$this->adminUser->name,
+            'level_name'=>$this->adminUser->doctor->level->name,
+            'label' => 'call',
+            'duration'=> (int)date('s',$this->end_time->timestamp - $this->start_time->timestamp),
             'start_time'=>date('Y-m-d H:i:s',strtotime($this->created_at)),
 
         ];

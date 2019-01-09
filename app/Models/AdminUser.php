@@ -190,6 +190,7 @@ class AdminUser extends AuthenticatableBase
             'hospital_name' => $this->doctor->hospital->name,
             'birthday' => $this->doctor->birthday,
             'gender' => $this->doctor->gender,
+            'address' => $this->doctor->address,
             'phone' => $this->phone,
             'sub_phone' => $this->doctor->sub_phone,
             'email' => $this->email,

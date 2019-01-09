@@ -1,6 +1,8 @@
 <?php
 
 Route::group(['namespace' => 'API'], function () {
+//    Route::get('/nganluong', 'PATIENT\V1\PaymentController@index');
+//    Route::get('/patient/v1/payment/success', 'PATIENT\V1\PaymentController@success');
     Route::group(['prefix' => 'v1', 'namespace' => 'V1'], function () {
 
         Route::group(['middleware' => []], function () {
@@ -8,7 +10,6 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('quickblox/getTokenAuth', 'QuickbloxController@getTokenAuth');
             Route::post('quickblox/signup', 'QuickbloxController@signUp');
             Route::post('quickblox/signin', 'QuickbloxController@signIn');
-            Route::get('nganluong', 'TestController@index');
             Route::get('provinces', 'StaticDataController@provinces');
             Route::get('districts/{province_id}', 'StaticDataController@districts');
             Route::post('device', 'DeviceController@register');
@@ -34,9 +35,15 @@ Route::group(['namespace' => 'API'], function () {
             });
             Route::group(['prefix' => 'profile'], function () {
                 Route::get('/', 'ProfileController@index');
+                Route::get('/list-data', 'ProfileController@listData');
+                Route::post('/update', 'ProfileController@update');
             });
             Route::group(['prefix' => 'price'], function () {
                 Route::post('/update', 'PriceController@update');
+            });
+
+            Route::group(['prefix' => 'statistic'], function () {
+                Route::get('/', 'StatisticController@index');
             });
             Route::group(['prefix' => 'image'], function () {
                 Route::post('/update-avatar', 'ImageUploadController@avatar');
@@ -62,6 +69,9 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/', 'ContactController@index');
                 Route::get('/detail/{idPatient}', 'ContactController@detail');
 
+            });
+            Route::group(['prefix' => 'chat'], function() {
+                Route::get('start-chat', 'ChatController@startChat');
             });
 
             Route::group(['prefix' => 'call'], function () {
@@ -122,6 +132,10 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/update-endtime', 'CallHistoryController@updateEndtime');
                 Route::post('/update-type', 'CallHistoryController@updateType');
             });
+
+            Route::group(['prefix' => 'history'], function () {
+                Route::get('/', 'HistoryController@index');
+            });
             Route::group(['prefix' => 'plans'], function () {
                 Route::get('/list/{idClinic}/{timestamp}', 'PlanController@index');
                 Route::get('/order', 'PlanController@order');
@@ -141,6 +155,12 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'notification'], function() {
                 Route::get('/list', 'NotificationController@list');
                 Route::get('/{id}', 'NotificationController@details');
+            });
+            
+            Route::group(['prefix' => 'payment'], function() {
+                Route::post('/send-order', 'PaymentController@index');
+                Route::get('/success', 'PaymentController@success');
+
             });
             
             Route::get('profile', 'PatientController@show');
