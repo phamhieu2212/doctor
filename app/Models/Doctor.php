@@ -112,7 +112,7 @@ class Doctor extends Base
             'idQuickBlox' => $idQuickBlox,
             'vote' => 4,
             'rate' => 100,
-            'gender' => ($this->gender == 1)?'Nam':'Nữ',
+            'gender' => $this->gender,
             'experience' => $this->experience,
             'address'=>($this->address)?$this->address:"",
             'birthday'=>$this->birthday?$this->birthday:"",
