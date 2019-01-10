@@ -64,13 +64,18 @@ class PatientFileController extends Controller
             $filePatient = $this->filePatientRepository->create($data);
             $dataFileImage['file_patient_id'] = $filePatient['id'];
 
+
             foreach($imageArray as $key=>$images)
             {
                 $dataFileImage['type'] = $key;
                 foreach($images as $imageId)
                 {
-                    $dataFileImage['image_id'] = $imageId;
-                    $this->filePatientImageRepository->create($dataFileImage);
+                    if(!empty($imageId))
+                    {
+                        $dataFileImage['image_id'] = $imageId;
+                        $this->filePatientImageRepository->create($dataFileImage);
+                    }
+
                 }
             }
             DB::commit();
