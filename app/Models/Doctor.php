@@ -114,7 +114,7 @@ class Doctor extends Base
         }
         return [
             'id' => $this->adminUser->id,
-            'idQuickBlox' => $idQuickBlox,
+            'idQuickBlox' => $this->adminUser->quick_id,
             'vote' => 4,
             'rate' => 100,
             'specialties'=>$specialties,
