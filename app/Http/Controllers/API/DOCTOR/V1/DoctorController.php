@@ -7,17 +7,30 @@ use App\Models\Plan;
 use App\Services\APIUserServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\AdminUserRepositoryInterface;
+use App\Services\FileUploadServiceInterface;
+use App\Repositories\ImageRepositoryInterface;
+use App\Http\Responses\API\V1\Response;
 
 class DoctorController extends Controller
 {
     protected $adminUserService;
+    protected $adminUserRepository;
+    protected $fileUploadService;
+    protected $imageRepository;
 
     public function __construct
     (
-        APIUserServiceInterface $APIUserService
+        APIUserServiceInterface $APIUserService,
+        AdminUserRepositoryInterface $adminUserRepository,
+        FileUploadServiceInterface $fileUploadService,
+        ImageRepositoryInterface $imageRepository
     )
     {
         $this->adminUserService = $APIUserService;
+        $this->adminUserRepository =  $adminUserRepository;
+        $this->fileUploadService = $fileUploadService;
+        $this->imageRepository = $imageRepository;
     }
     public function detail()
     {
@@ -46,5 +59,39 @@ class DoctorController extends Controller
                 ]
 
         ];
+    }
+
+    public function uploadAvatar(Request $request)
+    {
+        $currentUser = $this->adminUserService->getUser();
+
+        if( $request->hasFile( 'avatar' ) ) {
+            $currentImage = $currentUser->profileImage;
+            $file = $request->file( 'avatar' );
+            $newImage = $this->fileUploadService->upload(
+                'user_profile_image',
+                $file,
+                [
+                    'entityType' => 'currentUser',
+                    'entityId'   => $currentUser->id,
+                    'title'      => $request->input( 'name', '' ),
+                ]
+            );
+
+            if(empty($newImage)) {
+                return Response::response(50002);
+            }
+
+            $patient = $this->adminUserRepository->update( $currentUser, ['profile_image_id' => $newImage->id] );
+
+            if( !empty( $currentImage ) ) {
+                $this->fileUploadService->delete( $currentImage );
+                $this->imageRepository->delete( $currentImage );
+            }
+
+            return Response::response(200, ['url' => $newImage->present()->url]);
+        }
+
+        return Response::response(200, ['url' => null]);
     }
 }
