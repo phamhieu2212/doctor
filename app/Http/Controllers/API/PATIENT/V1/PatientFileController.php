@@ -56,7 +56,11 @@ class PatientFileController extends Controller
         $data['name'] = $bodyRequests['name'];
         $data['title'] = $bodyRequests['title'];
         $data['description'] = $bodyRequests['description'];
-        $data['started_at'] = $bodyRequests['started_at'];
+        if(!empty($bodyRequests['started_at']))
+        {
+            $data['started_at'] = $bodyRequests['started_at'];
+        }
+
         $data['user_id'] = $this->userService->getUser()->id;
         $imageArray = $bodyRequests['images'];
         try {
@@ -109,7 +113,10 @@ class PatientFileController extends Controller
         $data['name'] = $bodyRequests['name'];
         $data['title'] = $bodyRequests['title'];
         $data['description'] = $bodyRequests['description'];
-        $data['started_at'] = $bodyRequests['started_at'];
+        if(!empty($bodyRequests['started_at']))
+        {
+            $data['started_at'] = $bodyRequests['started_at'];
+        }
         $data['user_id'] = $this->userService->getUser()->id;
         $imageArray = $bodyRequests['images'];
         try {
