@@ -149,4 +149,11 @@ class Patient extends Base
         ];
     }
 
+    public function imageToAPIArray()
+    {
+        return [
+            'url'    => !empty($this->profileImage) ? $this->profileImage->present()->url : null,
+        ];
+    }
+
 }
