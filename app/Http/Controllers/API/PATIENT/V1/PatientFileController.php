@@ -118,19 +118,27 @@ class PatientFileController extends Controller
             $filePatientImageDeletes = FilePatientImage::where('file_patient_id',$filePatient['id'])->get();
             foreach($filePatientImageDeletes as $filePatientImageDelete)
             {
-                $filePatientImageDelete->delete();
+                foreach($filePatientImageDelete as $imageId)
+                {
+                    $filePatientImageDelete->delete();
+                }
+
             }
 
             $dataFileImage['file_patient_id'] = $filePatient['id'];
 
             foreach($imageArray as $key=>$images)
             {
-                $dataFileImage['type'] = $key;
-                foreach($images as $imageId)
+                if(!empty($imageId))
                 {
-                    $dataFileImage['image_id'] = $imageId;
-                    $this->filePatientImageRepository->create($dataFileImage);
+                    $dataFileImage['type'] = $key;
+                    foreach($images as $imageId)
+                    {
+                        $dataFileImage['image_id'] = $imageId;
+                        $this->filePatientImageRepository->create($dataFileImage);
+                    }
                 }
+
             }
             DB::commit();
 
