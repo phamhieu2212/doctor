@@ -164,6 +164,7 @@ Route::group(['namespace' => 'API'], function () {
             });
             
             Route::get('profile', 'PatientController@show');
+            Route::post('avatar', 'PatientController@uploadAvatar');
            
             Route::post('profile', 'PatientController@update');
 

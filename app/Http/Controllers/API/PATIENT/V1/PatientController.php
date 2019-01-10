@@ -81,4 +81,39 @@ class PatientController extends Controller {
 
         return Response::response(200, $patient->toAPIArray());
     }
+
+    public function uploadAvatar(BaseRequest $request)
+    {
+        $currentUser = $this->userService->getUser();
+        $patient = $currentUser->patient;
+
+        if( $request->hasFile( 'avatar' ) ) {
+            $currentImage = $patient->profileImage;
+            $file = $request->file( 'avatar' );
+            $newImage = $this->fileUploadService->upload(
+                'user_profile_image',
+                $file,
+                [
+                    'entityType' => 'patient',
+                    'entityId'   => $patient->id,
+                    'title'      => $request->input( 'name', '' ),
+                ]
+            );
+
+            if(empty($newImage)) {
+                return Response::response(50002);
+            }
+
+            $patient = $this->patientRepository->update( $patient, ['profile_image_id' => $newImage->id] );
+
+            if( !empty( $currentImage ) ) {
+                $this->fileUploadService->delete( $currentImage );
+                $this->imageRepository->delete( $currentImage );
+            }
+
+            return Response::response(200, ['url' => $newImage->present()->url]);
+        }
+
+        return Response::response(200, ['url' => null]);
+    }
 }
