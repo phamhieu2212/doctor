@@ -39,7 +39,7 @@ class ImageController extends Controller {
                 return Response::response(50002);
             }
 
-            return Response::response(200, ['id' => $newImage->id]); 
+            return Response::response(200, ['id' => $newImage->id, 'url' => $newImage->present()->url]); 
         }
     }
 

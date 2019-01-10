@@ -68,6 +68,11 @@ class Patient extends Base
         return $this->belongsTo(\App\Models\Image::class, 'profile_image_id', 'id');
     }
 
+    public function point()
+    {
+        return $this->hasOne(\App\Models\PointPatient::class, 'user_id', 'user_id');
+    }
+
     private function getProvince($id)
     {
         $public_path = public_path();
@@ -146,6 +151,7 @@ class Patient extends Base
             'relationship' => $this->relationship,
             'phone_of_relatives' => $this->phone_of_relatives,
             'cover_image'    => !empty($this->profileImage) ? $this->profileImage->present()->url : null,
+            'point' => $this->point->point,
         ];
     }
 
