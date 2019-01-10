@@ -93,6 +93,8 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/{id}', 'NotificationController@details');
             });
 
+            Route::post('avatar', 'DoctorController@uploadAvatar');
+
             Route::post('signout', 'AuthController@postSignOut');
         });
     });
