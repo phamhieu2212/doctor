@@ -73,7 +73,7 @@ class FilePatientImage extends Base
     public function toAPIArrayList()
     {
         return [
-            'url' => $this->image->url,
+            'url' => $this->present()->image()->present()->url,
             'image_id' => $this->image_id,
             'type' => $this->type,
         ];
