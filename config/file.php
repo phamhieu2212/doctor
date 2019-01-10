@@ -52,7 +52,7 @@ return [
             'buckets'     => [
                 env('AWS_IMAGE_BUCKET'),
             ],
-            'size'        => [500, 500],
+            'size'        => [600, 400],
             'thumbnails'  => [
                 [100, 100],
                 [200, 200]
@@ -99,7 +99,7 @@ return [
             'buckets'     => [
                 env('AWS_IMAGE_BUCKET'),
             ],
-            'size'        => [500, 500],
+            'size'        => [1024, 512],
             'thumbnails'  => [
                 [100, 100],
                 [200, 200]

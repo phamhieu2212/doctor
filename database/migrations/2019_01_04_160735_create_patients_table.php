@@ -24,9 +24,9 @@ class CreatepatientsTable extends Migration
             $table->string('nation')->nullable();
             $table->string('job')->nullable();
             $table->string('email')->nullable();
-            $table->string('province')->nullable();
-            $table->string('district')->nullable();
-            $table->string('ward')->nullable();
+            $table->integer('province')->nullable();
+            $table->integer('district')->nullable();
+            $table->integer('ward')->nullable();
             $table->string('address')->nullable();
             $table->string('name_of_relatives')->nullable();
             $table->string('relationship')->nullable();
