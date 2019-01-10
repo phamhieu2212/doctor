@@ -107,12 +107,20 @@ class Doctor extends Base
 
     public function toAPIArrayDetail($idQuickBlox)
     {
+        $specialties = $this->adminUser->specialties;
+        foreach($specialties as $key=>$specialty)
+        {
+            $specialties[$key] = $specialty->toAPIArray();
+        }
         return [
             'id' => $this->adminUser->id,
             'idQuickBlox' => $idQuickBlox,
             'vote' => 4,
             'rate' => 100,
+            'specialties'=>$specialties,
             'gender' => $this->gender,
+            'price_chat' => $this->price_chat,
+            'price_call' => $this->price_call,
             'experience' => $this->experience,
             'address'=>($this->address)?$this->address:"",
             'birthday'=>$this->birthday?$this->birthday:"",
