@@ -77,10 +77,8 @@ class DoctorController extends Controller
         {
             $clinics[$key] = $clinic->toAPIArrayListPlanDoctor($idDoctor,$startDate,$endDate);
         }
-        $quickBlocDoctor = $this->quickblox->getUser($doctor->adminUser->username);
-        $idQuick = $quickBlocDoctor['user']['id'];
         $data= [
-            'doctor'=>$doctor->toAPIArrayDetail($idQuick),
+            'doctor'=>$doctor->toAPIArrayDetail(),
             'clinics'=> $clinics
         ];
 

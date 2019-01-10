@@ -105,7 +105,7 @@ class Doctor extends Base
         ];
     }
 
-    public function toAPIArrayDetail($idQuickBlox)
+    public function toAPIArrayDetail()
     {
         $specialties = $this->adminUser->specialties;
         foreach($specialties as $key=>$specialty)
