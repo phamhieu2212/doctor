@@ -99,6 +99,9 @@ class AuthController extends Controller
         ];
 
         $serverRequest = PsrServerRequest::createFromRequest($request, $data);
+        foreach($adminUser->tokens as $token) {
+            $token->revoke();
+        }
 
         return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);
     }

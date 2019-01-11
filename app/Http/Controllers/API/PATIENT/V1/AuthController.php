@@ -101,6 +101,7 @@ class AuthController extends Controller
                         ]);
                     }
                 }
+
                 $data['username'] = $user->email;
                 $data['email'] = $user->email;
                 $data['password'] = "12345678";
@@ -115,6 +116,9 @@ class AuthController extends Controller
 
 
                 $serverRequest = PsrServerRequest::createFromRequest($request, $data);
+                foreach($user->tokens as $token) {
+                    $token->revoke();
+                }
 
                 return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);
 
