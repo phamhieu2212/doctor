@@ -212,7 +212,7 @@ class AdminUser extends AuthenticatableBase
         return [
             'name' => $this->name,
             'hospital'=>$this->doctor->hospital->name,
-            'place'=>'Khoa chấn thương chỉnh hình',
+            'position'=>$this->doctor->position,
             'price_chat'=>$this->doctor->price_chat,
             'price_call'=>$this->doctor->price_call,
             'vote' => 4,
