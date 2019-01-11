@@ -114,6 +114,11 @@ class ServiceBindServiceProvider extends ServiceProvider
             \App\Services\Production\PaymentService::class
         );
 
+        $this->app->singleton(
+            \App\Services\AccountKitServiceInterface::class,
+            \App\Services\Production\AccountKitService::class
+        );
+
         /* NEW BINDING */
     }
 }

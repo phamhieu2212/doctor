@@ -104,8 +104,6 @@ Route::group(['namespace' => 'API'], function () {
         Route::group(['middleware' => ['api.provider.patient']], function () {
             // Authentication
             Route::post('signin', 'AuthController@signIn');
-            Route::post('signup', 'AuthController@signUp');
-            Route::post('check-signup', 'AuthController@checkSignUp');
             Route::post('token/refresh', 'AuthController@refreshToken');
         });
 
