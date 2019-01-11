@@ -94,7 +94,7 @@ class ChatHistory extends Base
         $timeNow = strtotime(date('Y-m-d H:i:s'));
         return [
             'doctor_name'=>$this->adminUser->name,
-            'level_name'=>$this->adminUser->doctor->level->name,
+            'level_name'=>($this->adminUser->doctor->level_id != 0)?$this->adminUser->doctor->level->name:"",
             'label' => 'chat',
             'file_patient_id'=> ($this->filePatient['id'] != null)?$this->filePatient['id']:0,
             'duration'=> (($timeNow - $this->created_at->timestamp) <= 180)?$timeNow-$this->created_at->timestamp:0,
