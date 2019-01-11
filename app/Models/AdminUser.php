@@ -202,6 +202,8 @@ class AdminUser extends AuthenticatableBase
             'bank_number'=>$this->doctor->bank_number,
             'bank_owner'=>$this->doctor->bank_owner,
             'description'=>$this->doctor->description,
+            'quick_username' => $this->username,
+            'quick_password' => $this->username
         ];
     }
 

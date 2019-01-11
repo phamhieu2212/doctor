@@ -80,13 +80,7 @@ class ProfileController extends Controller
             $doctor = $this->doctorRepository->update($doctor,$inputDoctor);
             $adminUser->specialties()->sync($request->input('specialties_id'));
             DB::commit();
-            $data = [
-                'user' => $adminUser->toAPIArrayProfile(),
-                'accountQuick' => [
-                    'username' => $adminUser->username,
-                    'password' => $adminUser->username
-                ]
-            ];
+            $data = $adminUser->toAPIArrayProfile();
 
             return Response::response(200,$data);
 
