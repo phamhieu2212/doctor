@@ -183,11 +183,11 @@ class AdminUser extends AuthenticatableBase
         {
             $specialties[$key] = $specialty->toAPIArray();
         }
+        $hospital = $this->doctor->hospital->toAPIArrayListDataForProfileDoctor();
         return [
             'name' => $this->name,
             'position' => $this->doctor->position,
-            'hospital_id' => $this->doctor->hospital->id,
-            'hospital_name' => $this->doctor->hospital->name,
+            'hospital'=>$hospital,
             'birthday' => $this->doctor->birthday,
             'gender' => $this->doctor->gender,
             'address' => $this->doctor->address,
