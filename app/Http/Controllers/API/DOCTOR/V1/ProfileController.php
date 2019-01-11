@@ -43,13 +43,7 @@ class ProfileController extends Controller
     public function index()
     {
         $doctor = $this->adminUserService->getUser();
-        $data = [
-            'user' => $doctor->toAPIArrayProfile(),
-            'accountQuick' => [
-                'username' => $doctor->username,
-                'password' => $doctor->username
-            ]
-        ];
+        $data = $doctor->toAPIArrayProfile();
 
         return Response::response(200,$data);
     }
