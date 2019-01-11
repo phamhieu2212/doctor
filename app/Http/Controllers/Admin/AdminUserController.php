@@ -175,7 +175,7 @@ class AdminUserController extends Controller
                 }
             }
             $inputQuickBlox = [
-                'username' => $adminUser->username,
+                'username' => "BS".$adminUser->username,
                 'password' => $adminUser->username,
                 'email'    => $adminUser->email ,
                 'external_user_id' => '',
