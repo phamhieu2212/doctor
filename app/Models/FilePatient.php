@@ -86,7 +86,7 @@ class FilePatient extends Base
             'id' => $this->id,
             'name' => $this->name,
             'title' => $this->title,
-            'started_at' => $this->started_at,
+            'started_at' => ($this->started_at != "0000-00-00")?$this->started_at:"",
             'description' => $this->description,
             'images'=>$fileImages
         ];
