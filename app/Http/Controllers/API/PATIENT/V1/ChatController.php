@@ -165,10 +165,14 @@ class ChatController extends Controller {
         if ($currentPatient->patientPoint->point < $doctor->price_chat) {
             return Response::response(200, ['status'=>false]);
         }
+        $data = $this->pointPatientRepository->prepareForStart($currentPatient, $doctor);
 
         // create row on table patient_point and minus point user
-        if ($this->pointPatientRepository->prepareForStart($currentPatient, $doctor)) {
-            return Response::response(200, ['status'=>true]);
+        if ($data['status']) {
+            return Response::response(200, [
+                'status'=>true,
+                'chat_id'=>$data['chat_id']
+            ]);
         }
 
         return Response::response(200, ['status'=>false]);

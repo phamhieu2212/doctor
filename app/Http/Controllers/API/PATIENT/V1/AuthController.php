@@ -13,12 +13,14 @@ use App\Http\Requests\BaseRequest;
 use App\Models\AdminUser;
 use App\Models\User;
 use App\Repositories\PatientRepositoryInterface;
+use App\Repositories\PointPatientRepositoryInterface;
 use App\Services\AccountKitServiceInterface;
 use App\Services\AdminUserServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Services\APIUserServiceInterface;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use League\OAuth2\Server\AuthorizationServer;
 use Zend\Diactoros\Response as Psr7Response;
 use App\Http\Responses\API\V1\Response;
@@ -36,6 +38,7 @@ class AuthController extends Controller
 
     /** @var AuthorizationServer */
     protected $server;
+    protected $pointPatientRepository;
 
     public function __construct(
         UserServiceInterface        $userService,
@@ -43,7 +46,8 @@ class AuthController extends Controller
         AuthorizationServer         $server,
         QuickbloxController $quickblox,
         PatientRepositoryInterface $patientRepository,
-        AccountKitServiceInterface $accountKitService
+        AccountKitServiceInterface $accountKitService,
+        PointPatientRepositoryInterface $pointPatientRepository
 
     )
     {
@@ -53,6 +57,7 @@ class AuthController extends Controller
         $this->quickblox            = $quickblox;
         $this->patientRepository    = $patientRepository;
         $this->accountKitService    = $accountKitService;
+        $this->pointPatientRepository = $pointPatientRepository;
 
     }
 
@@ -145,13 +150,29 @@ class AuthController extends Controller
         }
         else
         {
+
             $dataPatient['telephone'] = $username;
             $dataPatient['password'] = '12345678';
             $dataPatient['email'] = $username.'@gmail.com';
             $dataPatient['quick_id'] = $userQuickblox['user']['id'];
-            $user = $this->userRepository->create($dataPatient);
-            $patient = $this->patientRepository->create(['user_id'=>$user['id']]);
-            return $user;
+            try {
+                DB::beginTransaction();
+
+                $user = $this->userRepository->create($dataPatient);
+                $this->patientRepository->create(['user_id'=>$user['id']]);
+                $this->pointPatientRepository->create(["user_id" => $user->id, "point" => 0]);
+
+
+                DB::commit();
+
+                return $user;
+
+            } catch (\Exception $ex) {
+                DB::rollBack();
+
+                return false;
+            }
+
         }
 
         }
