@@ -13,6 +13,10 @@ return [
         'message'        => 'Error, Parameter is invalid !!!',
         'httpStatusCode' => 400
     ],
+    40003 => [
+        'message'        => 'Wrong password !!!',
+        'httpStatusCode' => 400
+    ],
     40002 => [
         'message'        => 'Error, This username is already used !!!',
         'httpStatusCode' => 400

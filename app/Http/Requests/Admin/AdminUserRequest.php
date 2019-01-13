@@ -60,7 +60,7 @@ class AdminUserRequest extends BaseRequest
             'name.required' => 'Vui lòng nhập tên người dùng',
             'email.required' => 'Vui lòng nhập email người dùng',
             'password.required' => 'Vui lòng nhập mật khẩu',
-            'password.min' => 'Mật khẩu phải có ít nhất 6 kí tự',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 kí tự',
             'password.confirmed' => 'Mật khẩu không trùng khớp',
             'username.required' => 'Vui lòng nhập tên đăng nhập',
             'username.unique' => 'Tên đăng nhập này đã tồn tại! Vui lòng nhập tên khác',
