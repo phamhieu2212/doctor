@@ -108,6 +108,9 @@ Route::group(['namespace' => 'API'], function () {
         });
 
         Route::group(['middleware' => ['api.client', 'api.user','api.provider.patient']], function () {
+            Route::group(['prefix' => 'me'], function () {
+                Route::get('/', 'MeController@getMe');
+            });
             Route::group(['prefix' => 'search-doctor'], function () {
                 Route::get('/', 'DoctorController@index');
             });
