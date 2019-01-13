@@ -75,6 +75,9 @@ class ChatController extends Controller
         }
 
 
-        return Response::response(200, ['status'=>true]);
+        return Response::response(200, [
+            'status'=>true,
+            'chat_id' => $chatHistory->id
+        ]);
     }
 }
