@@ -23,7 +23,7 @@ class ChatHistory extends Base
      */
     protected $fillable = [
         'user_id',
-        'admin_user_id','file_patient_id'
+        'admin_user_id','file_patient_id','rate','content'
     ];
 
     /**
@@ -101,6 +101,16 @@ class ChatHistory extends Base
             'duration'=> (($timeNow - $this->created_at->timestamp) <= 180)?$timeNow-$this->created_at->timestamp:0,
             'start_time'=>(($timeNow - $this->created_at->timestamp) > 180)?date('Y-m-d H:i:s',strtotime($this->created_at)):"",
             'end_time'=>(($timeNow - $this->created_at->timestamp) > 180)?date('Y-m-d H:i:s',strtotime($this->created_at. ' + 3 days')):"",
+            'rate'=>($this->rate)?$this->rate:0
+
+
+        ];
+    }
+
+    public function toAPIArrayRate()
+    {
+        return [
+            'rate'=>$this->rate
 
 
         ];
