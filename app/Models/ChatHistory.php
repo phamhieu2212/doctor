@@ -93,6 +93,7 @@ class ChatHistory extends Base
     {
         $timeNow = strtotime(date('Y-m-d H:i:s'));
         return [
+            'id'=>$this->id,
             'doctor_name'=>$this->adminUser->name,
             'level_name'=>($this->adminUser->doctor->level_id != 0)?$this->adminUser->doctor->level->name:"",
             'label' => 'chat',

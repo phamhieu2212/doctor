@@ -111,6 +111,9 @@ Route::group(['namespace' => 'API'], function () {
             Route::group(['prefix' => 'me'], function () {
                 Route::get('/', 'MeController@getMe');
             });
+            Route::group(['prefix' => 'rate'], function () {
+                Route::post('/update', 'RateController@update');
+            });
             Route::group(['prefix' => 'search-doctor'], function () {
                 Route::get('/', 'DoctorController@index');
             });

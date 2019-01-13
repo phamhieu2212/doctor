@@ -21,6 +21,8 @@ class CreatecallHistoriesTable extends Migration
             $table->dateTime('end_time')->nullable();
             $table->integer('type')->nullable();
             $table->integer('is_read')->nullable()->default(0);
+            $table->integer('rate')->comment('diem')->default(0);
+            $table->text('content')->nullable();
 
             // Add some more columns
 

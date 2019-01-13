@@ -133,6 +133,7 @@ class CallHistory extends Base
     public function toAPIArrayDetailDoctor()
     {
         return [
+            'id'=>$this->id,
             'doctor_name'=>$this->adminUser->name,
             'level_name'=>$this->adminUser->doctor->level->name,
             'label' => 'call',
