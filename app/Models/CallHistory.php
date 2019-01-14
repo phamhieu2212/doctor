@@ -148,7 +148,8 @@ class CallHistory extends Base
     public function toAPIArrayRate()
     {
         return [
-            'rate'=>$this->rate
+            'rate'=>$this->rate,
+            'rate_content'=>$this->content
 
 
         ];
