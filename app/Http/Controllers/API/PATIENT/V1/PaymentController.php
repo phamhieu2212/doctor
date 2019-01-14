@@ -39,7 +39,7 @@ class PaymentController extends Controller
         //Mã đơn hàng
         $order_code='NL_'.time();
         //Khai báo url trả về
-        $return_url= "http://doctor.dev.vn/api/patient/v1/payment/success";
+        $return_url= asset('/api/patient/v1/payment/success');
         // Link nut hủy đơn hàng
         $cancel_url= "";
         //Giá của cả giỏ hàng
