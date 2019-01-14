@@ -139,7 +139,7 @@ class CallHistory extends Base
             'label' => 'call',
             'duration'=> (int)date('s',$this->end_time->timestamp - $this->start_time->timestamp),
             'start_time'=>date('Y-m-d H:i:s',strtotime($this->created_at)),
-            'rate'=>$this->rate,
+            'rate'=>($this->rate)?(int)$this->rate:0,
             'rate_content'=>$this->content
 
         ];
@@ -148,7 +148,7 @@ class CallHistory extends Base
     public function toAPIArrayRate()
     {
         return [
-            'rate'=>$this->rate,
+            'rate'=>(int)$this->rate,
             'rate_content'=>$this->content
 
 
