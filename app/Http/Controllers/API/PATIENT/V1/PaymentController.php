@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\PATIENT\V1;
 
 use App\Http\Responses\API\V1\Response;
+use App\Repositories\PaymentRepositoryInterface;
 use App\Repositories\PointPatientRepositoryInterface;
 use App\Services\APIUserServiceInterface;
 use App\Services\PaymentServiceInterface;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 class PaymentController extends Controller
 {
     protected $paymentService;
+    protected $paymentRepository;
     protected $userService;
     protected $pointPatientRepository;
 
@@ -21,12 +23,14 @@ class PaymentController extends Controller
     (
         PaymentServiceInterface $paymentService,
         APIUserServiceInterface $APIUserService,
-        PointPatientRepositoryInterface $pointPatientRepository
+        PointPatientRepositoryInterface $pointPatientRepository,
+        PaymentRepositoryInterface $paymentRepository
     )
     {
         $this->paymentService = $paymentService;
         $this->userService    = $APIUserService;
         $this->pointPatientRepository = $pointPatientRepository;
+        $this->paymentRepository      = $paymentRepository;
     }
 
     public function index(Request $request)
@@ -37,9 +41,9 @@ class PaymentController extends Controller
         $user = $this->userService->getUser();
         $receiver=RECEIVER;
         //Mã đơn hàng
-        $order_code='NL_'.time();
+        $order_code='NL_'.$user->telephone.'_'.time();
         //Khai báo url trả về
-        $return_url= asset('/api/patient/v1/payment/success');
+        $return_url= asset('/payment/success');
         // Link nut hủy đơn hàng
         $cancel_url= "";
         //Giá của cả giỏ hàng
@@ -75,55 +79,26 @@ class PaymentController extends Controller
 //            echo '<meta http-equiv="refresh" content="0; url='.$url.'" >';
 //            //&lang=en --> Ngôn ngữ hiển thị google translate
 //        }
+        try {
+            $payment = $this->paymentRepository->create([
+                'user_id'=>$user->id,
+                'order_code'=>$order_code,
+                'price'=>$price
+            ]);
+        } catch (\Exception $e) {
+            return Response::response(50002);
+        }
+
+        if( empty( $payment ) ) {
+            return Response::response(50002);
+        }
          return Response::response(200, [
                 'url'=>$url
                 ]);
     }
 
 
-    public function success(Request $request)
-    {
-        $data = $request->only([
-            'transaction_info',
-            'order_code',
-            'price',
-            'payment_id',
-            'payment_type',
-            'error_text',
-            'secure_code'
-        ]);
-        $transaction_info =$data['transaction_info'];
-        $order_code =$data['order_code'];
-        $price =$data['price'];
-        $payment_id =$data['payment_id'];
-        $payment_type =$data['payment_type'];
-        $error_text =$data['error_text'];
-        $secure_code =$data['secure_code'];
-        //Khai báo đối tượng của lớp NL_Checkout
 
-        //Tạo link thanh toán đến nganluong.vn
-        $checkpay= $this->paymentService->verifyPaymentUrl($transaction_info, $order_code, $price, $payment_id, $payment_type, $error_text, $secure_code);
-
-        if ($checkpay) {
-            $point = $price;
-            $currentPatient = $this->userService->getUser();
-            $patientPoint  = $this->pointPatientRepository->findByUserId($currentPatient->id);
-            if (empty($patientPoint)) {
-                $patientPoint = $this->pointPatientRepository->create(["user_id" => $currentPatient->id, "point" => $point]);
-            } else {
-                $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point + $point]);
-            }
-
-            return Response::response(200, [
-                'point'=>$patientPoint->point,
-                'status' => true
-            ]);
-        }else{
-            return Response::response(200, [
-                'status' => false
-            ]);
-        }
-    }
 
 
 

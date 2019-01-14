@@ -165,7 +165,6 @@ Route::group(['namespace' => 'API'], function () {
             
             Route::group(['prefix' => 'payment'], function() {
                 Route::post('/send-order', 'PaymentController@index');
-                Route::get('/success', 'PaymentController@success');
 
             });
             

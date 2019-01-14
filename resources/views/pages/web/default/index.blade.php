@@ -1,76 +1,40 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]>
-<html class="ie ie6" lang="en"><![endif]-->
-<!--[if IE 7 ]>
-<html class="ie ie7" lang="en"><![endif]-->
-<!--[if IE 8 ]>
-<html class="ie ie8" lang="en"><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en"><!--<![endif]-->
+<html lang="en-US">
 <head>
-    <!-- Website Template designed by www.downloadwebsitetemplates.co.uk -->
-    <meta charset="UTF-8">
-    <title>Progress - Free Responsive Website Template by Download Website Templates</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{!! \URLHelper::asset('default/images/ico/apple-touch-icon-144.png', 'web') !!}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{!! \URLHelper::asset('default/images/ico/apple-touch-icon-114.png', 'web') !!}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{!! \URLHelper::asset('default/images/ico/apple-touch-icon-72.png', 'web') !!}">
-    <link rel="apple-touch-icon-precomposed" href="{!! \URLHelper::asset('default/images/ico/apple-touch-icon-57.png', 'web') !!}">
-    <link rel="shortcut icon" href="{!! \URLHelper::asset('default/images/ico/favicon.png', 'web') !!}">
-    <!--[if IE]><![endif]-->
-    <link rel="stylesheet" href="{!! \URLHelper::asset('default/css/style.css', 'web') !!}">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Success Notification Boxes</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
-<body id="backtotop">
 
-<div class="fullwidth clearfix">
-    <div id="topcontainer" class="bodycontainer clearfix"
-         data-uk-scrollspy="{cls:'uk-animation-fade', delay: 300, repeat: true}">
+<body>
 
-        <p><span class="fa fa-signal"></span></p>
-        <h1><span>Progress</span><br/>is coming soon</h1>
-        <p>It's almost ready ... honest</p>
-
-    </div>
-</div>
-
-<div class="arrow-separator arrow-white"></div>
-
-<div class="fullwidth colour1 clearfix">
-    <div id="countdown" class="bodycontainer clearfix"
-         data-uk-scrollspy="{cls:'uk-animation-fade', delay: 300, repeat: true}">
-
-        <div id="countdowncont" class="clearfix">
-            <ul id="countscript">
-                <li>
-                    <span class="days">00</span>
-                    <p>Days</p>
-                </li>
-                <li>
-                    <span class="hours">00</span>
-                    <p>Hours</p>
-                </li>
-                <li class="clearbox">
-                    <span class="minutes">00</span>
-                    <p>Minutes</p>
-                </li>
-                <li>
-                    <span class="seconds">00</span>
-                    <p>Seconds</p>
-                </li>
-            </ul>
+<div class="container">
+    <div class="row text-center">
+        @if($status)
+        <div class="col-sm-6 col-sm-offset-3">
+            <br><br> <h2 style="color:#0fad00">Success</h2>
+            <img src="http://osmhotels.com//assets/check-true.jpg">
+            <h3>Cảm ơn quý khách</h3>
+            <p style="font-size:20px;color:#5C5C5C;">
+                Thanh toán thành công rồi pạn nhaaaa <3
+            </p>
+            <br><br>
         </div>
+        @else
+            <div class="col-sm-6 col-sm-offset-3">
+                <br><br> <h2 style="color:red">Error</h2>
+                <img src="http://osmhotels.com//assets/check-true.jpg">
+                <h3>Cảm ơn quý khách</h3>
+                <p style="font-size:20px;color:#5C5C5C;">
+                    Thanh toán thất bại rồi pạn nhaaaa <3
+                </p>
+                <br><br>
+            </div>
+         @endif
 
     </div>
 </div>
-<script src="{!! \URLHelper::asset('default/js/jquery.js', 'web') !!}"></script>
-<script src="{!! \URLHelper::asset('default/js/countdown.js', 'web') !!}"></script>
-<script src="{!! \URLHelper::asset('default/js/owlcarousel.js', 'web') !!}"></script>
-<script src="{!! \URLHelper::asset('default/js/uikit.scrollspy.js', 'web') !!}"></script>
-<script src="{!! \URLHelper::asset('default/js/scripts.js', 'web') !!}"></script>
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
+
 </body>
 </html>

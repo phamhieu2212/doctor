@@ -343,4 +343,13 @@ $factory->define(App\Models\Level::class, function (Faker\Generator $faker) {
         'name' => '',
     ];
 });
+$factory->define(App\Models\Payment::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'user_id' => '',
+        'order_code' => '',
+        'price' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

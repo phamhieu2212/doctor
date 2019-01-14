@@ -167,6 +167,11 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\LevelRepositoryInterface::class,
             \App\Repositories\Eloquent\LevelRepository::class
         );
+        $this->app->singleton(
+            \App\Repositories\PaymentRepositoryInterface::class,
+            \App\Repositories\Eloquent\PaymentRepository::class
+        );
+
         /* NEW BINDING */
     }
 }
