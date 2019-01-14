@@ -46,6 +46,16 @@ class MeController extends Controller
         $this->imageRepository     = $imageRepository;
     }
 
+    public function getPoint()
+    {
+        $adminUser = $this->userService->getUser();
+        return Response::response(200,
+            [
+                'point' => $adminUser->point->point,
+
+            ]);
+    }
+
     public function getMe()
     {
         $adminUser = $this->userService->getUser();

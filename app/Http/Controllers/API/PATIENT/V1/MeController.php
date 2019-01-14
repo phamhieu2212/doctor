@@ -20,6 +20,16 @@ class MeController extends Controller
         $this->userService = $userService;
     }
 
+    public function getPoint()
+    {
+        $user = $this->userService->getUser();
+        return Response::response(200,
+            [
+                'point' => $user->patientPoint->point,
+
+            ]);
+    }
+
     public function getMe()
     {
         $user = $this->userService->getUser();
