@@ -83,7 +83,8 @@ class PaymentController extends Controller
             $payment = $this->paymentRepository->create([
                 'user_id'=>$user->id,
                 'order_code'=>$order_code,
-                'price'=>$price
+                'price'=>$price,
+                'status'=>0
             ]);
         } catch (\Exception $e) {
             return Response::response(50002);
