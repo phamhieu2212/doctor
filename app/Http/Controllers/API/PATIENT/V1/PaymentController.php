@@ -44,8 +44,8 @@ class PaymentController extends Controller
         $cancel_url= "";
         //Giá của cả giỏ hàng
         $txh_name =$user->name;
-        $txt_email =$user->email;
-        $txt_phone =$user->telephone;
+        $txt_email ="";
+        $txt_phone ="0".substr($user->telephone,3);
         $price =(int)$input['point'];
         //Thông tin giao dịch
         $transaction_info="Thong tin giao dich";
