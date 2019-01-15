@@ -242,6 +242,11 @@ return [
                 'ended_at' => 'Ended_at',
             ],
         ],
+        'levels'   => [
+            'columns'  => [
+                'name' => 'Name',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

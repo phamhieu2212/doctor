@@ -22,6 +22,9 @@
             \Route::post('articles/images', 'Admin\ArticleController@postImage');
             \Route::delete('articles/images', 'Admin\ArticleController@deleteImage');
             \Route::resource('articles', 'Admin\ArticleController');
+            \Route::resource('hospitals', 'Admin\HospitalController');
+            \Route::resource('specialties', 'Admin\SpecialtyController');
+            \Route::resource('levels', 'Admin\LevelController');
 
             \Route::delete('images/delete', 'Admin\ImageController@deleteByUrl');
             \Route::resource('images', 'Admin\ImageController');
@@ -36,6 +39,7 @@
             \Route::resource('admin-user-notifications', 'Admin\AdminUserNotificationController');
             
             \Route::get('load-notification/{offset}', 'Admin\AdminUserNotificationController@loadNotification');
+            \Route::resource('clinics', 'Admin\ClinicController');
         });
 
         \Route::get('/', 'Admin\IndexController@index');
@@ -46,10 +50,6 @@
 
         \Route::post('signout', 'Admin\AuthController@postSignOut');
 
-        \Route::resource('hospitals', 'Admin\HospitalController');
-        \Route::resource('specialties', 'Admin\SpecialtyController');
-        \Route::resource('clinics', 'Admin\ClinicController');
-        \Route::resource('plans', 'Admin\PlanController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });
