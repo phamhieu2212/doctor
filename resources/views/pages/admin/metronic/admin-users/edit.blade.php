@@ -43,10 +43,7 @@
                 minView: 2,
             });
             $('.js-example-basic-multiple').select2(
-                    {
-                        dropdownAutoWidth: true
 
-                    }
             );
         });
     </script>
@@ -238,7 +235,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <div class="form-group m-form__group row">
                                             <label for="exampleSelect1">Bệnh viện</label>
                                             <select name="hospital_id" class="form-control  m-input" id="formRole">
@@ -248,12 +245,24 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-6">
+                                        <div class="form-group m-form__group row">
+                                            <label for="exampleSelect1">Học hàm</label>
+                                            <select name="level_id" class="form-control  m-input" id="formRole">
+                                                @foreach($levels as $level)
+                                                    <option {{(@$adminUser->doctor->level_id == $level->id)?'selected':''}} value="{{$level->id}}">{{$level->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group m-form__group row">
                                             <label for="exampleSelect1">Chuyên khoa</label>
                                             <select class="form-control js-example-basic-multiple" name="specialty_id[]" multiple="multiple" id="formRole">
                                                 @foreach($specialties as $specialty)
-                                                <option  value="{{$specialty->id}}">{{$specialty->name}}</option>
+                                                    <option  value="{{$specialty->id}}">{{$specialty->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

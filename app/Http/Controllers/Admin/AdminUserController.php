@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\AdminUserRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Repositories\DoctorRepositoryInterface;
 use App\Repositories\HospitalRepositoryInterface;
+use App\Repositories\LevelRepositoryInterface;
 use App\Repositories\PointDoctorRepositoryInterface;
 use App\Repositories\SpecialtyRepositoryInterface;
 use App\Services\FileUploadServiceInterface;
@@ -38,6 +39,7 @@ class AdminUserController extends Controller
     protected $imageRepository;
 
     protected $hospitalRepository;
+    protected $levelRepository;
     protected $specialtyRepository;
 
     public function __construct(
@@ -49,7 +51,8 @@ class AdminUserController extends Controller
         SpecialtyRepositoryInterface $specialtyRepository,
         DoctorRepositoryInterface $doctorRepository,
         QuickbloxController $quickblox,
-        PointDoctorRepositoryInterface $pointDoctorRepository
+        PointDoctorRepositoryInterface $pointDoctorRepository,
+        LevelRepositoryInterface $levelRepository
     )
     {
         $this->adminUserRepository = $adminUserRepository;
@@ -61,6 +64,7 @@ class AdminUserController extends Controller
         $this->doctorRepository = $doctorRepository;
         $this->quickblox        = $quickblox;
         $this->pointDoctorRepository = $pointDoctorRepository;
+        $this->levelRepository = $levelRepository;
     }
 
     /**
@@ -108,6 +112,7 @@ class AdminUserController extends Controller
         return view(
             'pages.admin.' . config('view.admin') . '.admin-users.edit',
             [
+                'levels' => $this->levelRepository->all(),
                 'hospitals' => $this->hospitalRepository->all(),
                 'specialties' => $this->specialtyRepository->all(),
                 'isNew'     => true,
@@ -149,7 +154,7 @@ class AdminUserController extends Controller
             {
                 $inputDoctor = $request->only(
                     [
-                        'experience','description','gender','city','address','hospital_id','position','birthday','name'
+                        'level_id','experience','description','gender','city','address','hospital_id','position','birthday','name'
                     ]
                 );
                 $inputDoctor['admin_user_id'] = $adminUser->id;
@@ -233,6 +238,7 @@ class AdminUserController extends Controller
         return view(
             'pages.admin.' . config('view.admin') . '.admin-users.edit',
             [
+                'levels' => $this->levelRepository->all(),
                 'hospitals' => $this->hospitalRepository->all(),
                 'specialties' => $this->specialtyRepository->all(),
                 'isNew'     => false,
@@ -313,7 +319,7 @@ class AdminUserController extends Controller
         {
             $inputDoctor = $request->only(
                 [
-                    'experience','description','gender','city','address','hospital_id','position','birthday'
+                    'level_id','experience','description','gender','city','address','hospital_id','position','birthday'
                 ]
             );
             $inputDoctor['admin_user_id'] = $adminUser->id;
