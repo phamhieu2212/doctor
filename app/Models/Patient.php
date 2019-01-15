@@ -150,7 +150,6 @@ class Patient extends Base
             'name_of_relatives' => $this->name_of_relatives,
             'relationship' => $this->relationship,
             'phone_of_relatives' => $this->phone_of_relatives,
-            'cover_image'    => !empty($this->profileImage) ? $this->profileImage->present()->url : null,
             'point' => $this->point->point,
         ];
     }
