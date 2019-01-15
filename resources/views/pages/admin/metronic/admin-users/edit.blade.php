@@ -210,7 +210,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group m-form__group row">
                                             <label >Ngày sinh</label>
-                                            <input type="text" name="birthday" class="form-control datetime-picker" id="started_date" readonly value="{{ old('birthday') ? old('birthday') : @$adminUser->birthday }}">
+                                            <input type="text" name="birthday" class="form-control datetime-picker" id="started_date" readonly value="{{ old('birthday') ? old('birthday') : @$adminUser->doctor->birthday }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -227,13 +227,13 @@
                                     <div class="col-md-5">
                                         <div class="form-group m-form__group row">
                                             <label for="address">Thành phố</label>
-                                            <input type="text" class="form-control m-input" name="city" id="city" placeholder="Thành phố" value="{{ old('address') ? old('address') : @$adminUser->address }}">
+                                            <input type="text" class="form-control m-input" name="city" id="city" placeholder="Thành phố" value="{{ old('city') ? old('city') : @$adminUser->doctor->city }}">
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group m-form__group row">
                                             <label for="address">Địa chỉ</label>
-                                            <input type="text" class="form-control m-input" name="address" id="address" placeholder="Địa chỉ" value="{{ old('address') ? old('address') : @$adminUser->address }}">
+                                            <input type="text" class="form-control m-input" name="address" id="address" placeholder="Địa chỉ" value="{{ old('address') ? old('address') : @$adminUser->doctor->address }}">
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group m-form__group row">
-                                            <label for="name">Chức vụ</label>
+                                            <label for="name">Khoa</label>
                                             <input type="text" class="form-control m-input" name="position" id="position" value="{{ old('position') ? old('position') : @$adminUser->doctor->position }}">
                                         </div>
                                     </div>
