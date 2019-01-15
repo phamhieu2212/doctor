@@ -33,6 +33,7 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/', 'MeController@getMe');
                 Route::get('/point', 'MeController@getPoint');
                 Route::post('/change-password', 'MeController@changePassword');
+                Route::post('/update-status', 'MeController@updateStatus');
                 Route::get('/logout', 'MeController@logout');
             });
             Route::group(['prefix' => 'profile'], function () {

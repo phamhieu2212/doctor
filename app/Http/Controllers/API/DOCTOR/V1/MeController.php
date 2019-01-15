@@ -100,6 +100,30 @@ class MeController extends Controller
         }
     }
 
+    public function updateStatus(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'status' => 'required|numeric'
+        ]);
+        if ($validate->fails()) {
+            return Response::response(40001);
+        }
+
+        $data = $request->only([
+            'status'
+        ]);
+
+        $adminUser = $this->userService->getUser();
+        try {
+            $this->adminUserRepository->update($adminUser, $data);
+        } catch (\Exception $e) {
+            return Response::response(50002);
+        }
+        return Response::response(200,[
+            'status'=> $adminUser->status
+        ]);
+    }
+
     public function logout() {
         $accessToken = $this->userService->getUser()->token();
         DB::table('oauth_refresh_tokens')

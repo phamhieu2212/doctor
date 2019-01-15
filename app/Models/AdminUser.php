@@ -66,7 +66,7 @@ class AdminUser extends AuthenticatableBase
         'remember_token',
         'api_access_token',
         'profile_image_id',
-        'last_notification_id','quick_id'
+        'last_notification_id','quick_id','status'
     ];
 
     /**
@@ -218,7 +218,7 @@ class AdminUser extends AuthenticatableBase
             'vote' => 4,
             'rate' => 100,
             'money' => $this->point['point'],
-            'status' => 0,
+            'status' => $this->status,
             'profile_image_id' => $this->profile_image_id,
             'image_link' => (!empty($this->present()->profileImage()))?$this->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
         ];
