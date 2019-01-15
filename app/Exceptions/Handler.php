@@ -48,8 +48,13 @@ class Handler extends ExceptionHandler
     {
         if ($request->is('api/*')) {
             if ($exception instanceof ValidationException) {
+
                 return parent::render($request, $exception);
             }
+            if($exception->getMessage() == "Unauthenticated.")
+            {
+                return response()->json(['code' => 401, 'message' => $exception->getMessage(), 'data' => null])->setStatusCode(401);
+            };
 
             if( !$exception->getMessage() ) {
                 switch( $exception->getStatusCode() ) {
