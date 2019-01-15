@@ -97,7 +97,7 @@ class Doctor extends Base
     {
 
         return [
-            'id' => $this->adminUser->id,
+            'id' => $this->adminUser['id'],
             'name' => ($this->name)?$this->name:"",
             'hospital_name' => $this->hospital['name'],
             'position' => ($this->position)?$this->position:"",
