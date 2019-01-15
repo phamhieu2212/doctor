@@ -90,12 +90,9 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/update-type', 'CallHistoryController@updateType');
                 Route::post('/update-endtime', 'CallHistoryController@updateEndtime');
             });
-            Route::group(['prefix' => 'rate'], function () {
-                Route::get('', 'RateController@index');
-            });
 
             Route::group(['prefix' => 'notification'], function() {
-                Route::get('/list', 'NotificationController@list');
+                Route::get('/list', 'NotificationController@index');
                 Route::get('/{id}', 'NotificationController@details');
             });
 
@@ -121,6 +118,7 @@ Route::group(['namespace' => 'API'], function () {
             });
             Route::group(['prefix' => 'rate'], function () {
                 Route::post('/update', 'RateController@update');
+                Route::get('/{idDoctor}', 'RateController@index');
             });
             Route::group(['prefix' => 'search-doctor'], function () {
                 Route::get('/', 'DoctorController@index');
@@ -167,7 +165,7 @@ Route::group(['namespace' => 'API'], function () {
             });
 
             Route::group(['prefix' => 'notification'], function() {
-                Route::get('/list', 'NotificationController@list');
+                Route::get('/list', 'NotificationController@index');
                 Route::get('/{id}', 'NotificationController@details');
             });
             

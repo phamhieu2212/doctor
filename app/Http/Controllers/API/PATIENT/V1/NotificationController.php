@@ -23,17 +23,13 @@ class NotificationController extends Controller
         $this->userService = $APIUserService;
     }
     
-    public function list(PaginationRequest $request)
+    public function index(PaginationRequest $request)
     {
-        $page = intval($request->get('page', 1));
-        $order = $request->get('order', 'id');
-        $direction = $request->get('direction', 'DESC');
-        $limit = intval($request->get('limit', 100));
 
-        $paginate['offset']     = $request->offset();
-        $paginate['limit']      = $request->limit($limit);
-        $paginate['order']      = $request->order($order);
-        $paginate['direction']  = $request->direction($direction);
+        $paginate['limit']      = $request->limit();
+        $paginate['offset']     = $request->get('offset',$request->offset());
+        $paginate['order']      = 'id';
+        $paginate['direction']  = 'desc';
 
         $currentUser = $this->userService->getUser();
         $count = $this->notiRepo->countByUserTypeAndUserId(FCMNotification::PATIENT, $currentUser->id);
@@ -54,8 +50,6 @@ class NotificationController extends Controller
         }
 
         $response = [
-            'total_page' => $total,
-            'current_page' => $page,
             'notifications' => $notifications
         ];
 

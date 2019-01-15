@@ -34,7 +34,7 @@ class DoctorController extends Controller
     {
         $date = ['sunday','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $paginate['limit']      = $request->limit();
-        $paginate['offset']     = $request->offset();
+        $paginate['offset']     = $request->get('offset',$request->offset());
         $paginate['order']      = 'id';
         $paginate['direction']  = 'desc';
         $filter = [];

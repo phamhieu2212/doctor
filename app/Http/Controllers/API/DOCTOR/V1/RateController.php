@@ -20,24 +20,5 @@ class RateController extends Controller
     {
         $this->userService = $APIUserService;
     }
-    public function index()
-    {
 
-        $idDoctor  = $this->userService->getUser()->id;
-        $callHistories = CallHistory::where('rate','>',0)
-            ->where('admin_user_id',$idDoctor)->get();
-        $chatHistories = ChatHistory::where('rate','>',0)
-        ->where('admin_user_id',$idDoctor)->get();
-
-        $histories = $callHistories->concat($chatHistories);
-        $histories = $histories->sortByDesc('rate_time')->values()->all();
-        foreach($histories as $key=>$history)
-        {
-            $histories[$key] = $history->toAPIArrayListRateForDoctor();
-
-        }
-
-        return Response::response(200,$histories
-        );
-    }
 }
