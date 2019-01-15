@@ -17,7 +17,8 @@ class CreatefcmNotificationsTable extends Migration
 
             $table->bigInteger('user_id');
             $table->smallInteger('user_type');
-            $table->text('data');
+            $table->string('title')->nullable();
+            $table->text('content');
             $table->dateTime('sent_at')->nullable()->default(null);
             $table->boolean('is_read')->default(false);
 

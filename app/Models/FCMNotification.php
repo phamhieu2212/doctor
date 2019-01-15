@@ -23,9 +23,9 @@ class FCMNotification extends Base
     protected $fillable = [
         'user_id',
         'user_type',
-        'data',
+        'content',
         'sent_at',
-        'is_read',
+        'is_read','title'
     ];
 
     /**
@@ -62,10 +62,9 @@ class FCMNotification extends Base
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'user_type' => $this->user_type,
-            'data' => $this->data,
-            'sent_at' => $this->sent_at,
+            'title' => ($this->title != null)?$this->title:"",
+            'content' => ($this->content != null)?$this->content:"",
+            'sent_at' => date('Y-m-d H:i:s',strtotime($this->sent_at)),
             'is_read' => $this->is_read,
         ];
     }
