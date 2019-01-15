@@ -89,6 +89,9 @@ Route::group(['namespace' => 'API'], function () {
                 Route::post('/update-type', 'CallHistoryController@updateType');
                 Route::post('/update-endtime', 'CallHistoryController@updateEndtime');
             });
+            Route::group(['prefix' => 'rate'], function () {
+                Route::get('', 'RateController@index');
+            });
 
             Route::group(['prefix' => 'notification'], function() {
                 Route::get('/list', 'NotificationController@list');

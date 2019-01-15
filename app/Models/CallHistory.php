@@ -155,4 +155,15 @@ class CallHistory extends Base
         ];
     }
 
+    public function toAPIArrayListRateForDoctor()
+    {
+        return [
+            'patient_name'=>$this->user->name,
+            'rate_time'=>($this->rate_time != null)?date('Y-m-d H:i:s',strtotime($this->rate_time)):"",
+            'rate'=>($this->rate)?(int)$this->rate:0,
+            'rate_content'=>$this->content
+
+        ];
+    }
+
 }
