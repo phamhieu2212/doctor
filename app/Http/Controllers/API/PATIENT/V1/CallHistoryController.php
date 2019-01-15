@@ -128,7 +128,7 @@ class CallHistoryController extends Controller
             'point'=>($pointPatient['point']-($doctor['price_call']/60*$timeCall) < 0)?0:$pointPatient['point']-($doctor['price_call']/60*$timeCall)
         ];
         $dataPointDoctor = [
-            'point'=>($pointDoctor['point']+($doctor['price_call']/60*$timeCall) < 0)?0:$pointPatient['point']-($doctor['price_call']/60*$timeCall)
+            'point'=>($pointDoctor['point']+($doctor['price_call']/60*$timeCall) < 0)?0:$pointPatient['point']+($doctor['price_call']/60*$timeCall)
         ];
         try {
             DB::beginTransaction();
@@ -183,7 +183,7 @@ class CallHistoryController extends Controller
             'point'=>((int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall)) < 0)?0:(int)floor($pointPatient['point']-($doctor['price_call']/60*$timeCall))
         ];
         $dataPointDoctor = [
-            'point'=>($pointDoctor['point']+($doctor['price_call']/60*$timeCall) < 0)?0:$pointPatient['point']-($doctor['price_call']/60*$timeCall)
+            'point'=>((int)floor($pointPatient['point']+($doctor['price_call']/60*$timeCall)) < 0)?0:(int)floor($pointPatient['point']+($doctor['price_call']/60*$timeCall))
         ];
         if( empty( $callHistory ) ) {
             return Response::response(50002);
