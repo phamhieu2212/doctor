@@ -57,26 +57,6 @@ class ChatController extends Controller {
         ]);
     }
 
-    public function usePoint(BaseRequest $request)
-    {
-        $point = $request->get('point', 0);
-        if ($point <= 0) {
-            return Response::response(40001);
-        }
-
-        $currentPatient = $this->userService->getUser();
-        $patientPoint  = $this->pointPatientRepository->findByUserId($currentPatient->id);
-        if (empty($patientPoint)) {
-            $patientPoint = $this->pointPatientRepository->create(["user_id" => $currentPatient->id, "point" => 0]);
-        } else {
-            $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point - $point]);
-        }
-
-        return Response::response(200, [
-            'point'=>$patientPoint->point
-        ]);
-    }
-
     public function checkChatState(Request $request)
     {
         $idDoctor = $request->get('idDoctor');
@@ -165,7 +145,7 @@ class ChatController extends Controller {
         if ($currentPatient->patientPoint->point < $doctor->price_chat) {
             return Response::response(200, ['status'=>false]);
         }
-        $data = $this->pointPatientRepository->prepareForStart($currentPatient, $doctor);
+        $data = $this->pointPatientRepository->prepareForStart($adminUserId,$currentPatient, $doctor);
 
         // create row on table patient_point and minus point user
         if ($data['status']) {

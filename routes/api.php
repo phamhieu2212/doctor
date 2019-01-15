@@ -153,7 +153,6 @@ Route::group(['namespace' => 'API'], function () {
             });
             Route::group(['prefix' => 'point'], function() {
                 Route::post('add', 'ChatController@addPoint');
-                Route::post('use', 'ChatController@usePoint');
             });
 
             Route::group(['prefix' => 'chat'], function() {

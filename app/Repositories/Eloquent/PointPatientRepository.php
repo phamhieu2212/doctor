@@ -1,6 +1,7 @@
 <?php namespace App\Repositories\Eloquent;
 
 use App\Models\ChatHistory;
+use App\Models\PointDoctor;
 use \App\Repositories\PointPatientRepositoryInterface;
 use \App\Models\PointPatient;
 use Carbon\Carbon;
@@ -14,16 +15,20 @@ class PointPatientRepository extends SingleKeyModelRepository implements PointPa
         return new PointPatient();
     }
 
-    public function prepareForStart($currentPatient, $doctor)
+    public function prepareForStart($adminUserId,$currentPatient, $doctor)
     {
+
         $now = Carbon::now();
         try {
             DB::beginTransaction();
 
             $currentPatientPoint = $currentPatient->patientPoint;
+            $pointDoctor = PointDoctor::where('admin_user_id',$adminUserId)->first();
             $usePoint = $doctor->price_chat;
-        
-            DB::table('point_patients')->update(["point" => $currentPatientPoint->point - $usePoint]);
+            $currentPatientPoint->point = $currentPatientPoint->point - $usePoint;
+            $currentPatientPoint->save();
+            $pointDoctor->point = $pointDoctor->point + $usePoint;
+            $pointDoctor->save();
             $chatId = DB::table('chat_histories')->insertGetId(["user_id" => $currentPatient->id, "admin_user_id" => $doctor->admin_user_id,"created_at"=>$now]);
 
             DB::commit();

@@ -2,5 +2,5 @@
 
 interface PointPatientRepositoryInterface extends SingleKeyModelRepositoryInterface
 {
-    public function prepareForStart($currentPatient, $doctor);
+    public function prepareForStart($adminUserId,$currentPatient, $doctor);
 }
