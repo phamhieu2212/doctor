@@ -33,6 +33,7 @@ Route::group(['namespace' => 'API'], function () {
                 Route::get('/', 'MeController@getMe');
                 Route::get('/point', 'MeController@getPoint');
                 Route::post('/change-password', 'MeController@changePassword');
+                Route::get('/logout', 'MeController@logout');
             });
             Route::group(['prefix' => 'profile'], function () {
                 Route::get('/', 'ProfileController@index');
@@ -115,6 +116,7 @@ Route::group(['namespace' => 'API'], function () {
         Route::group(['middleware' => ['api.client', 'api.user','api.provider.patient']], function () {
             Route::group(['prefix' => 'me'], function () {
                 Route::get('/', 'MeController@getMe');
+                Route::get('/logout', 'MeController@logout');
                 Route::get('/point', 'MeController@getPoint');
             });
             Route::group(['prefix' => 'rate'], function () {
