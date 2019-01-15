@@ -253,7 +253,7 @@
                                             <label for="exampleSelect1">Chuyên khoa</label>
                                             <select class="form-control js-example-basic-multiple" name="specialty_id[]" multiple="multiple" id="formRole">
                                                 @foreach($specialties as $specialty)
-                                                <option {{(@$adminUser->specialties->id == $specialty->id)?'selected':''}}   value="{{$specialty->id}}">{{$specialty->name}}</option>
+                                                <option  value="{{$specialty->id}}">{{$specialty->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
