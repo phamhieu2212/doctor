@@ -134,7 +134,7 @@ class Patient extends Base
     {
         return [
             'user_id' => $this->user_id,
-            'full_name' => $this->full_name,
+            'full_name' => $this->user->name,
             'birth_day' => $this->birth_day,
             'gender' => $this->gender,
             'identification' => $this->identification,
