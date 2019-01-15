@@ -94,7 +94,7 @@ class Doctor extends Base
     }
 
     public function toAPIArraySearch()
-    {
+    {dd(1);
 
         return [
             'id' => $this->adminUser->id,
