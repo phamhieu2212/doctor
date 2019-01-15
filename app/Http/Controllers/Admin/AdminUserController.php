@@ -142,6 +142,7 @@ class AdminUserController extends Controller
         );
         try {
             DB::beginTransaction();
+            $input['status'] = 2;
 
             $adminUser = $this->adminUserRepository->create($input);
             if (empty($adminUser)) {
