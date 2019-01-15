@@ -100,7 +100,8 @@ class Doctor extends Base
             'id' => $this->adminUser['id'],
             'name' => ($this->name)?$this->name:"",
             'hospital_name' => $this->hospital['name'],
-            'position' => ($this->position)?$this->position:""
+            'position' => ($this->position)?$this->position:"",
+            'image_link' => ($this->adminUser->profile_image_id != 0)?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
         ];
     }
 
