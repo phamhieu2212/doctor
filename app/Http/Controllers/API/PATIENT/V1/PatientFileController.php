@@ -159,4 +159,23 @@ class PatientFileController extends Controller
         }
 
     }
+
+    public function delete($id)
+    {
+        if( !is_numeric($id) || ($id <= 0) ) {
+            return Response::response(40001);
+        }
+
+        $filePatient = $this->filePatientRepository->find($id);
+        if( empty($filePatient) ) {
+            return Response::response(20004);
+        }
+        try {
+            $this->filePatientRepository->update($filePatient,['status'=>2]);
+        } catch (\Exception $e) {
+            return Response::response(50002);
+        }
+        return Response::response(200,['status'=>true]);
+
+    }
 }

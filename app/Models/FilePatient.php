@@ -24,7 +24,7 @@ class FilePatient extends Base
         'title',
         'user_id',
         'started_at',
-        'description',
+        'description','status'
     ];
 
     /**

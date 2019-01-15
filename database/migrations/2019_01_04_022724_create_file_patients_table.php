@@ -19,6 +19,7 @@ class CreatefilePatientsTable extends Migration
             $table->unsignedInteger('user_id')->comment('id tai khoan');
             $table->date('started_at');
             $table->text('description')->nullable();
+            $table->unsignedTinyInteger('status')->default(1);
 
             // Add some more columns
 

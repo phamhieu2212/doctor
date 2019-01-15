@@ -27,7 +27,7 @@ class FilePatientRepository extends SingleKeyModelRepository implements FilePati
     {
         $query = $this->buildQueryByFilter($this->getBlankModel(), $filter);
         $query = $this->buildOrder($query, $filter, $order, $direction);
-        return $query->where('user_id',$patient->id)->skip($offset)->take($limit)->get();
+        return $query->where('user_id',$patient->id)->where('status',1)->skip($offset)->take($limit)->get();
 
     }
 
