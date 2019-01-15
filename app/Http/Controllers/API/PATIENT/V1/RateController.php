@@ -7,6 +7,7 @@ use App\Http\Requests\API\V1\Request;
 use App\Http\Responses\API\V1\Response;
 use App\Repositories\CallHistoryRepositoryInterface;
 use App\Repositories\ChatHistoryRepositoryInterface;
+use Carbon\Carbon;
 
 class RateController extends Controller
 {
@@ -26,12 +27,14 @@ class RateController extends Controller
 
     public function update(Request $request)
     {
+
         $data = $request->only([
             'id','type'
         ]);
         $dataInput = $request->only([
-            'rate','content'
+            'rate','content',
         ]);
+        $dataInput['rate_time'] = Carbon::now();
 
         if($data['type'] == 'chat' and $dataInput['rate'] <= 5)
         {

@@ -35,7 +35,7 @@ class CallHistory extends Base
         'end_time',
         'type',
         'is_read',
-        'caller','rate','content'
+        'caller','rate','content','rate_time'
     ];
 
     /**

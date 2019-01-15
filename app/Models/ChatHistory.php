@@ -23,7 +23,7 @@ class ChatHistory extends Base
      */
     protected $fillable = [
         'user_id',
-        'admin_user_id','file_patient_id','rate','content'
+        'admin_user_id','file_patient_id','rate','content','rate_time'
     ];
 
     /**

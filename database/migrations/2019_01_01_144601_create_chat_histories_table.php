@@ -19,6 +19,7 @@ class CreatechatHistoriesTable extends Migration
             $table->unsignedInteger('file_patient_id')->comment('id benh an');
             $table->integer('rate')->comment('diem')->default(0);
             $table->text('content')->nullable();
+            $table->dateTime('rate_time')->nullable();
 
             // Add some more columns
 
