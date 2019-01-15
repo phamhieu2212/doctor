@@ -152,6 +152,7 @@ class AuthController extends Controller
         {
 
             $dataPatient['telephone'] = $username;
+            $dataPatient['name'] = $username;
             $dataPatient['password'] = '12345678';
             $dataPatient['email'] = $username.'@gmail.com';
             $dataPatient['quick_id'] = $userQuickblox['user']['id'];
