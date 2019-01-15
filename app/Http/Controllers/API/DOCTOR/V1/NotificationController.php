@@ -48,11 +48,8 @@ class NotificationController extends Controller
             $notifications[$key] = $notification->toAPIArray();
         }
 
-        $response = [
-            'notifications' => $notifications
-        ];
 
-        return Response::response(200, $response);
+        return Response::response(200, $notifications);
     }
 
     public function details($id)

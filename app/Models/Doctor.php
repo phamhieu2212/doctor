@@ -109,8 +109,8 @@ class Doctor extends Base
     {
         $countRateChat = ChatHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->count();
         $countRateCall = CallHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->count();
-        $rateChat = ChatHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->sum('rate');
-        $rateCall = CallHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->sum('rate');
+        $rateChat = ChatHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>=',0)->sum('rate');
+        $rateCall = CallHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>=',0)->sum('rate');
         $specialties = $this->adminUser->specialties;
         foreach($specialties as $key=>$specialty)
         {
