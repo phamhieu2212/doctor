@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\AdminUserRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Repositories\DoctorRepositoryInterface;
 use App\Repositories\HospitalRepositoryInterface;
+use App\Repositories\PointDoctorRepositoryInterface;
 use App\Repositories\SpecialtyRepositoryInterface;
 use App\Services\FileUploadServiceInterface;
 use App\Repositories\ImageRepositoryInterface;
@@ -23,6 +24,7 @@ class AdminUserController extends Controller
     /** @var \App\Repositories\AdminUserRepositoryInterface */
     protected $adminUserRepository;
     protected $doctorRepository;
+    protected $pointDoctorRepository;
 
     protected $quickblox;
 
@@ -46,7 +48,8 @@ class AdminUserController extends Controller
         HospitalRepositoryInterface $hospitalRepository,
         SpecialtyRepositoryInterface $specialtyRepository,
         DoctorRepositoryInterface $doctorRepository,
-        QuickbloxController $quickblox
+        QuickbloxController $quickblox,
+        PointDoctorRepositoryInterface $pointDoctorRepository
     )
     {
         $this->adminUserRepository = $adminUserRepository;
@@ -57,6 +60,7 @@ class AdminUserController extends Controller
         $this->specialtyRepository = $specialtyRepository;
         $this->doctorRepository = $doctorRepository;
         $this->quickblox        = $quickblox;
+        $this->pointDoctorRepository = $pointDoctorRepository;
     }
 
     /**
@@ -152,6 +156,7 @@ class AdminUserController extends Controller
                 $this->doctorRepository->create($inputDoctor);
 
             }
+            $pointDoctor = $this->pointDoctorRepository->create(['admin_user_id'=>$adminUser->id,'point'=>0]);
 
             $this->adminUserRoleRepository->setAdminUserRoles($adminUser->id, $request->input('role', []));
             $adminUser->specialties()->sync($request->input('specialty_id'));
