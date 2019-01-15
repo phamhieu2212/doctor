@@ -107,6 +107,10 @@ class Doctor extends Base
 
     public function toAPIArrayDetail()
     {
+        $countRateChat = ChatHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->count();
+        $countRateCall = CallHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->count();
+        $rateChat = ChatHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->sum('rate');
+        $rateCall = CallHistory::where('admin_user_id',$this->adminUser->id)->where('rate','>',0)->sum('rate');
         $specialties = $this->adminUser->specialties;
         foreach($specialties as $key=>$specialty)
         {
@@ -115,8 +119,8 @@ class Doctor extends Base
         return [
             'id' => $this->adminUser->id,
             'idQuickBlox' => $this->adminUser->quick_id,
-            'vote' => 4,
-            'rate' => 100,
+            'vote' => $countRateCall + $countRateChat,
+            'rate' => ($countRateChat + $countRateCall != 0)?(int)floor(($rateCall + $rateChat)/($countRateCall + $countRateChat)):0,
             'specialties'=>$specialties,
             'gender' => $this->gender,
             'price_chat' => $this->price_chat,
@@ -126,6 +130,7 @@ class Doctor extends Base
             'birthday'=>$this->birthday?$this->birthday:"",
             'position' => $this->position,
             'description' => $this->description,
+            'status'=> $this->adminUser->status
         ];
     }
 
