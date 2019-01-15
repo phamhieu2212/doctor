@@ -101,7 +101,7 @@ class Doctor extends Base
             'name' => ($this->name)?$this->name:"",
             'hospital_name' => $this->hospital['name'],
             'position' => ($this->position)?$this->position:"",
-            'image_link' => (!empty($this->adminUser->present()->profileImage()))?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
+            'image_link' => ($this->adminUser->present()->profileImage() != 0)?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
         ];
     }
 
