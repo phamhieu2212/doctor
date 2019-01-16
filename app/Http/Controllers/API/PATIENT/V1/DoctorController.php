@@ -51,7 +51,7 @@ class DoctorController extends Controller
         {
             $filter['gender'] = $request->get('gender');
         }
-        if($request->has('specialty_id'))
+        if($request->has('specialty_id') and $request->get('specialty_id') != null)
         {
             $filter['specialty_id'] = $request->get('specialty_id');
         }
