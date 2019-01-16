@@ -40,7 +40,7 @@
                     </h3>
                 </div>
             </div>
-            @if($count = 0)
+            @if($count == 0)
             <div class="m-portlet__head-tools">
                 <ul class="m-portlet__nav">
                     <li class="m-portlet__nav-item">
