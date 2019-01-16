@@ -39,7 +39,7 @@ class PhoneAdminController extends Controller
             $filter['query'] = $keyword;
         }
 
-        $count = $this->phoneAdminRepository->countByFilter($filter);dd($count);
+        $count = $this->phoneAdminRepository->countByFilter($filter);
         $phoneAdmins = $this->phoneAdminRepository->getByFilter($filter, $paginate['order'], $paginate['direction'], $paginate['offset'], $paginate['limit']);
 
         return view(
