@@ -17,9 +17,20 @@ class PointPatientRepository extends SingleKeyModelRepository implements PointPa
 
     public function prepareForStart($adminUserId,$currentPatient, $doctor)
     {
+        $checkIsNew = ChatHistory::where('admin_user_id',$adminUserId)
+                        ->where('user_id',$currentPatient->id)->count();
+        if($checkIsNew == 0)
+        {
+            $isNew = 1;
+        }
+        else
+        {
+            $isNew = 0;
+        }
 
         $now = Carbon::now();
         try {
+
             DB::beginTransaction();
 
             $currentPatientPoint = $currentPatient->patientPoint;
@@ -30,6 +41,19 @@ class PointPatientRepository extends SingleKeyModelRepository implements PointPa
             $pointDoctor->point = $pointDoctor->point + $usePoint;
             $pointDoctor->save();
             $chatId = DB::table('chat_histories')->insertGetId(["user_id" => $currentPatient->id, "admin_user_id" => $doctor->admin_user_id,"created_at"=>$now]);
+
+            DB::table('admin_statistics')->insert(
+                [
+                    'admin_user_id' => $adminUserId,
+                    'conversation_id' => $chatId,
+                    'total'=>$usePoint,
+                    'price'=>$usePoint,
+                    'date' => date('Y-m-d',strtotime($now)),
+                    'time_call'=>0,
+                    'type'=>1,
+                    'is_patient_new'=>$isNew
+                ]
+            );
 
             DB::commit();
 

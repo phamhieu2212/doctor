@@ -359,4 +359,18 @@ $factory->define(App\Models\PhoneAdmin::class, function (Faker\Generator $faker)
     ];
 });
 
+$factory->define(App\Models\AdminStatistic::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'admin_user_id' => '',
+        'conversation_id' => '',
+        'total' => '',
+        'price' => '',
+        'date' => '',
+        'time_call' => '',
+        'type' => '',
+        'is_patient_new' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */
