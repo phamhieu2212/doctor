@@ -78,8 +78,8 @@ class ChatController extends Controller {
             }
             else
             {
-                $username = $userQuick['user']['login'];
-                $adminUser = $this->adminUserRepository->findByUsername($username);
+                $username = $userQuick['user']['id'];
+                $adminUser = $this->adminUserRepository->findByQuickId($username);
                 if( empty($adminUser) ) {
                     return Response::response(20004);
                 }
