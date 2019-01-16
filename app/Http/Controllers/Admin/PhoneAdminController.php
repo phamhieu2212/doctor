@@ -84,10 +84,14 @@ class PhoneAdminController extends Controller
         );
 
         $input['is_enabled'] = $request->get('is_enabled', 0);
-        $phoneAdmin = $this->phoneAdminRepository->create($input);
         $count = $this->phoneAdminRepository->count();
 
-        if( empty($phoneAdmin) or $count > 0 ) {
+        if($count > 0 ) {
+            return redirect()->back()->with('message-error', trans('admin.errors.general.save_failed'));
+        }
+        $phoneAdmin = $this->phoneAdminRepository->create($input);
+
+        if( empty($phoneAdmin)) {
             return redirect()->back()->with('message-error', trans('admin.errors.general.save_failed'));
         }
 
