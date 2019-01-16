@@ -30,25 +30,29 @@
 @stop
 
 @section('title')
-    PhoneAdmin | Admin | {{ config('site.name') }}
+    @if($isNew)
+        {{'Thêm mới liên hệ'}}
+    @else
+        {{'Sửa liên hệ'}}
+    @endif
 @stop
 
 @section('header')
-    PhoneAdmin
+    Số điện thoai liên hệ
 @stop
 
 @section('breadcrumb')
     <li class="m-nav__separator"> / </li>
     <li class="m-nav__item">
         <a href="{!! action('Admin\PhoneAdminController@index') !!}" class="m-nav__link">
-            PhoneAdmin
+            Số điện thoai liên hệ
         </a>
     </li>
 
     @if( $isNew )
         <li class="m-nav__separator"> / </li>
         <li class="m-nav__item">
-            New Record
+            Thêm mới
         </li>
     @else
         <li class="m-nav__separator"> / </li>
@@ -64,7 +68,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Create New Record
+                        Thêm mới
                     </h3>
                 </div>
             </div>
@@ -72,7 +76,7 @@
                 <ul class="m-portlet__nav">
                     <li class="m-portlet__nav-item">
                         <a href="{!! action('Admin\PhoneAdminController@index') !!}" class="btn m-btn--pill m-btn--air btn-secondary btn-sm" style="width: 120px;">
-                            @lang('admin.pages.common.buttons.back')
+                            Quay lại
                         </a>
                     </li>
                 </ul>
@@ -103,7 +107,7 @@
                                                                         <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group m-form__group row @if ($errors->has('phone')) has-danger @endif">
-                                        <label for="phone">@lang('admin.pages.phone-admins.columns.phone')</label>
+                                        <label for="phone">Số điện thoại</label>
                                         <input type="text" class="form-control m-input" name="phone" id="phone" required placeholder="@lang('admin.pages.phone-admins.columns.phone')" value="{{ old('phone') ? old('phone') : $phoneAdmin->phone }}">
                                     </div>
                                 </div>
