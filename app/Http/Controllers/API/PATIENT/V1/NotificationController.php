@@ -35,7 +35,7 @@ class NotificationController extends Controller
         $count = $this->notiRepo->countByUserTypeAndUserId(FCMNotification::PATIENT, $currentUser->id);
 
         $notifications = $this->notiRepo->getWithPaginate(
-            FCMNotification::DOCTOR,
+            FCMNotification::PATIENT,
             $currentUser->id,
             $paginate['order'],
             $paginate['direction'],
@@ -64,6 +64,11 @@ class NotificationController extends Controller
         
         if (empty($notification)) {
             return Response::response(20004);
+        }
+        try {
+            $this->notiRepo->update($notification, ['is_read'=>1]);
+        } catch (\Exception $e) {
+            return Response::response(50002);
         }
 
         return Response::response(200, $notification->toAPIArray()); 
