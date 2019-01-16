@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API\PATIENT\V1;
 
 use App\Http\Responses\API\V1\Response;
+use App\Models\AdminStatistic;
 use App\Models\CallHistory;
 use App\Models\Doctor;
 use App\Models\PointDoctor;
 use App\Models\PointPatient;
+use App\Repositories\AdminStatisticRepositoryInterface;
 use App\Repositories\CallHistoryRepositoryInterface;
 use App\Repositories\PointDoctorRepositoryInterface;
 use App\Repositories\PointPatientRepositoryInterface;
@@ -23,18 +25,21 @@ class CallHistoryController extends Controller
     protected $userService;
     protected $pointPatientRepository;
     protected $pointDoctorRepository;
+    protected $adminStatisticRepository;
     public function __construct
     (
         CallHistoryRepositoryInterface $callHistoryRepository,
         APIUserServiceInterface $APIUserService,
         PointPatientRepositoryInterface $pointPatientRepository,
-        PointDoctorRepositoryInterface $pointDoctorRepository
+        PointDoctorRepositoryInterface $pointDoctorRepository,
+        AdminStatisticRepositoryInterface $adminStatisticRepository
     )
     {
         $this->callHistoryRepository = $callHistoryRepository;
         $this->userService = $APIUserService;
         $this->pointPatientRepository = $pointPatientRepository;
         $this->pointDoctorRepository  = $pointDoctorRepository;
+        $this->adminStatisticRepository = $adminStatisticRepository;
     }
 
     public function index(PaginationRequest $request)
@@ -66,6 +71,7 @@ class CallHistoryController extends Controller
     }
     public function store(\App\Http\Requests\API\V1\Request $request)
     {
+        $now = Carbon::now();
         $input = $request->only(
             [
                 'doctor_id'
@@ -78,22 +84,45 @@ class CallHistoryController extends Controller
             'caller'=>'patient',
             'type'=>3
         ];
-
+        $checkIsNew = CallHistory::where('admin_user_id',$data['admin_user_id'])
+            ->where('user_id',$this->userService->getUser()->id)->count();
+        if($checkIsNew == 0)
+        {
+            $isNew = 1;
+        }
+        else
+        {
+            $isNew = 0;
+        }
 
         try {
+            DB::beginTransaction();
+
             $callHistory = $this->callHistoryRepository->create($data);
-        } catch (\Exception $e) {
-            return Response::response(50002);
+            $this->adminStatisticRepository->create([
+                'admin_user_id'=> $data['admin_user_id'],
+                'conversation_id'=>$callHistory->id,
+                'total'=>0,
+                'price'=>0,
+                'date'=>date('Y-m-d',strtotime($now)),
+                'time_call'=>0,
+                'type'=>2,
+                'is_patient_new'=>$isNew
+            ]);
+            DB::commit();
+            return Response::response(200,[
+                'call_id'=>$callHistory->id
+            ]);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return Response::response(200,['status'=>false]);
         }
 
-        if( empty( $callHistory ) ) {
-            return Response::response(50002);
-        }
 
 
-        return Response::response(200,[
-            'call_id'=>$callHistory->id
-        ]);
+
     }
 
     public function updateEndtime(\App\Http\Requests\API\V1\Request $request)
@@ -107,16 +136,23 @@ class CallHistoryController extends Controller
         if( empty( $callHistory ) ) {
             return Response::response(50002);
         }
+        $statistic = AdminStatistic::where('type',2)
+            ->where('conversation_id',$input['call_id'])->first();
+        if( empty( $statistic ) ) {
+            return Response::response(50002);
+        }
         $timeNow = Carbon::now();
         if($callHistory->start_time == null)
         {
             $dataCallHistory = ['end_time'=>$timeNow,'start_time'=>$timeNow];
             $timeCall = 0;
+            $timeStatistic = 0;
         }
         else
         {
             $dataCallHistory = ['end_time'=>$timeNow];
             $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
+            $timeStatistic = (int)$timeNow->timestamp - $callHistory['start_time']->timestamp;
         }
 
 
@@ -136,7 +172,13 @@ class CallHistoryController extends Controller
             $this->callHistoryRepository->update($callHistory,$dataCallHistory);
 
             $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
-            $pointDoctor = $this->pointDoctorRepository->update($pointDoctor,$dataPointDoctor);
+            $this->pointDoctorRepository->update($pointDoctor,$dataPointDoctor);
+            $this->adminStatisticRepository->update($statistic,[
+                'total'=>$doctor['price_call']/60*$timeStatistic,
+                'time_call'=>$timeStatistic,
+                'price'=>$doctor['price_call']
+            ]);
+
             DB::commit();
             return Response::response(200,['point'=>$pointPatient['point']]);
 
@@ -159,6 +201,11 @@ class CallHistoryController extends Controller
         );
         $timeNow = Carbon::now();
         $callHistory = $this->callHistoryRepository->find($input['call_id']);
+        $statistic = AdminStatistic::where('type',2)
+            ->where('conversation_id',$input['call_id'])->first();
+        if( empty( $statistic ) ) {
+            return Response::response(50002);
+        }
         if($callHistory->type != 1 and $callHistory->type != 2)
         {
             $dataCallHistory = ['end_time'=>$timeNow,'type'=>$input['type']];
@@ -170,10 +217,12 @@ class CallHistoryController extends Controller
         if($callHistory->end_time == null)
         {
             $timeCall = 0;
+            $timeStatistic = 0;
         }
         else
         {
             $timeCall = (int)$timeNow->timestamp - $callHistory['end_time']->timestamp;
+            $timeStatistic = (int)$timeNow->timestamp - $callHistory['start_time']->timestamp;
         }
         $pointPatient = PointPatient::where('user_id',$this->userService->getUser()->id)->first();
         $pointDoctor = PointDoctor::where('admin_user_id',$callHistory['admin_user_id'])->first();
@@ -194,7 +243,12 @@ class CallHistoryController extends Controller
             $this->callHistoryRepository->update($callHistory,$dataCallHistory);
 
             $pointPatient = $this->pointPatientRepository->update($pointPatient,$dataPointPatient);
-            $pointDoctor = $this->pointDoctorRepository->update($pointDoctor,$dataPointDoctor);
+            $this->pointDoctorRepository->update($pointDoctor,$dataPointDoctor);
+            $this->adminStatisticRepository->update($statistic,[
+                'total'=>(int)floor($doctor['price_call']/60*$timeStatistic),
+                'time_call'=>$timeStatistic,
+                'price'=>$doctor['price_call']
+            ]);
             DB::commit();
             return Response::response(200,['point'=>$pointPatient['point']]);
 
