@@ -59,7 +59,7 @@ class DoctorController extends Controller
         foreach( $doctors as $key => $doctor ) {
             $doctors[$key] = $doctor->toAPIArraySearch();
         }
-        $specialties = $this->specialtyRepository->all();
+//        $specialties = $this->specialtyRepository->all();
 
         return Response::response(200,$doctors
             );
