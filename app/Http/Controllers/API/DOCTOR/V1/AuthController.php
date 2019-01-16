@@ -9,6 +9,7 @@ use App\Http\Requests\API\V1\RefreshTokenRequest;
 use App\Http\Requests\API\V1\SignInRequest;
 use App\Http\Requests\API\V1\SignUpRequest;
 use App\Models\AdminUser;
+use App\Models\OauthAccessToken;
 use App\Services\AdminUserServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Services\APIUserServiceInterface;
@@ -99,8 +100,12 @@ class AuthController extends Controller
         ];
 
         $serverRequest = PsrServerRequest::createFromRequest($request, $data);
-        foreach($adminUser->tokens as $token) {
-            $token->revoke();
+        $token = OauthAccessToken::where('user_id',$adminUser->id)
+                ->where('client_id',$data['client_id'])->first();
+        if(!empty($token))
+        {
+            $token->revoked = 1;
+            $token->save();
         }
 
         return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);

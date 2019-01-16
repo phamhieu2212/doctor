@@ -11,6 +11,7 @@ use App\Http\Requests\API\V1\SignInRequest;
 use App\Http\Requests\API\V1\SignUpRequest;
 use App\Http\Requests\BaseRequest;
 use App\Models\AdminUser;
+use App\Models\OauthAccessToken;
 use App\Models\User;
 use App\Repositories\PatientRepositoryInterface;
 use App\Repositories\PointPatientRepositoryInterface;
@@ -121,8 +122,12 @@ class AuthController extends Controller
 
 
                 $serverRequest = PsrServerRequest::createFromRequest($request, $data);
-                foreach($user->tokens as $token) {
-                    $token->revoke();
+                $token = OauthAccessToken::where('user_id',$user->id)
+                    ->where('client_id',$data['client_id'])->first();
+                if(!empty($token))
+                {
+                    $token->revoked = 1;
+                    $token->save();
                 }
 
                 return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);
