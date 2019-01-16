@@ -15,6 +15,9 @@ class AdminController extends Controller
         if( empty($phoneAdmin) ) {
             return Response::response(20004);
         }
-        return Response::response(200,$phoneAdmin['phone']);
+
+        return Response::response(200,[
+            'phone'=>$phoneAdmin['phone']
+        ]);
     }
 }
