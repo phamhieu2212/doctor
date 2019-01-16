@@ -31,7 +31,7 @@ class CreatedoctorsTable extends Migration
             $table->string('bank_number')->nullable();
             $table->string('bank_address')->nullable();
             $table->string('bank_owner')->nullable();
-            $table->text('experience')->nullable()->default('');
+            $table->integer('experience')->nullable()->default(0);
             $table->text('description')->nullable()->default('');
 
             // Add some more columns

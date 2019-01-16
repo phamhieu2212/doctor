@@ -235,7 +235,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="form-group m-form__group row">
                                             <label for="exampleSelect1">Bệnh viện</label>
                                             <select name="hospital_id" class="form-control  m-input" id="formRole">
@@ -245,13 +245,71 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group m-form__group row">
                                             <label for="exampleSelect1">Học hàm</label>
                                             <select name="level_id" class="form-control  m-input" id="formRole">
                                                 @foreach($levels as $level)
                                                     <option {{(@$adminUser->doctor->level_id == $level->id)?'selected':''}} value="{{$level->id}}">{{$level->name}}</option>
                                                 @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group m-form__group row">
+                                            <label for="exampleSelect1">Kinh nghiệm</label>
+                                            <select name="experience" class="form-control  m-input" id="formRole">
+                                                <option {{(@$adminUser->doctor->experience == 1)?'selected':''}} value="1">1 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 2)?'selected':''}} value="2">2 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 3)?'selected':''}} value="3">3 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 4)?'selected':''}} value="4">4 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 5)?'selected':''}} value="5">5 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 6)?'selected':''}} value="6">6 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 7)?'selected':''}} value="7">7 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 8)?'selected':''}} value="8">8 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 9)?'selected':''}} value="9">9 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 10)?'selected':''}} value="10">10 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 11)?'selected':''}} value="11">11 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 12)?'selected':''}} value="12">12 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 13)?'selected':''}} value="13">13 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 14)?'selected':''}} value="14">14 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 15)?'selected':''}} value="15">15 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 16)?'selected':''}} value="16">16 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 17)?'selected':''}} value="17">17 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 18)?'selected':''}} value="18">18 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 19)?'selected':''}} value="19">19 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 20)?'selected':''}} value="20">20 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 21)?'selected':''}} value="21">21 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 22)?'selected':''}} value="22">22 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 23)?'selected':''}} value="23">23 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 24)?'selected':''}} value="24">24 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 25)?'selected':''}} value="25">25 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 26)?'selected':''}} value="26">26 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 27)?'selected':''}} value="27">27 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 28)?'selected':''}} value="28">28 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 29)?'selected':''}} value="29">29 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 30)?'selected':''}} value="30">30 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 31)?'selected':''}} value="31">31 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 32)?'selected':''}} value="32">32 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 33)?'selected':''}} value="33">33 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 34)?'selected':''}} value="34">34 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 35)?'selected':''}} value="35">35 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 36)?'selected':''}} value="36">36 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 37)?'selected':''}} value="37">37 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 38)?'selected':''}} value="38">38 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 39)?'selected':''}} value="39">39 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 40)?'selected':''}} value="40">40 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 41)?'selected':''}} value="41">41 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 42)?'selected':''}} value="42">42 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 43)?'selected':''}} value="43">43 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 44)?'selected':''}} value="44">44 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 45)?'selected':''}} value="45">45 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 46)?'selected':''}} value="46">46 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 47)?'selected':''}} value="47">47 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 48)?'selected':''}} value="48">48 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 49)?'selected':''}} value="49">49 năm</option>
+                                                <option {{(@$adminUser->doctor->experience == 50)?'selected':''}} value="50">50 năm</option>
+
                                             </select>
                                         </div>
                                     </div>
@@ -273,14 +331,6 @@
                                         <div class="form-group m-form__group row">
                                             <label for="name">Khoa</label>
                                             <input type="text" class="form-control m-input" name="position" id="position" value="{{ old('position') ? old('position') : @$adminUser->doctor->position }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-form__group row">
-                                            <label for="content">Kinh nghiệm</label>
-                                            <textarea name="experience" id="experience" class="form-control m-input" rows="3" >{{ old('experience') ? old('experience') : @$adminUser->doctor->experience }}</textarea>
                                         </div>
                                     </div>
                                 </div>

@@ -125,7 +125,7 @@ class Doctor extends Base
             'gender' => $this->gender,
             'price_chat' => $this->price_chat,
             'price_call' => $this->price_call,
-            'experience' => $this->experience,
+            'experience' => (int)$this->experience,
             'address'=>($this->address)?$this->address:"",
             'birthday'=>$this->birthday?$this->birthday:"",
             'position' => $this->position,
