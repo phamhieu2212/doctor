@@ -31,9 +31,9 @@ class IndexController extends Controller
         $this->pointPatientRepository = $pointPatientRepository;
         $this->userRepository         = $userRepository;
     }
-    public function index()
+    public function rule()
     {
-        return view('pages.web.default.index', [
+        return view('pages.web.default.rule', [
         ]);
     }
 

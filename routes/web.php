@@ -3,6 +3,7 @@
 \Route::group(['middleware' => ['web.values']], function () {
 
     \Route::get('/payment/success', 'Web\IndexController@success');
+    \Route::get('/rule', 'Web\IndexController@rule');
 
     \Route::group(['middleware' => ['web.guest']], function () {
         \Route::get('signin', 'Web\AuthController@getSignIn');
