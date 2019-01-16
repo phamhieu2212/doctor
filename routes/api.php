@@ -15,6 +15,9 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('device', 'DeviceController@register');
             Route::post('image/upload', 'ImageController@upload');
             Route::delete('image/{id}', 'ImageController@delete');
+            Route::group(['prefix' => 'admin'], function() {
+                Route::get('/phone', 'AdminController@phone');
+            });
         });
 
     });

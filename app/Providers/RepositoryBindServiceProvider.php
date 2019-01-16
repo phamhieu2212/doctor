@@ -172,6 +172,11 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\Eloquent\PaymentRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\PhoneAdminRepositoryInterface::class,
+            \App\Repositories\Eloquent\PhoneAdminRepository::class
+        );
+
         /* NEW BINDING */
     }
 }

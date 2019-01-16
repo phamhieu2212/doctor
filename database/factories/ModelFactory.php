@@ -352,4 +352,11 @@ $factory->define(App\Models\Payment::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\PhoneAdmin::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'phone' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

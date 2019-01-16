@@ -296,7 +296,7 @@ class AdminUserController extends Controller
         ];
 
         $adminUser = $this->adminUserRepository->update($adminUser, $input);
-        $doctor = $this->doctorRepository->update($doctor,$inputDoctor);
+
         if($input['role'][0] == 'super_user')
         {
             if(!empty($doctor))
@@ -318,6 +318,7 @@ class AdminUserController extends Controller
         }
         if($input['role'][0] == 'admin')
         {
+            $doctor = $this->doctorRepository->update($doctor,$inputDoctor);
             $inputDoctor = $request->only(
                 [
                     'level_id','experience','description','gender','city','address','hospital_id','position','birthday'

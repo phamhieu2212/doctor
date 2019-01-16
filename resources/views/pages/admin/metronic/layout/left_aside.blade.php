@@ -40,10 +40,22 @@
                         <span class="m-menu__link-title">
                             <span class="m-menu__link-wrap">
                                 <span class="m-menu__link-text">
-                                    @lang('admin.menu.admin_users')
+                                    Quản lý bác sĩ
                                 </span>
                             </span>
                         </span>
+                    </a>
+                </li>
+                <li class="m-menu__item @if( $menu=='phone_admins') m-menu__item--active @endif" aria-haspopup="true">
+                    <a href="{!! \URL::action('Admin\PhoneAdminController@index') !!}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                Quản lý liên hệ admin
+                            </span>
+                        </span>
+                    </span>
                     </a>
                 </li>
 
@@ -126,29 +138,6 @@
                     </span>
                     </a>
                 </li>
-            @endif
-
-            @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
-                <li class="m-menu__section ">
-                    <h4 class="m-menu__section-text">
-                        BACKEND
-                    </h4>
-                    <i class="m-menu__section-icon flaticon-more-v3"></i>
-                </li>
-
-                <li class="m-menu__item @if( $menu=='oauth_clients') m-menu__item--active @endif" aria-haspopup="true">
-                    <a href="{!! \URL::action('Admin\OauthClientController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-key"></i>
-                        <span class="m-menu__link-title">
-                            <span class="m-menu__link-wrap">
-                                <span class="m-menu__link-text">
-                                    OAuth Clients
-                                </span>
-                            </span>
-                        </span>
-                    </a>
-                </li>
-
             @endif
 
 

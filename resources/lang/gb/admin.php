@@ -247,6 +247,11 @@ return [
                 'name' => 'Name',
             ],
         ],
+        'phone-admins'   => [
+            'columns'  => [
+                'phone' => 'Phone',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

@@ -50,6 +50,7 @@
 
         \Route::post('signout', 'Admin\AuthController@postSignOut');
 
+        \Route::resource('phone-admins', 'Admin\PhoneAdminController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });
