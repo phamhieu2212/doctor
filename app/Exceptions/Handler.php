@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
             }
             if($exception->getMessage() == "Unauthenticated.")
             {
-                return response()->json(['code' => 401, 'message' => $exception->getMessage(), 'data' => null])->setStatusCode(401);
+                return response()->json(['code' => 401, 'message' => 'Tài khoản của bạn đã đăng nhập trên thiết bị khác, vui lòng đăng nhập lại', 'data' => null])->setStatusCode(401);
             };
 
             if( !$exception->getMessage() ) {

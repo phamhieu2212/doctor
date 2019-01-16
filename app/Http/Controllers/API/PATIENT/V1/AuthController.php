@@ -75,7 +75,7 @@ class AuthController extends Controller
         );
         $check = $this->userService->checkClient($request);
         if( !$check ) {
-            return Response::response(40101);
+            return Response::response(40001);
         }
         $checkAccountKit = $this->accountKitService->getNumber($data['account_kit_token']);
         if($checkAccountKit == false)
