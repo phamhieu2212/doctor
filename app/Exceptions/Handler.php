@@ -77,6 +77,9 @@ class Handler extends ExceptionHandler
                     case '500':
                         return Response::response(50001);
                         break;
+                    case '400':
+                        return Response::response(40001);
+                        break;
 
                     default:
                         return $this->renderHttpException($exception);
