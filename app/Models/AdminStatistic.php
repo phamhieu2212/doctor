@@ -67,16 +67,43 @@ class AdminStatistic extends Base
      */
     public function toAPIArray()
     {
+
         return [
-            'id' => $this->id,
-            'admin_user_id' => $this->admin_user_id,
-            'conversation_id' => $this->conversation_id,
-            'total' => $this->total,
-            'price' => $this->price,
-            'date' => $this->date,
-            'time_call' => $this->time_call,
-            'type' => $this->type,
-            'is_patient_new' => $this->is_patient_new,
+
+            'date' => date('Y-m',strtotime($this->date)),
+            'log'=>
+                [
+                    'total_chat' => $this->total_chat,
+                    'total_call' => $this->total_call,
+                    'total_amount' => $this->total_amount,
+                    'price' => $this->price,
+                    'total_duration' => $this->total_duration,
+                    'type' => $this->type,
+                    'new_patient' => $this->new_patient,
+                    'total_patient'=> ''
+                ]
+
+        ];
+    }
+
+    public function toAPIArrayListForDoctor($countTotalPatient)
+    {
+
+        return [
+
+            'date' => date('Y-m',strtotime($this->date)),
+            'log'=>
+                [
+                    'total_chat' => $this->total_chat,
+                    'total_call' => $this->total_call,
+                    'total_amount' => $this->total_amount,
+                    'price' => $this->price,
+                    'total_duration' => $this->total_duration,
+                    'type' => $this->type,
+                    'new_patient' => $this->new_patient,
+                    'total_patient'=> $countTotalPatient
+                ]
+
         ];
     }
 
