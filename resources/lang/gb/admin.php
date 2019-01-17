@@ -252,6 +252,17 @@ return [
                 'phone' => 'Phone',
             ],
         ],
+
+        'fcm-notifications'   => [
+            'columns'  => [
+                'user_id' => 'User_id',
+                'user_type' => 'User_type',
+                'content' => 'Content',
+                'sent_at' => 'Sent_at',
+                'is_read' => 'Is_read',
+                'title' => 'Title',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

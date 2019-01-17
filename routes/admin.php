@@ -25,6 +25,7 @@
             \Route::resource('hospitals', 'Admin\HospitalController');
             \Route::resource('specialties', 'Admin\SpecialtyController');
             \Route::resource('levels', 'Admin\LevelController');
+            \Route::resource('phone-admins', 'Admin\PhoneAdminController');
 
             \Route::delete('images/delete', 'Admin\ImageController@deleteByUrl');
             \Route::resource('images', 'Admin\ImageController');
@@ -50,7 +51,8 @@
 
         \Route::post('signout', 'Admin\AuthController@postSignOut');
 
-        \Route::resource('phone-admins', 'Admin\PhoneAdminController');
+
+        \Route::resource('fcm-notifications', 'Admin\FCMNotificationController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });
