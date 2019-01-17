@@ -60,7 +60,7 @@ class AuthController extends Controller
 
         $check = $this->userService->checkClient($request);
         if( !$check ) {
-            return Response::response(40001);
+            return Response::response(40003);
         }
         $adminUser = $this->adminUserService->signIn($data);
         if (empty($adminUser)) {

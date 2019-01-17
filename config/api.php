@@ -10,15 +10,23 @@ return [
         'httpStatusCode' => 200
     ],
     40001 => [
-        'message'        => 'Error, Parameter is invalid !!!',
+        'message'        => 'Mật khẩu hoặc tên đăng nhập sai',
         'httpStatusCode' => 400
     ],
     40003 => [
-        'message'        => 'Wrong password !!!',
+        'message'        => 'Sai thông tin Client',
         'httpStatusCode' => 400
     ],
     40002 => [
         'message'        => 'Error, This username is already used !!!',
+        'httpStatusCode' => 400
+    ],
+    40004 => [
+        'message'        => 'Tài khoản accountKit không đúng',
+        'httpStatusCode' => 400
+    ],
+    40005 => [
+        'message'        => 'Không thể đăng kí tài khoản quickBlox',
         'httpStatusCode' => 400
     ],
     40101 => [

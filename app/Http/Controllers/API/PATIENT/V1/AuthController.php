@@ -75,24 +75,18 @@ class AuthController extends Controller
         );
         $check = $this->userService->checkClient($request);
         if( !$check ) {
-            return Response::response(40001);
+            return Response::response(40003);
         }
         $checkAccountKit = $this->accountKitService->getNumber($data['account_kit_token']);
         if($checkAccountKit == false)
         {
-            return Response::response(200,[
-                'status'=>false,
-                'message'=>'not matching account kit'
-            ]);
+            return Response::response(40004);
         }
         else
         {
             if($data['username'] != $checkAccountKit)
             {
-                return Response::response(200,[
-                    'status'=>false,
-                    'message'=>'not matching account kit'
-                ]);
+                return Response::response(40004);
             }
             else
             {
@@ -101,10 +95,7 @@ class AuthController extends Controller
                     $user = $this->signUp($data['username']);
                     if($user == false)
                     {
-                        return Response::response(200,[
-                            'status'=>false,
-                            'message'=>'error with quickBlox'
-                        ]);
+                        return Response::response(40005);
                     }
                 }
 
