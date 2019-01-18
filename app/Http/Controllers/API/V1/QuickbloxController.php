@@ -252,7 +252,7 @@ class QuickbloxController extends Controller
         $token = $dataToken['session']['token'];
 
         // Quickblox endpoints
-        DEFINE('QB_API_USER', "https://api.quickblox.com/users/".$idQuick.".json");
+        DEFINE('QB_API_USER_UPDATE', "https://api.quickblox.com/users/".$idQuick.".json");
 
         // Build post body
         $post_body = [
@@ -261,6 +261,8 @@ class QuickbloxController extends Controller
                 'full_name' => $name
             ]
         ];
+        dd($post_body);
+
         $post_body = json_encode($post_body);
         DEFINE('QB_TOKEN', "Qb-Token:".$token);
 
@@ -268,7 +270,7 @@ class QuickbloxController extends Controller
         // Configure cURL
         $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_URL, QB_API_USER);
+        curl_setopt($curl, CURLOPT_URL, QB_API_USER_UPDATE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $post_body);
         curl_setopt($curl, CURLOPT_POST, 1);
