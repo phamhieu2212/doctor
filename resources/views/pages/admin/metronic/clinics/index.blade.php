@@ -85,7 +85,7 @@
                                 <th style="width: 10px">{!! \PaginationHelper::sort('id', 'ID') !!}</th>
                                 <th>{!! \PaginationHelper::sort('name', 'Tên') !!}</th>
                                 <th>{!! \PaginationHelper::sort('address', 'Địa chỉ') !!}</th>
-                                <th>{!! \PaginationHelper::sort('price', 'Giá') !!}</th>
+                                <th>{!! \PaginationHelper::sort('staus', 'Trạng thái') !!}</th>
                                 @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
                                     <th>{!! \PaginationHelper::sort('admin_user_id', 'Bác sĩ') !!}</th>
                                 @endif
@@ -100,7 +100,16 @@
                                     <td>{{ $clinic->id }}</td>
                                     <td>{{ $clinic->name }}</td>
                                     <td>{{ $clinic->address }}</td>
-                                    <td>{{ $clinic->price }}</td>
+                                    <td>
+                                        @if($clinic->status == 1)
+                                            <button class="btn btn-success btn-xs"><i class="la la-check"></i> Đang hoạt động</button>
+                                        @else
+                                            <button class="btn btn-warning btn-xs"><i class="fa fa-refresh fa-spin"></i> Đang chờ xoá</button>
+                                        @endif
+
+
+
+                                    </td>
                                     @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
                                         <td>{{ @$clinic->adminUser->name }}</td>
                                     @endif
