@@ -263,7 +263,7 @@ class QuickbloxController extends Controller
         ];
 
 
-        $post_body = json_encode($post_body);dd($post_body);
+        $post_body = json_encode($post_body);dd(QB_API_USER_UPDATE);
         DEFINE('QB_TOKEN', "Qb-Token:".$token);
 
 
