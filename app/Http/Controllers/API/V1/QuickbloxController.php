@@ -281,7 +281,7 @@ class QuickbloxController extends Controller
         $headers = array();
         $headers[] = 'Content-Type: application/json';
         $headers[] = 'Quickblox-Rest-Api-Version: 0.1.0';
-        $headers[] = 'Qb-Token: 95b602d5eb099c5cc5ef25c9b37c55fe4501226b';
+        $headers[] = QB_TOKEN;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         $result = curl_exec($ch);
