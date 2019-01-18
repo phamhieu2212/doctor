@@ -250,21 +250,25 @@ class QuickbloxController extends Controller
     {
         $dataToken = json_decode($this->getTokenAuth(),true);
         $token = $dataToken['session']['token'];
-        DEFINE('QB_TOKEN', "Qb-Token:".$token);
+
         // Quickblox endpoints
+        DEFINE('QB_API_USER', "https://api.quickblox.com/users/".$idQuick.".json");
+
         // Build post body
         $post_body = [
             'user'=>[
+
                 'full_name' => $name
             ]
         ];
         $post_body = json_encode($post_body);
+        DEFINE('QB_TOKEN', "Qb-Token:".$token);
 
 
         // Configure cURL
         $curl = curl_init();
 
-        curl_setopt($curl, CURLOPT_URL, "https://api.quickblox.com/users/".$idQuick.".json");
+        curl_setopt($curl, CURLOPT_URL, QB_API_USER);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $post_body);
         curl_setopt($curl, CURLOPT_POST, 1);
@@ -281,19 +285,14 @@ class QuickbloxController extends Controller
 
         // Check errors
         curl_close($curl);
-        if ($responce) {dd($responce);
+        if ($responce) {
 
             $user = json_decode($responce,true);
 
-            return [
-                'status'=> 200,
-                'message'=>'success',
-                'data'=>$user,
-
-            ];
+            return $user;
         } else {
             $error = curl_error($curl). '(' .curl_errno($curl). ')';
-            return $error . "\n";
+            return \GuzzleHttp\json_decode($error,true);
         }
 
     }
