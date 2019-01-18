@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\DOCTOR\V1;
 
+use App\Http\Controllers\API\V1\QuickbloxController;
 use App\Http\Responses\API\V1\Response;
 use App\Repositories\AdminUserRepositoryInterface;
 use App\Repositories\DoctorRepositoryInterface;
@@ -21,6 +22,7 @@ class ProfileController extends Controller
     protected  $hospitalRepository;
     protected  $levelRepository;
     protected  $specialtyRepository;
+    protected  $quickBlox;
 
     public function __construct
     (
@@ -29,7 +31,8 @@ class ProfileController extends Controller
         DoctorRepositoryInterface $doctorRepository,
         HospitalRepositoryInterface $hospitalRepository,
         LevelRepositoryInterface $levelRepository,
-        SpecialtyRepositoryInterface $specialtyRepository
+        SpecialtyRepositoryInterface $specialtyRepository,
+        QuickbloxController $quickblox
     )
     {
         $this->adminUserService = $APIUserService;
@@ -38,6 +41,7 @@ class ProfileController extends Controller
         $this->hospitalRepository = $hospitalRepository;
         $this->levelRepository     = $levelRepository;
         $this->specialtyRepository  = $specialtyRepository;
+        $this->quickBlox            = $quickblox;
 
     }
     public function index()
@@ -66,6 +70,7 @@ class ProfileController extends Controller
         ]);
         $adminUser = $this->adminUserService->getUser();
         $doctor = $this->doctorRepository->findByAdminUserId($adminUser->id);
+
         try {
             DB::beginTransaction();
 
@@ -75,6 +80,7 @@ class ProfileController extends Controller
             $adminUser->specialties()->sync($request->input('specialties_id'));
             DB::commit();
             $data = $adminUser->toAPIArrayProfile();
+            $this->quickBlox->updateUser($adminUser->quick_id,$inputAdminUser['name']);
 
             return Response::response(200,$data);
 

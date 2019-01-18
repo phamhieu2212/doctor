@@ -245,4 +245,54 @@ class QuickbloxController extends Controller
         return json_decode($result,true);
 
     }
+
+    public function updateUser($idQuick,$name)
+    {
+        $dataToken = json_decode($this->getTokenAuth(),true);
+        $token = $dataToken['session']['token'];
+        DEFINE('QB_TOKEN', "Qb-Token:".$token);
+        // Quickblox endpoints
+        // Build post body
+        $post_body = [
+            'full_name' => $name,
+        ];
+        $post_body = json_encode($post_body);
+
+
+        // Configure cURL
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_URL, "https://api.quickblox.com/users/".$idQuick.".json");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_body);
+        curl_setopt($curl, CURLOPT_POST, 1);
+
+        $headers = array();
+        $headers[] = "Content-Type: application/json";
+        $headers[] = "Quickblox-Rest-Api-Version: 0.1.0";
+        $headers[] = QB_TOKEN;
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+
+        // Execute request and read responce
+        $responce = curl_exec($curl);
+
+        // Check errors
+        curl_close($curl);
+        if ($responce) {
+
+            $user = json_decode($responce,true);
+
+            return [
+                'status'=> 200,
+                'message'=>'success',
+                'data'=>$user,
+
+            ];
+        } else {
+            $error = curl_error($curl). '(' .curl_errno($curl). ')';
+            return $error . "\n";
+        }
+
+    }
 }
