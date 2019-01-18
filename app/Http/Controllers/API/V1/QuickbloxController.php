@@ -281,7 +281,7 @@ class QuickbloxController extends Controller
 
         // Check errors
         curl_close($curl);
-        if ($responce) {
+        if ($responce) {dd($responce);
 
             $user = json_decode($responce,true);
 
