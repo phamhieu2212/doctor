@@ -4,7 +4,7 @@ use \App\Services\PaymentServiceInterface;
 
 class PaymentService extends BaseService implements PaymentServiceInterface
 {
-    public $nganluong_url = NGANLUONG_URL;
+    public $nganluong_url = PAYMENT_URL;
     // Mã website của bạn đăng ký trong chức năng tích hợp thanh toán của NgânLượng.vn.
     public $merchant_site_code = MERCHANT_ID; //100001 chỉ là ví dụ, bạn hãy thay bằng mã của bạn
     // Mật khẩu giao tiếp giữa website của bạn và NgânLượng.vn.
