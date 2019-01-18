@@ -80,8 +80,8 @@ class ProfileController extends Controller
             $adminUser->specialties()->sync($request->input('specialties_id'));
             DB::commit();
             $data = $adminUser->toAPIArrayProfile();
-            $this->quickBlox->updateUser($adminUser->quick_id,$inputAdminUser['name']);
-
+            $a = $this->quickBlox->updateUser($adminUser->quick_id,$inputAdminUser['name']);
+            dd($a);
             return Response::response(200,$data);
 
         } catch (\Exception $ex) {
