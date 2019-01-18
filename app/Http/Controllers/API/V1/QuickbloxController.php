@@ -261,9 +261,9 @@ class QuickbloxController extends Controller
                 'full_name' => $name
             ]
         ];
-        dd($post_body);
 
-        $post_body = json_encode($post_body);
+
+        $post_body = json_encode($post_body);dd($post_body);
         DEFINE('QB_TOKEN', "Qb-Token:".$token);
 
 
