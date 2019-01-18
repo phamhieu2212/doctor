@@ -295,6 +295,8 @@ class AdminUserController extends Controller
         $inputDoctor = [
             'name' => $input['name']
         ];
+        try {
+            DB::beginTransaction();
 
         $adminUser = $this->adminUserRepository->update($adminUser, $input);
 
@@ -355,10 +357,18 @@ class AdminUserController extends Controller
                 $this->adminUserRepository->update($adminUser, ['profile_image_id' => $newImage->id]);
             }
         }
+            DB::commit();
 
         return redirect()
             ->action('Admin\AdminUserController@show', [$id])
             ->with('message-success', trans('admin.messages.general.update_success'));
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->withErrors(trans('admin.errors.general.save_failed'));
+        }
     }
 
     /**
