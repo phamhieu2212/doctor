@@ -254,7 +254,9 @@ class QuickbloxController extends Controller
         // Quickblox endpoints
         // Build post body
         $post_body = [
-            'full_name' => $name,
+            'user'=>[
+                'full_name' => $name
+            ]
         ];
         $post_body = json_encode($post_body);
 
