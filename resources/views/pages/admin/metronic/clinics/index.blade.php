@@ -117,9 +117,11 @@
                                         <a href="{!! action('Admin\ClinicController@show', $clinic->id) !!}" class="btn m--font-primary m-btn--pill m-btn--air no-padding">
                                             <i class="la la-edit"></i>
                                         </a>
+                                        @if($clinic->status == 2)
                                         <a href="javascript:;" data-delete-url="{!! action('Admin\ClinicController@destroy', $clinic->id) !!}" class="btn m--font-danger m-btn--pill m-btn--air no-padding delete-button">
                                             <i class="la la-trash"></i>
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
