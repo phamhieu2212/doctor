@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\FCMNotification;
 use App\Models\Payment;
 use App\Models\User;
 use App\Repositories\Eloquent\UserRepository;
+use App\Repositories\FCMNotificationRepositoryInterface;
 use App\Repositories\PaymentRepositoryInterface;
 use App\Repositories\PointPatientRepositoryInterface;
 use App\Services\PaymentServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -17,19 +20,23 @@ class IndexController extends Controller
     protected $paymentRepository;
     protected $pointPatientRepository;
     protected $userRepository;
+    protected $FCMNotificationRepository;
 
     public function __construct
     (
         PaymentServiceInterface $paymentService,
         PointPatientRepositoryInterface $pointPatientRepository,
         PaymentRepositoryInterface $paymentRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        FCMNotificationRepositoryInterface $FCMNotificationRepository
     )
     {
         $this->paymentRepository = $paymentRepository;
         $this->paymentService    = $paymentService;
         $this->pointPatientRepository = $pointPatientRepository;
         $this->userRepository         = $userRepository;
+        $this->FCMNotificationRepository = $FCMNotificationRepository;
+
     }
     public function rule()
     {
@@ -70,14 +77,37 @@ class IndexController extends Controller
             $patientPoint  = $this->pointPatientRepository->findByUserId($currentPatient->id);
             if (empty($patientPoint)) {
                 $patientPoint = $this->pointPatientRepository->create(["user_id" => $currentPatient->id, "point" => $point]);
+                try {
+                    $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point + $point]);
+                } catch (\Exception $e) {
+                    return view('pages.web.default.index', [
+                        'status'=>false
+                    ]);
+                }
             } else {
-                $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point + $point]);
+                try {
+                    $this->pointPatientRepository->update($patientPoint, ["point" => $patientPoint->point + $point]);
+                } catch (\Exception $e) {
+                    return view('pages.web.default.index', [
+                        'status'=>false
+                    ]);
+                }
             }
+            $this->FCMNotificationRepository->create([
+                'user_id'=> $currentPatient->id,
+                'user_type'=>FCMNotification::PATIENT,
+                'content'=>'Quý khách vừa nạp thành công '.$point.' điểm vào tài khoản!',
+                'title'=>'Hệ thống thanh toán',
+                'sent_at'=> Carbon::now(),
+                'is_read'=>0
+
+            ]);
 
             return view('pages.web.default.index', [
                 'status'=>true
             ]);
-        }else{
+        }
+        else{
             return view('pages.web.default.index', [
                 'status'=>false
             ]);
