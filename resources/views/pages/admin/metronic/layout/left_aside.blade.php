@@ -48,7 +48,7 @@
                 </li>
                 <li class="m-menu__item @if( $menu=='phone_admins') m-menu__item--active @endif" aria-haspopup="true">
                     <a href="{!! \URL::action('Admin\PhoneAdminController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                        <i class="m-menu__link-icon la la-phone"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
@@ -71,7 +71,7 @@
 
                 <li class="m-menu__item @if( $menu=='hospitals') m-menu__item--active @endif" aria-haspopup="true">
                     <a href="{!! \URL::action('Admin\HospitalController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                        <i class="m-menu__link-icon la la-hospital-o"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
@@ -83,7 +83,7 @@
                 </li>
                 <li class="m-menu__item @if( $menu=='specialties') m-menu__item--active @endif" aria-haspopup="true">
                     <a href="{!! \URL::action('Admin\SpecialtyController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                        <i class="m-menu__link-icon la la-user-md"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
@@ -104,7 +104,7 @@
                 </li>
                 <li class="m-menu__item @if( $menu=='f_c_m_notifications') m-menu__item--active @endif" aria-haspopup="true">
                     <a href="{!! \URL::action('Admin\FCMNotificationController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                        <i class="m-menu__link-icon la la-bell"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
@@ -127,7 +127,7 @@
 
                 <li class="m-menu__item @if( $menu=='clinics') m-menu__item--active @endif" aria-haspopup="true">
                     <a href="{!! \URL::action('Admin\ClinicController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                        <i class="m-menu__link-icon la la-hotel"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
@@ -149,7 +149,7 @@
 
                 <li class="m-menu__item @if( $menu=='levels') m-menu__item--active @endif" aria-haspopup="true">
                     <a href="{!! \URL::action('Admin\LevelController@index') !!}" class="m-menu__link">
-                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                        <i class="m-menu__link-icon la la-mortar-board"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
