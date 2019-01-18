@@ -193,7 +193,7 @@ class ClinicController extends Controller
         if( empty($clinic) ) {
             abort(404);
         }
-        $this->clinicRepository->delete($clinic);
+        $this->clinicRepository->update($clinic,['status'=>3]);
 
         return redirect()->action('Admin\ClinicController@index')
             ->with('message-success', trans('admin.messages.general.delete_success'));
