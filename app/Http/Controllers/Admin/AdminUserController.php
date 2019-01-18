@@ -372,10 +372,13 @@ class AdminUserController extends Controller
     {
         /** @var \App\Models\AdminUser $adminUser */
         $adminUser = $this->adminUserRepository->find($id);
+        $doctor = $adminUser->doctor;
         if (empty($adminUser)) {
             \App::abort(404);
         }
         $this->adminUserRepository->delete($adminUser);
+        $doctor->delete();
+        $doctor->save();
         $this->quickblox->deleteUser($adminUser->quick_id);
 
         return redirect()
