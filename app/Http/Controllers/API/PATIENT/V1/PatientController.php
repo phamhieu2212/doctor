@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\API\PATIENT\V1;
 
+use App\Http\Controllers\API\V1\QuickbloxController;
 use App\Http\Responses\API\V1\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,17 +17,20 @@ class PatientController extends Controller {
     protected $userService;
     protected $fileUploadService;
     protected $imageRepository;
+    protected $quickBlox;
 
     public function __construct(
         PatientRepositoryInterface $patientRepository,
         APIUserServiceInterface $userService,
         FileUploadServiceInterface $fileUploadService,
-        ImageRepositoryInterface $imageRepository
+        ImageRepositoryInterface $imageRepository,
+        QuickbloxController $quickblox
     ){
         $this->patientRepository = $patientRepository;
         $this->userService = $userService;
         $this->fileUploadService = $fileUploadService;
         $this->imageRepository = $imageRepository;
+        $this->quickBlox = $quickblox;
     }
 
     public function show()
@@ -55,6 +59,7 @@ class PatientController extends Controller {
         } catch (\Exception $e) {
             return Response::response(50002);
         }
+        $this->quickBlox->updateUser($currentUser->quick_id,$data['full_name']);
 
         if( $request->hasFile( 'cover_image' ) ) {
             $currentImage = $patient->profileImage;

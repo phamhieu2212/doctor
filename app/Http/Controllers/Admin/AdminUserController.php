@@ -329,6 +329,7 @@ class AdminUserController extends Controller
             $doctor = $this->doctorRepository->update($doctor,$inputDoctor);
             $adminUser->specialties()->sync($request->input('specialty_id'));
 
+
         }
         $this->adminUserRoleRepository->setAdminUserRoles($id, $request->input('role', []));
 
@@ -375,6 +376,7 @@ class AdminUserController extends Controller
             \App::abort(404);
         }
         $this->adminUserRepository->delete($adminUser);
+        $this->quickblox->deleteUser($adminUser->quick_id);
 
         return redirect()
             ->action('Admin\AdminUserController@index')

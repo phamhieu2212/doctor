@@ -81,7 +81,6 @@ class ProfileController extends Controller
             DB::commit();
             $data = $adminUser->toAPIArrayProfile();
             $a = $this->quickBlox->updateUser($adminUser->quick_id,$inputAdminUser['name']);
-
             return Response::response(200,$data);
 
         } catch (\Exception $ex) {
