@@ -134,7 +134,7 @@ class AuthController extends Controller
             'external_user_id' => '',
             'facebook_id' => '',
             'twitter_id' => '',
-            'full_name'=> '' ,
+            'full_name'=> $username ,
             'phone'    => $username,
             'website' => '',
             ];
