@@ -34,4 +34,20 @@ class UserRepository extends AuthenticatableRepository implements UserRepository
         return $query->whereIn('id',$idListUserContact)->skip($offset)->take($limit)->get();
 
     }
+
+    public function countAllWithFilter($startDate,$endDate)
+    {
+        if($startDate == null and $endDate == null)
+        {
+            return User::count();
+        }
+        else
+        {
+            $startDate = date('Y-m-d 00:00:00',strtotime($startDate));
+            $endDate = date('Y-m-d 23:59:59',strtotime($endDate));
+            return User::where('created_at','>=',$startDate)
+                ->where('created_at','<=',$endDate)->count();
+        }
+
+    }
 }

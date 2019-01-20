@@ -2,4 +2,5 @@
 
 interface AdminStatisticRepositoryInterface extends SingleKeyModelRepositoryInterface
 {
+    public function sumAllWithFilter($startDate,$endDate);
 }

@@ -16,4 +16,6 @@ interface AdminUserRoleRepositoryInterface extends SingleKeyModelRepositoryInter
      * @param array $roles
      */
     public function setAdminUserRoles($adminUserId, $roles);
+    public function getAllAdminUserByRoleWithFilter($role,$startDate,$endDate);
+    public function countAllAdminUserByRoleWithFilter($role,$startDate,$endDate);
 }

@@ -2,4 +2,5 @@
 
 interface PaymentRepositoryInterface extends SingleKeyModelRepositoryInterface
 {
+    public function sumAllWithFilter($startDate,$endDate);
 }

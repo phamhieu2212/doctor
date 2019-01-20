@@ -18,5 +18,19 @@ class ChatHistoryRepository extends SingleKeyModelRepository implements ChatHist
 
         return $lastSession;
     }
+    public function countAllWithFilter($startDate,$endDate)
+    {
+        if($startDate == null and $endDate == null)
+        {
+            return ChatHistory::count();
+        }
+        else
+        {
+            $startDate = date('Y-m-d 00:00:00',strtotime($startDate));
+            $endDate = date('Y-m-d 23:59:59',strtotime($endDate));
+            return ChatHistory::where('created_at','>=',$startDate)
+                ->where('created_at','<=',$endDate)->count();
+        }
+    }
 
 }

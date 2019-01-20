@@ -82,5 +82,19 @@ class CallHistoryRepository extends SingleKeyModelRepository implements CallHist
     {
         $this->getBlankModel()->where('is_read', '=', CallHistory::NOT_YET_READ)->update(["is_read" => CallHistory::IS_READ]);
     }
+    public function countAllWithFilter($startDate,$endDate)
+    {
+        if($startDate == null and $endDate == null)
+        {
+            return CallHistory::count();
+        }
+        else
+        {
+            $startDate = date('Y-m-d 00:00:00',strtotime($startDate));
+            $endDate = date('Y-m-d 23:59:59',strtotime($endDate));
+            return CallHistory::where('created_at','>=',$startDate)
+                ->where('created_at','<=',$endDate)->count();
+        }
+    }
 
 }

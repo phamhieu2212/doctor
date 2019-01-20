@@ -6,4 +6,5 @@ interface CallHistoryRepositoryInterface extends SingleKeyModelRepositoryInterfa
     public function getByFilterWithDoctor($idDoctor,$filter, $order, $direction, $offset, $limit);
     public function checkRead($doctorId);
     public function updateIsRead();
+    public function countAllWithFilter($startDate,$endDate);
 }

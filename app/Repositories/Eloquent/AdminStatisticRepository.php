@@ -23,4 +23,19 @@ class AdminStatisticRepository extends SingleKeyModelRepository implements Admin
         ];
     }
 
+    public function sumAllWithFilter($startDate,$endDate)
+    {
+        if($startDate == null and $endDate == null)
+        {
+            return AdminStatistic::sum('total');
+        }
+        else
+        {
+            $startDate = date('Y-m-d 00:00:00',strtotime($startDate));
+            $endDate = date('Y-m-d 23:59:59',strtotime($endDate));
+            return AdminStatistic::where('created_at','>=',$startDate)
+                ->where('created_at','<=',$endDate)->sum('total');
+        }
+    }
+
 }
