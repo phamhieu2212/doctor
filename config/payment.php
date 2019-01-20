@@ -14,6 +14,6 @@ header("Content-Type: text/html; charset=utf-8");
 
 // define('NGANLUONG_URL', 'http://192.168.11.15/nl30/mobile_checkout_api_post.php');
 define('PAYMENT_URL', 'https://www.nganluong.vn/checkout.php');
-define('RECEIVER', 'phamhieu.dev@gmail.com');// Email tài khoản ngân lượng
+define('RECEIVER', 'sac.doctor.oicsoft@gmail.com');// Email tài khoản ngân lượng
 define('MERCHANT_ID', '58138');
 define('MERCHANT_PASS', '7e9a5d0e928886f07baa547e0cfaacf7');
