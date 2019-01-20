@@ -80,9 +80,19 @@ class IndexController extends Controller
         $countCall = $this->callHistoryRepository->countAllWithFilter($startDate,$endDate);
         $sumPayment = $this->paymentRepository->sumAllWithFilter($startDate,$endDate);
         $sumDoctor = $this->adminStatisticRepository->sumAllWithFilter($startDate,$endDate);
+        if($startDate == null and $endDate == null)
+        {
+            $doctors = AdminStatistic::groupBy('admin_user_id')
+                ->selectRaw('*,sum(total) as total_amount')->paginate(10);
+        }
+        else
+        {
+            $startDate = date('Y-m-d 00:00:00',strtotime($startDate));
+            $endDate = date('Y-m-d 23:59:59',strtotime($endDate));
+            $doctors = AdminStatistic::groupBy('admin_user_id')
+                ->where('created_at','>=',$startDate)->where('created_at','<=',$endDate)->selectRaw('*,sum(total) as total_amount')->paginate(10);
+        }
 
-        $doctors = AdminStatistic::groupBy('admin_user_id')
-            ->selectRaw('*,sum(total) as total_amount')->paginate(10);
 
 
 
