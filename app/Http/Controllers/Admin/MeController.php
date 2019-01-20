@@ -32,7 +32,10 @@ class MeController extends Controller
 
     public function index()
     {
-        return view('pages.admin.' . config('view.admin') . '.me.index');
+        return view('pages.admin.' . config('view.admin') . '.me.index',
+            [
+                'adminUser' => $this->adminUserService->getUser()
+            ]);
     }
 
     public function update(MeUpdateRequest $request)

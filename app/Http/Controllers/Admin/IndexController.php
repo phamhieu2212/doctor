@@ -95,12 +95,11 @@ class IndexController extends Controller
 
 
 
-
         return view('pages.admin.' . config('view.admin') . '.index', [
             'countDoctor'=>$countDoctor,
             'countPatient'=>$countPatient,
-            'startDate'=>$startDate,
-            'endDate'=>$endDate,
+            'startDate'=>$request->get('start'),
+            'endDate'=>$request->get('end'),
             'countChat'=>$countChat,
             'countCall'=>$countCall,
             'sumPayment'=>$sumPayment,

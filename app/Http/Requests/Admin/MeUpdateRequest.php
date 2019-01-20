@@ -24,17 +24,16 @@ class MeUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'min:6',
+            'password' => 'required|min:8|confirmed',
         ];
     }
 
     public function messages()
     {
         return [
-            'email.required' => trans('admin.errors.requests.me.email.required'),
-            'email.email' => trans('admin.errors.requests.me.email.email'),
-            'password.min' => trans('admin.errors.requests.me.password.min'),
+            'password.required' => 'Vui lòng nhập mật khẩu',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 kí tự',
+            'password.confirmed' => 'Mật khẩu không trùng khớp',
         ];
     }
 }

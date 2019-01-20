@@ -17,19 +17,14 @@
 
     <!--begin::Page Scripts -->
     <script src="{{asset('/static/admin/libs/metronic/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
-    <script>
-        $("#m_reset").click(function(){
-        $('#m_datepicker_5').val("").datepicker("update");
-        })
-    </script>
 @stop
 
 @section('title')
-    {{ config('site.name') }} | Admin | Dashboard
+    Thống kê
 @stop
 
 @section('header')
-    Dashboard
+    Thống kê
 @stop
 
 @section('breadcrumb')
@@ -37,7 +32,7 @@
     <li class="m-nav__item">
         <a href="" class="m-nav__link">
             <span class="m-nav__link-text">
-                Dashboard
+                Thống kê
             </span>
         </a>
     </li>
@@ -250,10 +245,6 @@
         </div>
         </div>
 
-
-
-@stop
-@section('scripts')
 
 
 @stop

@@ -1,367 +1,117 @@
-@extends('pages.admin.metronic.layout.application',['menu' => 'dashboard'] )
+@extends('pages.admin.metronic.layout.application',['menu' => 'categories'] )
 
 @section('metadata')
 @stop
 
 @section('styles')
+    <style>
+        .row {
+            margin-bottom: 15px;
+        }
+    </style>
 @stop
 
 @section('scripts')
+    <script src="{!! \URLHelper::asset('metronic/demo/default/custom/crud/forms/validation/form-controls.js', 'admin') !!}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#cover-image').change(function (event) {
+                $('#cover-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
+            });
+
+            $('.datetime-picker').datetimepicker({
+                todayHighlight: true,
+                autoclose: true,
+                pickerPosition: 'bottom-left',
+                format: 'yyyy/mm/dd hh:ii'
+            });
+        });
+    </script>
 @stop
 
 @section('title')
-    Profile | Admin | {{ config('site.name') }}
+    Sửa thông tin cá nhân
 @stop
 
 @section('header')
-    My Profile
+    Quản lý thông tin cá nhân
 @stop
 
 @section('breadcrumb')
-    <li class="m-nav__separator"> - </li>
     <li class="m-nav__item">
-        <a href="" class="m-nav__link">
-            <span class="m-nav__link-text">
-                Profile
-            </span>
-        </a>
+        Sửa thông tin cá nhân
     </li>
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-xl-3 col-lg-4">
-            <div class="m-portlet m-portlet--full-height  ">
-                <div class="m-portlet__body">
-                    <div class="m-card-profile">
-                        <div class="m-card-profile__title m--hide">
-                            Your Profile
-                        </div>
-                        <div class="m-card-profile__pic">
-                            <div class="m-card-profile__pic-wrapper">
-                                <img src="{!! \URLHelper::asset('metronic/app/media/img/users/user4.jpg', 'admin') !!}" alt=""/>
-                            </div>
-                        </div>
-                        <div class="m-card-profile__details">
-                            <span class="m-card-profile__name">
-                                Mark Andre
-                            </span>
-                            <a href="" class="m-card-profile__email m-link"> mark.andre@gmail.com </a>
-                        </div>
-                    </div>
-
-                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
-                        <li class="m-nav__separator m-nav__separator--fit"></li>
-                        <li class="m-nav__section m--hide">
-                            <span class="m-nav__section-text">
-                                Section
-                            </span>
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="{{ action('Admin\MeController@index') }}" class="m-nav__link">
-                                <i class="m-nav__link-icon flaticon-profile-1"></i>
-                                <span class="m-nav__link-title">
-                                    <span class="m-nav__link-wrap">
-                                        <span class="m-nav__link-text">
-                                            My Profile
-                                        </span>
-                                        <span class="m-nav__link-badge">
-                                            <span class="m-badge m-badge--success">
-                                                2
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="{{ action('Admin\MeController@index') }}" class="m-nav__link">
-                                <i class="m-nav__link-icon flaticon-share"></i>
-                                <span class="m-nav__link-text">
-                                    Activity
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="{{ action('Admin\MeController@index') }}" class="m-nav__link">
-                                <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                <span class="m-nav__link-text">
-                                    Messages
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="{{ action('Admin\MeController@index') }}" class="m-nav__link">
-                                <i class="m-nav__link-icon flaticon-graphic-2"></i>
-                                <span class="m-nav__link-text">
-                                    Sales
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="{{ action('Admin\MeController@index') }}" class="m-nav__link">
-                                <i class="m-nav__link-icon flaticon-time-3"></i>
-                                <span class="m-nav__link-text">
-                                    Events
-                                </span>
-                            </a>
-                        </li>
-                        <li class="m-nav__item">
-                            <a href="{{ action('Admin\MeController@index') }}" class="m-nav__link">
-                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                <span class="m-nav__link-text">
-                                    Support
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="m-portlet__body-separator"></div>
-
-                    <div class="m-widget1 m-widget1--paddingless">
-                        <div class="m-widget1__item">
-                            <div class="row m-row--no-padding align-items-center">
-                                <div class="col">
-                                    <h3 class="m-widget1__title">
-                                        Member Profit
-                                    </h3>
-                                    <span class="m-widget1__desc">
-                                        Awerage Weekly Profit
-                                    </span>
-                                </div>
-                                <div class="col m--align-right">
-														<span class="m-widget1__number m--font-brand">
-															+$17,800
-														</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-widget1__item">
-                            <div class="row m-row--no-padding align-items-center">
-                                <div class="col">
-                                    <h3 class="m-widget1__title">
-                                        Orders
-                                    </h3>
-                                    <span class="m-widget1__desc">
-                                        Weekly Customer Orders
-                                    </span>
-                                </div>
-                                <div class="col m--align-right">
-                                    <span class="m-widget1__number m--font-danger">
-                                        +1,800
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-widget1__item">
-                            <div class="row m-row--no-padding align-items-center">
-                                <div class="col">
-                                    <h3 class="m-widget1__title">
-                                        Issue Reports
-                                    </h3>
-                                    <span class="m-widget1__desc">
-                                        System bugs and issues
-                                    </span>
-                                </div>
-                                <div class="col m--align-right">
-                                    <span class="m-widget1__number m--font-success">
-                                        -27,49%
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    @if (count($errors) > 0)
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Sửa thông tin cá nhân
+                    </h3>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-9 col-lg-8">
-            <div class="m-portlet m-portlet--full-height m-portlet--tabs  ">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-tools">
-                        <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary" role="tablist">
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab_1" role="tab">
-                                    <i class="flaticon-share m--hide"></i> Update Profile </a>
-                            </li>
-                            <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_2" role="tab"> Change Password </a>
-                            </li>
-                        </ul>
+        <div class="m-portlet__body">
+            <form class="m-form m-form--fit" action="{!! action('Admin\MeController@update') !!}" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                {!! csrf_field() !!}
+
+                <div class="m-portlet__body" style="padding-top: 0;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group row">
+                                <label for="name">Tên</label>
+                                <input type="text" class="form-control m-input" name="name" id="name" required readonly value="{{$adminUser->name}}">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group m-form__group row">
+                                        <label for="password">Mật khẩu</label>
+                                        <input type="password" class="form-control m-input" name="password" id="password" placeholder="Mật khẩu">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group m-form__group row">
+                                        <label for="password">Nhập lại mật khẩu</label>
+                                        <input type="password" class="form-control m-input" name="password_confirmation" id="password_confirmation" placeholder="Mật khẩu">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="m_user_profile_tab_1">
-                        <form class="m-form m-form--fit m-form--label-align-right">
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group m--margin-top-10 m--hide">
-                                    <div class="alert m-alert m-alert--default" role="alert">
-                                        The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <div class="col-10 ml-auto">
-                                        <h3 class="m-form__section">
-                                            1. Personal Details
-                                        </h3>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Full Name </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="Mark Andre">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Occupation </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="CTO">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Company Name </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="Keenthemes">
-															<span class="m-form__help">
-																If you want your invoices addressed to a company. Leave blank to use your full name.
-															</span>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Phone No. </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="+456669067890">
-                                    </div>
-                                </div>
-                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-                                <div class="form-group m-form__group row">
-                                    <div class="col-10 ml-auto">
-                                        <h3 class="m-form__section">
-                                            2. Address
-                                        </h3>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Address </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="L-12-20 Vertex, Cybersquare">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> City </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="San Francisco">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> State </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="California">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Postcode </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="45000">
-                                    </div>
-                                </div>
-                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-                                <div class="form-group m-form__group row">
-                                    <div class="col-10 ml-auto">
-                                        <h3 class="m-form__section">
-                                            3. Social Links
-                                        </h3>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Linkedin </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="www.linkedin.com/Mark.Andre">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Facebook </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="www.facebook.com/Mark.Andre">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Twitter </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="www.twitter.com/Mark.Andre">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="example-text-input" class="col-2 col-form-label"> Instagram </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" value="www.instagram.com/Mark.Andre">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="m-portlet__foot m-portlet__foot--fit">
-                                <div class="m-form__actions">
-                                    <div class="row">
-                                        <div class="col-2"></div>
-                                        <div class="col-7">
-                                            <button type="reset" class="btn btn-accent m-btn m-btn--air m-btn--custom">
-                                                Save changes
-                                            </button>
-                                            &nbsp;&nbsp;
-                                            <button type="reset" class="btn btn-secondary m-btn m-btn--air m-btn--custom">
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane " id="m_user_profile_tab_2">
-                        <form class="m-form m-form--fit m-form--label-align-right" action="{!! action('Admin\MeController@update') !!}" method="post">
-                            <input type="hidden" name="_method" value="put">
-                            {!! csrf_field() !!}
 
-                            <div class="m-portlet__body">
-                                <div class="form-group m-form__group row">
-                                    <label for="current-password" class="col-3 col-form-label"> Current Password </label>
-                                    <div class="col-7">
-                                        <input type="password" name="current_password" id="current-password" required class="form-control m-input" placeholder="Enter your Current Password">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="new-password" class="col-3 col-form-label"> New Password </label>
-                                    <div class="col-7">
-                                        <input type="password" name="new_password" id="new-password" required class="form-control m-input" placeholder="New Password">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="confirm-password" class="col-3 col-form-label"> Confirm Password </label>
-                                    <div class="col-7">
-                                        <input type="password" name="confirm_password" id="confirm-password" required class="form-control m-input" placeholder="Confirm your New Password">
-                                    </div>
-                                </div>
+                <div class="m-portlet__foot m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions">
+                        <div class="row">
+                            <div class="col-lg-9 ml-lg-auto">
+                                <a href="{!! action('Admin\IndexController@index') !!}" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-accent" style="width: 120px;">
+                                    @lang('admin.pages.common.buttons.cancel')
+                                </a>
+                                <button type="submit" class="btn m-btn--pill m-btn--air btn-primary m-btn m-btn--custom" style="width: 120px;">
+                                    @lang('admin.pages.common.buttons.save')
+                                </button>
                             </div>
-
-                            <div class="m-portlet__foot m-portlet__foot--fit">
-                                <div class="m-form__actions">
-                                    <div class="row">
-                                        <div class="col-3"></div>
-                                        <div class="col-7">
-                                            <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">
-                                                Save changes
-                                            </button>
-                                            &nbsp;&nbsp;
-                                            <button type="reset" class="btn btn-secondary m-btn m-btn--air m-btn--custom">
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 @stop

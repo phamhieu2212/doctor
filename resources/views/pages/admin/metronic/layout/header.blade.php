@@ -6,7 +6,7 @@
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
                         <a href="#" class="m-brand__logo-wrapper">
-                            KABE
+                            KHUYẾN NÔNG
                         </a>
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -562,18 +562,18 @@
                                                             Section
                                                         </span>
                                                     </li>
-                                                    {{--<li class="m-nav__item">--}}
-                                                        {{--<a href="{!! action('Admin\MeController@index') !!}" class="m-nav__link">--}}
-                                                            {{--<i class="m-nav__link-icon flaticon-profile-1"></i>--}}
-                                                            {{--<span class="m-nav__link-title">--}}
-                                                                {{--<span class="m-nav__link-wrap">--}}
-                                                                    {{--<span class="m-nav__link-text">--}}
-                                                                        {{--Thông tin cá nhân--}}
-                                                                    {{--</span>--}}
-                                                                {{--</span>--}}
-                                                            {{--</span>--}}
-                                                        {{--</a>--}}
-                                                    {{--</li>--}}
+                                                    <li class="m-nav__item">
+                                                        <a href="{!! action('Admin\MeController@index') !!}" class="m-nav__link">
+                                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                                            <span class="m-nav__link-title">
+                                                                <span class="m-nav__link-wrap">
+                                                                    <span class="m-nav__link-text">
+                                                                        Thông tin cá nhân
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </a>
+                                                    </li>
                                                     <li class="m-nav__separator m-nav__separator--fit"></li>
                                                     <li class="m-nav__item">
                                                         <form id="signout" method="post" action="{!! URL::action('Admin\AuthController@postSignOut') !!}">{!! csrf_field() !!}</form>
