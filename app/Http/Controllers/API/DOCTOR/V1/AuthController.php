@@ -100,12 +100,16 @@ class AuthController extends Controller
         ];
 
         $serverRequest = PsrServerRequest::createFromRequest($request, $data);
-        $token = OauthAccessToken::where('user_id',$adminUser->id)
-                ->where('client_id',$data['client_id'])->first();
-        if(!empty($token))
+        $tokens = OauthAccessToken::where('user_id',$adminUser->id)
+                ->where('client_id',$data['client_id'])->get();
+        if(!empty($tokens))
         {
-            $token->revoked = 1;
-            $token->save();
+            foreach($tokens as $token)
+            {
+                $token->revoked = 1;
+                $token->save();
+            }
+
         }
 
         return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response,$dataUser);
