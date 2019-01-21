@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\FCMNotificationRepositoryInterface;
 use App\Http\Requests\Admin\FCMNotificationRequest;
 use App\Http\Requests\PaginationRequest;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class FCMNotificationController extends Controller
@@ -88,6 +89,7 @@ class FCMNotificationController extends Controller
                             'title',
                         ]
         );
+        $input['sent_at'] = Carbon::now();
         if($input['user_type'] == 2)
         {
             $listIdAdmins = AdminUserRole::where('role','admin')->pluck('admin_user_id');
@@ -194,11 +196,10 @@ class FCMNotificationController extends Controller
                             'user_id',
                             'user_type',
                             'content',
-                            'sent_at',
-                            'is_read',
                             'title',
                         ]
         );
+        $input['sent_at'] = Carbon::now();
 
         $input['is_enabled'] = $request->get('is_enabled', 0);
         $this->fCMNotificationRepository->update($fCMNotification, $input);
