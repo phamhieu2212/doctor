@@ -64,7 +64,7 @@ class FCMNotification extends Base
             'id' => $this->id,
             'title' => ($this->title != null)?$this->title:"",
             'content' => ($this->content != null)?$this->content:"",
-            'sent_at' => ($this->sent_at != null)?$this->sent_at != null:'',
+            'sent_at' => ($this->sent_at != null)?date('Y-m-d H:i:s',strtotime($this->sent_at)):'',
             'is_read' => $this->is_read,
         ];
     }
