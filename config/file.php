@@ -52,11 +52,7 @@ return [
             'buckets'     => [
                 env('AWS_IMAGE_BUCKET'),
             ],
-            'size'        => [600, 400],
-            'thumbnails'  => [
-                [100, 100],
-                [200, 200]
-            ],
+            'size'        => [1280, 628],
             'seed_prefix' => 'user_profile',
             'format'      => 'png',
             'local_type'  => 'common',
