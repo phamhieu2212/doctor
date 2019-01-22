@@ -30,7 +30,7 @@ return [
         'httpStatusCode' => 400
     ],
     40101 => [
-        'message'        => 'Error, Authentication failed !!!',
+        'message'        => 'Tài khoản của bạn đã đăng nhập trên thiết bị khác, vui lòng đăng nhập lại',
         'httpStatusCode' => 401
     ],
     40301 => [
