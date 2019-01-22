@@ -188,7 +188,7 @@ class AdminUser extends AuthenticatableBase
             'name' => $this->name,
             'position' => $this->doctor->position,
             'hospital'=>$hospital,
-            'birthday' => $this->doctor->birthday,
+            'birthday' => ($this->doctor->birthday != null)?$this->doctor->birthday:"",
             'gender' => $this->doctor->gender,
             'address' => $this->doctor->address,
             'phone' => $this->phone,
