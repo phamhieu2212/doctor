@@ -6,14 +6,14 @@ use App\Http\Controllers\API\V1\QuickbloxController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\PsrServerRequest;
 use App\Http\Requests\API\V1\RefreshTokenRequest;
-use App\Http\Requests\API\V1\SignInRequest;
-use App\Http\Requests\API\V1\SignUpRequest;
+use App\Http\Requests\API\V1\Request;
 use App\Models\AdminUser;
 use App\Models\OauthAccessToken;
 use App\Services\AdminUserServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Services\APIUserServiceInterface;
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Support\Facades\Validator;
 use League\OAuth2\Server\AuthorizationServer;
 use Zend\Diactoros\Response as Psr7Response;
 use App\Http\Responses\API\V1\Response;
@@ -47,8 +47,19 @@ class AuthController extends Controller
         $this->quickblox            = $quickblox;
     }
 
-    public function signIn(SignInRequest $request)
+    public function signIn(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'username'         => 'required',
+            'password'      => 'required|min:8',
+            'grant_type'    => 'required',
+            'client_id'     => 'required',
+            'client_secret' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return Response::response(40001);
+        }
         $data = $request->only(
             [
                 'username',
