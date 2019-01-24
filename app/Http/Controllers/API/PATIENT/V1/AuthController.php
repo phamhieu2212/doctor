@@ -75,18 +75,18 @@ class AuthController extends Controller
         );
         $check = $this->userService->checkClient($request);
         if( !$check ) {
-            return Response::response(40003);
+            return response()->json(['code' => 400, 'message' => 'Sai thông tin Client', 'data' => null]);
         }
         $checkAccountKit = $this->accountKitService->getNumber($data['account_kit_token']);
         if($checkAccountKit == false)
         {
-            return Response::response(40004);
+            return response()->json(['code' => 400, 'message' => 'Tài khoản accountKit không đúng', 'data' => null]);
         }
         else
         {
             if($data['username'] != $checkAccountKit)
             {
-                return Response::response(40004);
+                return response()->json(['code' => 400, 'message' => 'Tài khoản accountKit không đúng', 'data' => null]);
             }
             else
             {
@@ -95,7 +95,7 @@ class AuthController extends Controller
                     $user = $this->signUp($data['username']);
                     if($user == false)
                     {
-                        return Response::response(40005);
+                        return response()->json(['code' => 400, 'message' => 'Không thể đăng kí tài khoản quickBlox', 'data' => null]);
                     }
                 }
 

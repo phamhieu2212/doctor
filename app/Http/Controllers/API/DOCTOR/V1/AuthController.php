@@ -58,7 +58,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Response::response(40001);
+            return response()->json(['code' => 400, 'message' => 'Mật khẩu hoặc tên đăng nhập sai', 'data' => null]);
         }
         $data = $request->only(
             [
@@ -71,11 +71,11 @@ class AuthController extends Controller
 
         $check = $this->userService->checkClient($request);
         if( !$check ) {
-            return Response::response(40003);
+            return response()->json(['code' => 400, 'message' => 'Sai thông tin Client', 'data' => null]);
         }
         $adminUser = $this->adminUserService->signIn($data);
         if (empty($adminUser)) {
-            return Response::response(40001);
+            return response()->json(['code' => 400, 'message' => 'Mật khẩu hoặc tên đăng nhập sai', 'data' => null]);
         }
         $data['email'] = $adminUser->email;
         $data['username'] = $adminUser->email;

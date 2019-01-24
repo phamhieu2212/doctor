@@ -10,8 +10,9 @@ return [
         'httpStatusCode' => 200
     ],
     40001 => [
+        'code'           => 400,
         'message'        => 'Mật khẩu hoặc tên đăng nhập sai',
-        'httpStatusCode' => 400
+        'httpStatusCode' => 200
     ],
     40003 => [
         'message'        => 'Sai thông tin Client',
