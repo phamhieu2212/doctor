@@ -230,7 +230,8 @@ class FileUploadService extends BaseService implements FileUploadServiceInterfac
 
         $fileUploadedPath = $localPath . $fileName;
 
-        $this->imageService->resizeImage($path, config('file.categories.' . $configKey . '.size'), $fileUploadedPath);
+//        $this->imageService->resizeImage($path, config('file.categories.' . $configKey . '.size'), $fileUploadedPath);
+        move_uploaded_file($path, $fileUploadedPath);
         if( !file_exists($fileUploadedPath) ) {
             return false;
         }
