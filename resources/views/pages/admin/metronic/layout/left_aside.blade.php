@@ -159,7 +159,29 @@
                     </span>
                     </a>
                 </li>
+                <li class="m-menu__section ">
+                    <h4 class="m-menu__section-text">
+                        Quản lý điểm
+                    </h4>
+                    <i class="m-menu__section-icon flaticon-more-v3"></i>
+                </li>
+
+                <li class="m-menu__item @if( $menu=='point_patients') m-menu__item--active @endif" aria-haspopup="true">
+                    <a href="{!! \URL::action('Admin\PointPatientController@index') !!}" class="m-menu__link">
+                        <i class="m-menu__link-icon la la-sticky-note"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                Điểm bệnh nhân
+                            </span>
+                        </span>
+                    </span>
+                    </a>
+                </li>
             @endif
+
+
+
 
 
 

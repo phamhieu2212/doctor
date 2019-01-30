@@ -54,6 +54,7 @@
 
 
         \Route::resource('fcm-notifications', 'Admin\FCMNotificationController');
+        \Route::resource('point-patients', 'Admin\PointPatientController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });

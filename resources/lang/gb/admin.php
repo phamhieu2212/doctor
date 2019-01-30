@@ -263,6 +263,12 @@ return [
                 'title' => 'Title',
             ],
         ],
+        'point-patients'   => [
+            'columns'  => [
+                'user_id' => 'User_id',
+                'point' => 'Point',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [
