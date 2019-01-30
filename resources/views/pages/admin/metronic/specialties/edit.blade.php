@@ -38,14 +38,14 @@
 @stop
 
 @section('header')
-    Quản lý chuyên khoa
+    Quản lý chuyên ngành
 @stop
 
 @section('breadcrumb')
     <li class="m-nav__separator"> / </li>
     <li class="m-nav__item">
         <a href="{!! action('Admin\SpecialtyController@index') !!}" class="m-nav__link">
-            Danh sách chuyên khoa
+            Danh sách chuyên ngành
         </a>
     </li>
 
@@ -68,7 +68,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Thêm mới chuyên khoa
+                        Thêm mới chuyên ngành
                     </h3>
                 </div>
             </div>

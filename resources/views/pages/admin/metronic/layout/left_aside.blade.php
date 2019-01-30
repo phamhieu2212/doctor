@@ -87,7 +87,7 @@
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
-                                Quản lý chuyên khoa
+                                Quản lý chuyên ngành
                             </span>
                         </span>
                     </span>

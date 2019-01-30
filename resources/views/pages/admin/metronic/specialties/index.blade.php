@@ -12,11 +12,11 @@
 @stop
 
 @section('title')
-     Quản lý chuyên khoa
+     Quản lý chuyên ngành
 @stop
 
 @section('header')
-    Danh sách chuyên khoa
+    Danh sách chuyên ngành
 @stop
 
 @section('breadcrumb')
@@ -24,7 +24,7 @@
     <li class="m-nav__item">
         <a href="" class="m-nav__link">
             <span class="m-nav__link-text">
-                Danh sách chuyên khoa
+                Danh sách chuyên ngành
             </span>
         </a>
     </li>
@@ -36,7 +36,7 @@
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
-                        Danh sách chuyên khoa
+                        Danh sách chuyên ngành
                     </h3>
                 </div>
             </div>
