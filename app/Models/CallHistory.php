@@ -132,9 +132,17 @@ class CallHistory extends Base
 
     public function toAPIArrayDetailDoctor()
     {
+        if(!empty($this->adminUser->doctor->level->name))
+        {
+            $level = $this->adminUser->doctor->level->name;
+        }
+        else
+        {
+            $level = "";
+        }
         return [
             'id'=>$this->id,
-            'doctor_name'=>$this->adminUser->name,
+            'doctor_name'=>$level.' '.$this->adminUser->name,
             'level_name'=>$this->adminUser->doctor->level->name,
             'label' => 'call',
             'duration'=> (int)date('s',$this->end_time->timestamp - $this->start_time->timestamp),

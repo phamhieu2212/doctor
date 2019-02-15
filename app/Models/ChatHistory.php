@@ -91,10 +91,18 @@ class ChatHistory extends Base
 
     public function toAPIArrayDetailDoctor()
     {
+        if(!empty($this->adminUser->doctor->level->name))
+        {
+            $level = $this->adminUser->doctor->level->name;
+        }
+        else
+        {
+            $level = "";
+        }
         $timeNow = strtotime(date('Y-m-d H:i:s'));
         return [
             'id'=>$this->id,
-            'doctor_name'=>$this->adminUser->name,
+            'doctor_name'=>$level.' '.$this->adminUser->name,
             'level_name'=>($this->adminUser->doctor->level_id != 0)?$this->adminUser->doctor->level->name:"",
             'label' => 'chat',
             'file_patient_id'=> ($this->filePatient['id'] != null)?$this->filePatient['id']:0,
