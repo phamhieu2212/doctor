@@ -30,7 +30,7 @@ class PriceController extends Controller
     {
         $idDoctor = $this->userService->getUser()->id;
         if( !is_numeric($idDoctor) || ($idDoctor <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải số nguyên', 'data' => null]);
         }
 
         $doctor = Doctor::where('admin_user_id',$idDoctor)->first();
@@ -48,7 +48,7 @@ class PriceController extends Controller
         try {
             $this->doctorRepository->update($doctor, $data);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
 
 

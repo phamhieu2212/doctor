@@ -79,7 +79,7 @@ class DoctorController extends Controller
             );
 
             if(empty($newImage)) {
-                return Response::response(50002);
+                return response()->json(['code' => 503, 'message' => 'Không thể thêm mới ảnh', 'data' => null]);
             }
 
             $patient = $this->adminUserRepository->update( $currentUser, ['profile_image_id' => $newImage->id] );

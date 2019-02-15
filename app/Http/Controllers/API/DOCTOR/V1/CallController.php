@@ -36,7 +36,7 @@ class CallController extends Controller
         $callHistory  = $this->callHistoryRepository->create($data);
 
         if (empty($callHistory)) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
 
         return Response::response(200, $callHistory->toAPIArray()); 
@@ -53,7 +53,7 @@ class CallController extends Controller
         try {
             $callHistory = $this->callHistoryRepository->update($callHistory, ["type" => $type, "end_time" => date('Y-m-d H:i:s')]);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
 
         return Response::response(200, $callHistory->toAPIArray());  

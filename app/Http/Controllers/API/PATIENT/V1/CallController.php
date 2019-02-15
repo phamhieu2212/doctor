@@ -43,7 +43,7 @@ class CallController extends Controller
             try {
                 $pointPatient = $this->pointPatientRepository->create($data);
             } catch (\Exception $e) {
-                return Response::response(50002);
+                return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
             }
 
         }

@@ -134,12 +134,12 @@ class CallHistoryController extends Controller
         );
         $callHistory = $this->callHistoryRepository->find($input['call_id']);
         if( empty( $callHistory ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không tồn tại dữ liệu', 'data' => null]);
         }
         $statistic = AdminStatistic::where('type',2)
             ->where('conversation_id',$input['call_id'])->first();
         if( empty( $statistic ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không tồn tại dữ liệu', 'data' => null]);
         }
         $timeNow = Carbon::now();
         if($callHistory->start_time == null)
@@ -204,7 +204,7 @@ class CallHistoryController extends Controller
         $statistic = AdminStatistic::where('type',2)
             ->where('conversation_id',$input['call_id'])->first();
         if( empty( $statistic ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không tồn tại dữ liệu', 'data' => null]);
         }
         if($callHistory->type != 1 and $callHistory->type != 2)
         {
@@ -235,7 +235,7 @@ class CallHistoryController extends Controller
             'point'=>((int)floor($pointPatient['point']+($doctor['price_call']/60*$timeCall)) < 0)?0:(int)floor($pointPatient['point']+($doctor['price_call']/60*$timeCall))
         ];
         if( empty( $callHistory ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không tồn tại dữ liệu', 'data' => null]);
         }
         try {
             DB::beginTransaction();

@@ -74,11 +74,11 @@ class CallHistoryController extends Controller
         try {
             $callHistory = $this->callHistoryRepository->create($data);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
 
         if( empty( $callHistory ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
 
 
@@ -118,7 +118,7 @@ class CallHistoryController extends Controller
         );
         $callHistory = $this->callHistoryRepository->find($input['call_id']);
         if( empty( $callHistory ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không tồn tại dữ liệu', 'data' => null]);
         }
         $timeNow = Carbon::now();
         if($callHistory->start_time == null)
@@ -169,7 +169,7 @@ class CallHistoryController extends Controller
         }
 
         if( empty( $callHistory ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không tồn tại dữ liệu', 'data' => null]);
         }
         try {
             DB::beginTransaction();

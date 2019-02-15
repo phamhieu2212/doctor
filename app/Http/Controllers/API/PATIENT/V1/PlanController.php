@@ -32,7 +32,7 @@ class PlanController extends Controller
     public function index($idClinic,$timestamp)
     {
         if( !is_numeric($idClinic) || ($idClinic <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải số nguyên', 'data' => null]);
         }
 
         $clinic = $this->clinicRepository->find($idClinic);

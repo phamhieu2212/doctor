@@ -99,7 +99,7 @@ class PatientFileController extends Controller
     public function update($id,APIRequest $request)
     {
         if( !is_numeric($id) || ($id <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải số nguyên', 'data' => null]);
         }
 
         $filePatient = $this->filePatientRepository->find($id);
@@ -163,7 +163,7 @@ class PatientFileController extends Controller
     public function delete($id)
     {
         if( !is_numeric($id) || ($id <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải số nguyên', 'data' => null]);
         }
 
         $filePatient = $this->filePatientRepository->find($id);
@@ -173,7 +173,7 @@ class PatientFileController extends Controller
         try {
             $this->filePatientRepository->update($filePatient,['status'=>2]);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
         return Response::response(200,['status'=>true]);
 

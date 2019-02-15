@@ -87,11 +87,11 @@ class PaymentController extends Controller
                 'status'=>0
             ]);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
 
         if( empty( $payment ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
          return Response::response(200, [
                 'url'=>$url

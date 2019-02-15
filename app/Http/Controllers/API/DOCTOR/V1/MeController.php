@@ -80,7 +80,7 @@ class MeController extends Controller
             'old_password' => 'required',
         ]);
         if ($validate->fails()) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'Vui lòng điền đúng thông tin', 'data' => null]);
         }
 
         $data = $request->only([
@@ -96,7 +96,7 @@ class MeController extends Controller
         }
         else
         {
-            return Response::response(40003);
+            return response()->json(['code' => 503, 'message' => 'Mật khẩu không trùng khớp', 'data' => null]);
         }
     }
 
@@ -106,7 +106,7 @@ class MeController extends Controller
             'status' => 'required|numeric'
         ]);
         if ($validate->fails()) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'Vui lòng điền đầy đủ thông tin', 'data' => null]);
         }
 
         $data = $request->only([
@@ -117,7 +117,7 @@ class MeController extends Controller
         try {
             $this->adminUserRepository->update($adminUser, $data);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
         return Response::response(200,[
             'status'=> $adminUser->status

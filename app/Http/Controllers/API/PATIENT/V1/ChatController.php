@@ -69,12 +69,7 @@ class ChatController extends Controller {
             $userQuick = $this->quickBlox->getUserById($idQuickDoctor);
             if( isset($userQuick['message']) and $userQuick['code'] == null)
             {
-                return [
-                    'code' => 503,
-                    'status'=> $userQuick['message'],
-                    'data'=>''
-
-                ];
+                return response()->json(['code' => 503, 'message' => $userQuick['message'], 'data' => null]);
             }
             else
             {
@@ -122,12 +117,7 @@ class ChatController extends Controller {
             $userQuick = $this->quickBlox->getUserById($idQuickDoctor);
             if( isset($userQuick['message']) and $userQuick['code'] == null)
             {
-                return [
-                    'code' => 503,
-                    'status'=> $userQuick['message'],
-                    'data'=>''
-
-                ];
+                return response()->json(['code' => 503, 'message' => $userQuick['message'], 'data' => null]);
             }
             else
             {
@@ -177,7 +167,7 @@ class ChatController extends Controller {
         try {
             $this->chatHistoryRepository->update($chatHistory, ['file_patient_id'=>$input['file_patient_id']]);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
 
         return Response::response(200, [

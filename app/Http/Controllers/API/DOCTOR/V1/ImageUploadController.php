@@ -31,7 +31,7 @@ class ImageUploadController extends Controller
     {
         $idDoctor = $this->adminUserService->getUser()->id;
         if( !is_numeric($idDoctor) || ($idDoctor <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải là số nguyên', 'data' => null]);
         }
 
         $adminUser = $this->adminUserRepository->find($idDoctor);

@@ -67,7 +67,7 @@ class NotificationController extends Controller
         try {
             $this->notiRepo->update($notification, ['is_read'=>1]);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
 
         return Response::response(200, $notification->toAPIArray()); 

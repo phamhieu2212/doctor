@@ -58,11 +58,11 @@ class ClinicController extends Controller
         try {
             $clinic = $this->clinicRepository->create($data);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
 
         if( empty( $clinic ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
         $plan = $this->planController->store($data['admin_user_id'],$clinic->id,$bodyRequests['plans']);
         $now =  Carbon::now();
@@ -76,7 +76,7 @@ class ClinicController extends Controller
     public function edit($id, $timestamp)
     {
         if( !is_numeric($id) || ($id <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID là không phải là số nguyên', 'data' => null]);
         }
 
         $clinic = $this->clinicRepository->find($id);
@@ -94,7 +94,7 @@ class ClinicController extends Controller
     public function update($id,APIRequest $request)
     {
         if( !is_numeric($id) || ($id <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải là số nguyên', 'data' => null]);
         }
 
         $clinic = $this->clinicRepository->find($id);
@@ -112,7 +112,7 @@ class ClinicController extends Controller
         try {
             $this->clinicRepository->update($clinic, $data);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
         $plan = $this->planController->update($data['admin_user_id'],$clinic->id,$bodyRequests['plans']);
         $now =  Carbon::now();
@@ -141,7 +141,7 @@ class ClinicController extends Controller
         try {
             $this->clinicRepository->update($clinic, $data);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
 
 

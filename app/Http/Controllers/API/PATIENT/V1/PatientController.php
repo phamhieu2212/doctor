@@ -57,7 +57,7 @@ class PatientController extends Controller {
         try {
             $this->patientRepository->update($patient, $data);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể cập nhật dữ liệu', 'data' => null]);
         }
         $this->quickBlox->updateUser($currentUser->quick_id,$data['full_name']);
 
@@ -106,7 +106,7 @@ class PatientController extends Controller {
             );
 
             if(empty($newImage)) {
-                return Response::response(50002);
+                return response()->json(['code' => 503, 'message' => 'Không tồn tại ảnh', 'data' => null]);
             }
 
             $patient = $this->patientRepository->update( $patient, ['profile_image_id' => $newImage->id] );

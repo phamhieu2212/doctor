@@ -59,7 +59,7 @@ class ContactController extends Controller
     public function detail($idPatient)
     {
         if( !is_numeric($idPatient) || ($idPatient <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải là số nguyên ', 'data' => null]);
         }
         $adminUser  = $this->adminUserService->getUser();
         $callHistories = CallHistory::where('admin_user_id',$adminUser->id)->where('start_time','!=',null)
@@ -82,7 +82,7 @@ class ContactController extends Controller
     public function getFilePatient($idFilePatient)
     {
         if( !is_numeric($idFilePatient) || ($idFilePatient <= 0) ) {
-            return Response::response(40001);
+            return response()->json(['code' => 503, 'message' => 'ID không phải là số nguyên', 'data' => null]);
         }
         $filePatient = $this->filePatientRepository->find($idFilePatient);
         if( empty($filePatient) ) {

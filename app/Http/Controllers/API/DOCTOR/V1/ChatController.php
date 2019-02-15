@@ -42,12 +42,7 @@ class ChatController extends Controller
             $userQuick = $this->quickBlox->getUserById($idQuickPatient);
             if( isset($userQuick['message']) and $userQuick['code'] == null)
             {
-                return [
-                    'code' => 503,
-                    'status'=> $userQuick['message'],
-                    'data'=>''
-
-                ];
+                return response()->json(['code' => 503, 'message' => $userQuick['message'], 'data' => null]);
             }
             else
             {
@@ -67,11 +62,11 @@ class ChatController extends Controller
         try {
             $chatHistory = $this->chatHistoryRepository->create($dataInput);
         } catch (\Exception $e) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
 
         if( empty( $chatHistory ) ) {
-            return Response::response(50002);
+            return response()->json(['code' => 503, 'message' => 'Không thể thêm mới dữ liệu', 'data' => null]);
         }
 
 
