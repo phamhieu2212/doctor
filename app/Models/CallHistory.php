@@ -92,10 +92,18 @@ class CallHistory extends Base
 
     public function toAPIArrayListForPatient()
     {
+        if(!empty($this->adminUser->doctor->level->name))
+        {
+            $level = $this->adminUser->doctor->level->name;
+        }
+        else
+        {
+            $level = "";
+        }
         return [
             'quick_id'=> $this->adminUser->quick_id,
             'doctor_id'=> $this->adminUser->id,
-            'doctor_name' =>$this->adminUser->name,
+            'doctor_name' =>$level.' '.$this->adminUser->name,
             'start_time' => ($this->start_time == null)?date('Y-m-d H:i:s',strtotime($this->created_at)):date('Y-m-d H:i:s',strtotime($this->start_time)),
             'end_time' => ($this->end_time == null)?date('Y-m-d H:i:s',strtotime($this->created_at)):date('Y-m-d H:i:s',strtotime($this->end_time)),
             'type' => ($this->caller == 'patient')?3:$this->type,
