@@ -23,7 +23,7 @@ class HistoryController extends Controller
     public function index()
     {
 
-        $idPatient  = $this->userService->getUser()->id;
+        $idPatient  = $this->userService->getUser()->id;dd($idPatient);
         $callHistories = CallHistory::where('start_time','!=',null)
             ->where('user_id',$idPatient)->get();
         $chatHistories = ChatHistory::where('user_id',$idPatient)->get();
