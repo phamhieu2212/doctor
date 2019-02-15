@@ -47,7 +47,7 @@ class DoctorController extends Controller
             $filter['day_start'] = date("Y-m-d 00:00:00", strtotime($date[$day].' this week'));
             $filter['day_end'] = date("Y-m-d 23:59:59", strtotime($date[$day].' this week'));
         }
-        if($request->has('gender') and $request->get('specialty_id') != null)
+        if($request->has('gender') and $request->get('gender') != null)
         {
             $filter['gender'] = $request->get('gender');
         }
