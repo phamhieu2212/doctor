@@ -101,7 +101,6 @@
         <p class="enormous-font bree-font"> 403 </p>
         <p class="big-font"> You can not access to this page..</p>
         <hr>
-        <p class="big-font"> Let’s return to the <a href="{!! action('Web\IndexController@index') !!}">home page</a></p>
     </div>
 </div>
 </body>
