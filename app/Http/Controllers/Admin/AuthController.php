@@ -30,6 +30,7 @@ class AuthController extends Controller
         }
         if($adminUser->roles[0]->role == 'super_user')
         {
+            dd(1);
             return \RedirectHelper::intended(action('Admin\IndexController@index'), $this->adminUserService->getGuardName());
         }
         else
