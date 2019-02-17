@@ -320,7 +320,7 @@
                                             <label for="exampleSelect1">Chuyên khoa</label>
                                             <select class="form-control js-example-basic-multiple" name="specialty_id[]" multiple="multiple" id="formRole">
                                                 @foreach($specialties as $specialty)
-                                                    <option  value="{{$specialty->id}}">{{$specialty->name}}</option>
+                                                    <option {{(isset($adminUserSpecialty[$specialty->id]))?'selected="selected"':''}}  value="{{$specialty->id}}">{{$specialty->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -245,6 +245,7 @@ class AdminUserController extends Controller
                 'specialties' => $this->specialtyRepository->all(),
                 'isNew'     => false,
                 'adminUser' => $adminUser,
+                'adminUserSpecialty' => $adminUser->specialties->keyBy('id'),
             ]
         );
     }
