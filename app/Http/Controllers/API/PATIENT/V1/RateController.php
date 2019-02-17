@@ -37,6 +37,9 @@ class RateController extends Controller
             'rate','content',
         ]);
         $dataInput['rate_time'] = Carbon::now();
+        if( !is_numeric($data['id']) || ($data['id'] <= 0) ) {
+            return response()->json(['code' => 503, 'message' => 'ID không phải số nguyên', 'data' => null]);
+        }
 
         if($data['type'] == 'chat' and $dataInput['rate'] <= 5)
         {
