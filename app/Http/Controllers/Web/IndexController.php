@@ -38,6 +38,10 @@ class IndexController extends Controller
         $this->FCMNotificationRepository = $FCMNotificationRepository;
 
     }
+    public function index()
+    {
+
+    }
     public function rule()
     {
         return view('pages.web.default.rule', [
