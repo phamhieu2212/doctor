@@ -28,8 +28,16 @@ class AuthController extends Controller
         if (empty($adminUser)) {
             return redirect()->action('Admin\AuthController@getSignIn');
         }
+        if($adminUser->roles[0]->role == 'super_user')
+        {
+            return \RedirectHelper::intended(action('Admin\IndexController@index'), $this->adminUserService->getGuardName());
+        }
+        else
+        {
+            return \RedirectHelper::intended(action('Admin\ClinicController@index'), $this->adminUserService->getGuardName());
+        }
 
-        return \RedirectHelper::intended(action('Admin\IndexController@index'), $this->adminUserService->getGuardName());
+
     }
 
     public function postSignOut()
