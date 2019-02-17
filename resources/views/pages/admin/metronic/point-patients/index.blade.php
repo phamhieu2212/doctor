@@ -92,21 +92,6 @@
                     <div class="col-sm-12 col-md-6">
                         Tổng số: {{$count}} kết quả
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div id="m_table_1_filter" class="dataTables_filter">
-                            <form method="get" accept-charset="utf-8" action="{!! action('Admin\PointPatientController@index') !!}">
-                                {!! csrf_field() !!}
-                                <div class="m-input-icon m-input-icon--left m-input-icon--right">
-                                    <input type="text" name="keyword" id="keyword" value="{{ $keyword }}" class="form-control m-input m-input--pill" placeholder="Tìm kiếm ...">
-                                    <span class="m-input-icon__icon m-input-icon__icon--left">
-                                        <span>
-                                            <i class="la la-search"></i>
-                                        </span>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
