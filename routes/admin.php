@@ -32,10 +32,9 @@
 
             \Route::resource('oauth-clients', 'Admin\OauthClientController');
             \Route::resource('logs', 'Admin\LogController');
-            \Route::get('/', 'Admin\IndexController@index');
 
-            \Route::get('/me', 'Admin\MeController@index');
-            \Route::put('/me', 'Admin\MeController@update');
+
+
 
         });
 
@@ -45,7 +44,11 @@
             
             \Route::get('load-notification/{offset}', 'Admin\AdminUserNotificationController@loadNotification');
             \Route::resource('clinics', 'Admin\ClinicController');
+            \Route::get('/me', 'Admin\MeController@index');
+            \Route::put('/me', 'Admin\MeController@update');
+            \Route::get('/', 'Admin\IndexController@index');
         });
+
 
 
         \Route::get('/me/notifications', 'Admin\MeController@notifications');
