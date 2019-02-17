@@ -209,13 +209,21 @@ class AdminUser extends AuthenticatableBase
 
     public function toAPIArrayLoginDoctor()
     {
+        if(!empty($this->doctor->level->name))
+        {
+            $level = $this->doctor->level->name;
+        }
+        else
+        {
+            $level = "";
+        }
         $countRateChat = ChatHistory::where('admin_user_id',$this->id)->where('rate','>',0)->count();
         $countRateCall = CallHistory::where('admin_user_id',$this->id)->where('rate','>',0)->count();
         $rateChat = ChatHistory::where('admin_user_id',$this->id)->where('rate','>',0)->sum('rate');
         $rateCall = CallHistory::where('admin_user_id',$this->id)->where('rate','>',0)->sum('rate');
 
         return [
-            'name' => $this->name,
+            'name' => $level.' '.$this->name,
             'hospital'=>$this->doctor->hospital->name,
             'position'=>$this->doctor->position,
             'price_chat'=>$this->doctor->price_chat,
