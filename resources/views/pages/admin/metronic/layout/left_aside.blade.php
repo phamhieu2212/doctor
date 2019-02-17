@@ -5,16 +5,19 @@
     <!-- BEGIN: Aside Menu -->
     <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500">
         <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow " style="padding-top: 0;">
-            <li class="m-menu__section ">
-                <h4 class="m-menu__section-text">
-                    MAIN NAVIGATION
-                </h4>
-                <i class="m-menu__section-icon flaticon-more-v3"></i>
-            </li>
 
-            <li class="m-menu__item @if( $menu=='dashboard') m-menu__item--active @endif" aria-haspopup="true">
-                <a href="{!! \URL::action('Admin\IndexController@index') !!}" class="m-menu__link ">
-                    <i class="m-menu__link-icon flaticon-line-graph"></i>
+
+            @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
+                <li class="m-menu__section ">
+                    <h4 class="m-menu__section-text">
+                        MAIN NAVIGATION
+                    </h4>
+                    <i class="m-menu__section-icon flaticon-more-v3"></i>
+                </li>
+
+                <li class="m-menu__item @if( $menu=='dashboard') m-menu__item--active @endif" aria-haspopup="true">
+                    <a href="{!! \URL::action('Admin\IndexController@index') !!}" class="m-menu__link ">
+                        <i class="m-menu__link-icon flaticon-line-graph"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
                             <span class="m-menu__link-text">
@@ -22,11 +25,8 @@
                             </span>
                         </span>
                     </span>
-                </a>
-            </li>
-
-
-            @if( $authUser->hasRole(\App\Models\AdminUserRole::ROLE_SUPER_USER) )
+                    </a>
+                </li>
                 <li class="m-menu__section ">
                     <h4 class="m-menu__section-text">
                         USER MANAGEMENT
