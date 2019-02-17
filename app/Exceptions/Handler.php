@@ -62,6 +62,9 @@ class Handler extends ExceptionHandler
                     case '403':
                         return Response::response(40301);
                         break;
+                    case '413':
+                        return response()->json(['code' => 413, 'message' => 'Dung lượng quá lớn', 'data' => null]);
+                        break;
 
                     // not found
                     case '404':
