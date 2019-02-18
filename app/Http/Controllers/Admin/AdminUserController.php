@@ -179,9 +179,10 @@ class AdminUserController extends Controller
                 );
                 $inputDoctor['admin_user_id'] = $adminUser->id;
                 $this->doctorRepository->create($inputDoctor);
+                $pointDoctor = $this->pointDoctorRepository->create(['admin_user_id'=>$adminUser->id,'point'=>0]);
 
             }
-            $pointDoctor = $this->pointDoctorRepository->create(['admin_user_id'=>$adminUser->id,'point'=>0]);
+
 
             $this->adminUserRoleRepository->setAdminUserRoles($adminUser->id, $request->input('role', []));
             $adminUser->specialties()->sync($request->input('specialty_id'));
