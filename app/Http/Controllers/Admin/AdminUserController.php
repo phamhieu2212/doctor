@@ -170,7 +170,7 @@ class AdminUserController extends Controller
                     ->withErrors(trans('admin.errors.general.save_failed'));
             }
 
-            if($input['role'][0] == 'admin')
+            if($input['role'] == 'admin')
             {
                 $inputDoctor = $request->only(
                     [
@@ -301,7 +301,7 @@ class AdminUserController extends Controller
 
         $adminUser = $this->adminUserRepository->update($adminUser, $input);
 
-        if($input['role'][0] == 'super_user')
+        if($input['role'] == 'super_user')
         {
             if(!empty($doctor))
             {
@@ -320,7 +320,7 @@ class AdminUserController extends Controller
             }
 
         }
-        if($input['role'][0] == 'admin')
+        if($input['role'] == 'admin')
         {
             $doctor = $this->doctorRepository->update($doctor,$inputDoctor);
             $inputDoctor = $request->only(
