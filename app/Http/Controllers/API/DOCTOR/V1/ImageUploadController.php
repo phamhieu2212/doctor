@@ -75,6 +75,7 @@ class ImageUploadController extends Controller
 
     public function genImage($adminUser)
     {
-        Image::make($adminUser->present()->profileImage()->present()->url)->encode('jpg')->save('static/common/img/quick-ava/'.$adminUser->quick_id.'.jpg');
+        $nameImage = $adminUser->profileImage->url;
+        Image::make(file_get_contents('static/common/img/users/'.$nameImage))->encode('jpg')->save('static/common/img/quick-ava/'.$adminUser->quick_id.'.jpg');
     }
 }
