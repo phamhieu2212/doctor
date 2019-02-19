@@ -193,6 +193,7 @@ return [
         App\Providers\RepositoryBindServiceProvider::class,
         App\Providers\ServiceBindServiceProvider::class,
         App\Providers\HelperBindServiceProvider::class,
+        'Intervention\Image\ImageServiceProvider',
 
     ], $additionalProviders),
 
@@ -252,6 +253,7 @@ return [
         'TypeHelper'             => App\Facades\TypeHelper::class,
         'RedirectHelper'         => App\Facades\RedirectHelper::class,
         'CacheHelper'            => App\Facades\CacheHelper::class,
+        'Image' => 'Intervention\Image\Facades\Image',
         /* NEW FACADE */
     ],
 

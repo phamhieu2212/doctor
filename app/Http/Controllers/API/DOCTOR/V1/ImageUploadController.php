@@ -9,6 +9,7 @@ use App\Services\APIUserServiceInterface;
 use App\Services\FileUploadServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class ImageUploadController extends Controller
 {
@@ -54,12 +55,15 @@ class ImageUploadController extends Controller
             );
 
             if (!empty($newImage)) {
-                $oldImage = $adminUser->coverImage;
+                $oldImage = $adminUser->profileImage;
                 if (!empty($oldImage)) {
                     $this->fileUploadService->delete($oldImage);
                 }
 
                 $this->adminUserRepository->update($adminUser, ['profile_image_id' => $newImage->id]);
+                $adminUser = $this->adminUserRepository->find($idDoctor);
+                Image::make($adminUser->present()->profileImage()->present()->url)->encode('jpg')->save('static/common/img/quick-ava/'.$adminUser->quick_id.'.jpg');
+
             }
         }
         $adminUser = $this->adminUserRepository->find($idDoctor);
