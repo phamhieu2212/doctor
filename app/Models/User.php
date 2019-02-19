@@ -140,7 +140,7 @@ class User extends AuthenticatableBase
     public function toAPIArrayLogin()
     {
         return [
-            'name'      => $this->name,
+            'name'      => ($this->patient->full_name)?$this->patient->full_name:$this->name,
             'telephone' => $this->telephone,
             'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
