@@ -61,14 +61,12 @@ class ImageUploadController extends Controller
                 }
 
                 $this->adminUserRepository->update($adminUser, ['profile_image_id' => $newImage->id]);
-                $adminUser = $this->adminUserRepository->find($idDoctor);
-
-                Image::make($adminUser->present()->profileImage()->present()->url)->encode('jpg')->save('static/common/img/quick-ava/'.$adminUser->quick_id.'.jpg');
 
 
             }
         }
         $adminUser = $this->adminUserRepository->find($idDoctor);
+        Image::make($adminUser->present()->profileImage()->present()->url)->encode('jpg')->save('static/common/img/quick-ava/'.$adminUser->quick_id.'.jpg');
 
         return Response::response(200, $adminUser->toAPIArrayUploadAvatar());
 
