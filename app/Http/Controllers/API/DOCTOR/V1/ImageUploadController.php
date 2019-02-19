@@ -71,6 +71,7 @@ class ImageUploadController extends Controller
                         $flag = false;
                     } catch (\Exception $e) {
                         //not throwing  error when exception occurs
+                        dd(1);
                     }
                     $try++;
                 endwhile;
