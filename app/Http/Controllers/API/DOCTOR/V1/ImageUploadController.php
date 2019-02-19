@@ -62,19 +62,8 @@ class ImageUploadController extends Controller
 
                 $this->adminUserRepository->update($adminUser, ['profile_image_id' => $newImage->id]);
                 $adminUser = $this->adminUserRepository->find($idDoctor);
-                $flag = true;
-                $try = 1;
-                while ($flag && $try <= 3):
-                    try {
-                        Image::make($adminUser->present()->profileImage()->present()->url)->encode('jpg')->save('static/common/img/quick-ava/'.$adminUser->quick_id.'.jpg');
-                        //Image migrated successfully
-                        $flag = false;
-                    } catch (\Exception $e) {
-                        //not throwing  error when exception occurs
-                        dd(1);
-                    }
-                    $try++;
-                endwhile;
+
+                Image::make($adminUser->present()->profileImage()->present()->url)->encode('jpg')->save('static/common/img/quick-ava/'.$adminUser->quick_id.'.jpg');
 
 
             }
