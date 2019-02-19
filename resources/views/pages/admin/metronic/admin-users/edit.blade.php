@@ -172,7 +172,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group m-form__group row">
                                             <label for="exampleSelect1">Vai trò</label>
-                                            <select name="role" class="form-control m-input" id="formRole">
+                                            <select name="role[]" class="form-control m-input" id="formRole">
                                                 <option value="0">Vui lòng chọn vai trò</option>
                                                 <option {{(@$adminUser->roles[0]->role == 'super_user')?'selected':''}} value="super_user">Super admin</option>
                                                 <option {{(@$adminUser->roles[0]->role == 'admin')?'selected':''}} value="admin">Bác sĩ</option>
