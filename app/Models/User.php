@@ -152,7 +152,7 @@ class User extends AuthenticatableBase
             'id'=>$this->id,
             'quick_id'=> $this->quick_id,
             'gender'=>$this->patient->gender,
-            'name'      => $this->name,
+            'name'      => $this->patient->full_name,
             'age'  => ($this->patient->birth_day != null)?date_diff(date_create($this->patient->birth_day), date_create('now'))->y:null,
             'address'   => $this->address,
             'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),

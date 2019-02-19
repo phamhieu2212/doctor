@@ -118,7 +118,7 @@ class CallHistory extends Base
         return [
             'quick_id'=> $this->user->quick_id,
             'patient_id'=> $this->user->id,
-            'patient_name' =>$this->user->name,
+            'patient_name' =>$this->user->patient->full_name,
             'start_time' => ($this->start_time == null)?date('Y-m-d H:i:s',strtotime($this->created_at)):date('Y-m-d H:i:s',strtotime($this->start_time)),
             'end_time' => ($this->end_time == null)?date('Y-m-d H:i:s',strtotime($this->created_at)):date('Y-m-d H:i:s',strtotime($this->end_time)),
             'type' => ($this->caller == 'doctor')?3:$this->type,
