@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
             {
                 return response()->json(['code' => 401, 'message' => 'Tài khoản của bạn đã đăng nhập trên thiết bị khác, vui lòng đăng nhập lại', 'data' => null]);
             };
-            if($exception->getMessage() == "413 Request Entity Too Large")
+            if($exception->getMessage() == "Request Entity Too Large")
             {
                 return response()->json(['code' => 413, 'message' => 'Dung lượng quá lớn', 'data' => null]);
             };
