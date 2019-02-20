@@ -133,7 +133,7 @@ class User extends AuthenticatableBase
             'birthday'  => $this->birthday,
             'locale'    => $this->locale,
             'address'   => $this->address,
-            'image_link'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
+            'image_link'    => !empty($this->patient->present()->profileImage()) ? $this->patient->present()->profileImage()->present()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
     }
 
@@ -142,7 +142,7 @@ class User extends AuthenticatableBase
         return [
             'name'      => ($this->patient->full_name)?$this->patient->full_name:$this->name,
             'telephone' => $this->telephone,
-            'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->present()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
+            'avatar'    => !empty($this->patient->present()->profileImage()) ? $this->patient->present()->profileImage()->present()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
     }
 
