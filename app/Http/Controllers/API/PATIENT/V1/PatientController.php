@@ -10,6 +10,7 @@ use App\Services\APIUserServiceInterface;
 use App\Services\FileUploadServiceInterface;
 use App\Repositories\ImageRepositoryInterface;
 use App\Http\Requests\BaseRequest;
+use Intervention\Image\Facades\Image;
 
 
 class PatientController extends Controller {
@@ -115,10 +116,18 @@ class PatientController extends Controller {
                 $this->fileUploadService->delete( $currentImage );
                 $this->imageRepository->delete( $currentImage );
             }
+            $this->genImage($newImage,$currentUser);
 
             return Response::response(200, ['url' => $newImage->present()->url]);
         }
 
+
         return Response::response(200, ['url' => null]);
+    }
+
+    public function genImage($newImage,$currentUser)
+    {
+        $nameImage = $newImage->url;
+        Image::make(file_get_contents('static/common/img/users/'.$nameImage))->encode('jpg')->save('static/common/img/quick-ava/'.$currentUser->quick_id.'.jpg');
     }
 }
