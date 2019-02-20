@@ -128,6 +128,6 @@ class PatientController extends Controller {
     public function genImage($newImage,$currentUser)
     {
         $nameImage = $newImage->url;
-        Image::make(file_get_contents('static/common/img/users/'.$nameImage))->encode('jpg')->save('static/common/img/quick-ava/'.$currentUser->quick_id.'.jpg');
+        Image::make(file_get_contents('static/common/img/users/'.$nameImage))->encode('jpg')->rotate(-90)->save('static/common/img/quick-ava/'.$currentUser->quick_id.'.jpg');
     }
 }
