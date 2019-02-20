@@ -142,7 +142,7 @@ class User extends AuthenticatableBase
         return [
             'name'      => ($this->patient->full_name)?$this->patient->full_name:$this->name,
             'telephone' => $this->telephone,
-            'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
+            'avatar'    => !empty($this->present()->profileImage()) ? $this->present()->profileImage()->present()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
     }
 
@@ -155,7 +155,7 @@ class User extends AuthenticatableBase
             'name'      => $this->patient->full_name,
             'age'  => ($this->patient->birth_day != null)?date_diff(date_create($this->patient->birth_day), date_create('now'))->y:null,
             'address'   => $this->address,
-            'avatar'    => !empty($this->patient->present()->profileImage()) ? $this->present()->profileImage()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
+            'avatar'    => !empty($this->patient->present()->profileImage()) ? $this->patient->present()->profileImage()->present()->url : \URLHelper::asset('img/user_avatar.png', 'common'),
         ];
     }
 
