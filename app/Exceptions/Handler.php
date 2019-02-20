@@ -55,15 +55,16 @@ class Handler extends ExceptionHandler
             {
                 return response()->json(['code' => 401, 'message' => 'Tài khoản của bạn đã đăng nhập trên thiết bị khác, vui lòng đăng nhập lại', 'data' => null]);
             };
+            if($exception->getMessage() == "413 Request Entity Too Large")
+            {
+                return response()->json(['code' => 413, 'message' => 'Dung lượng quá lớn', 'data' => null]);
+            };
 
             if( !$exception->getMessage() ) {
                 switch( $exception->getStatusCode() ) {
                     // not authorized
                     case '403':
                         return Response::response(40301);
-                        break;
-                    case '413':
-                        return response()->json(['code' => 413, 'message' => 'Dung lượng quá lớn', 'data' => null]);
                         break;
 
                     // not found
