@@ -243,10 +243,11 @@ class FileUploadService extends BaseService implements FileUploadServiceInterfac
             $input['url']      = $fileName;
             $input['is_local'] = true;
 
-            foreach (array_get(config('file.categories.' . $configKey), 'thumbnails', []) as $thumbnail) {
-                $thumbnailKey = $this->getThumbnailKeyFromKey($fileName, $thumbnail);
-                $this->imageService->resizeImage($path, $thumbnail, $localPath . $thumbnailKey);
-            }
+//            foreach (array_get(config('file.categories.' . $configKey), 'thumbnails', []) as $thumbnail) {
+//                dd(1);
+//                $thumbnailKey = $this->getThumbnailKeyFromKey($fileName, $thumbnail);
+//                $this->imageService->resizeImage($path, $thumbnail, $localPath . $thumbnailKey);
+//            }
         } else {
             $bucket = $this->decideBucket(array_get(config('file.categories.' . $configKey), 'buckets', ''));
             $region = array_get(config('file.categories.' . $configKey), 'region', 'ap-northeast-1');
