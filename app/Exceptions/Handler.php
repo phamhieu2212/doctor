@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
                 }
             } else {
                 // defined in route but method not exist
-                return response()->json(['code' => 503, 'message' => $exception->getMessage(), 'data' => null])->setStatusCode(503);
+                return response()->json(['code' => 503, 'message' => 'Có lỗi xảy ra', 'data' => null]);
             }
         }
         
