@@ -2,7 +2,7 @@
 
 \Route::group(['middleware' => ['web.values']], function () {
 
-    \Route::get('/', 'Admin\AuthController@getSignIn');
+    \Route::get('/', 'Web\IndexController@index');
     \Route::get('/payment/success', 'Web\IndexController@success');
     \Route::get('/rule', 'Web\IndexController@rule');
 
