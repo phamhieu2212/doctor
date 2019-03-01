@@ -390,7 +390,8 @@ class AdminUserController extends Controller
         if (empty($adminUser)) {
             \App::abort(404);
         }
-        $this->adminUserRepository->delete($adminUser);
+        $adminUser->delete();
+        $adminUser->save();
         $doctor->delete();
         $doctor->save();
         $this->quickblox->deleteUser($adminUser->quick_id);

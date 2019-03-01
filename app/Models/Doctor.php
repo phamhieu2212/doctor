@@ -55,7 +55,7 @@ class Doctor extends Base
     // Relations
     public function adminUser()
     {
-        return $this->belongsTo(\App\Models\AdminUser::class, 'admin_user_id', 'id');
+        return $this->belongsTo(\App\Models\AdminUser::class, 'admin_user_id','id');
     }
 
     public function hospital()
@@ -105,11 +105,11 @@ class Doctor extends Base
         }
 
         return [
-            'id' => $this->adminUser['id'],
-            'name' => ($this->name)?$level.' '.$this->name:"",
-            'hospital_name' => $this->hospital['name'],
-            'position' => ($this->position)?$this->position:"",
-            'image_link' => ($this->adminUser->profile_image_id != 0)?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
+            'id' => ($this->adminUser != null)?$this->adminUser->id:"",
+            'name' => (@$this->name)?$level.' '.@$this->name:"",
+            'hospital_name' => @$this->hospital->name,
+            'position' => (@$this->position)?@$this->position:"",
+            'image_link' => (@$this->adminUser->profile_image_id != 0)?$this->adminUser->present()->profileImage()->present()->url: \URLHelper::asset('img/no_image.jpg', 'common'),
         ];
     }
 
