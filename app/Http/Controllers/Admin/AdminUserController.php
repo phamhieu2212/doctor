@@ -140,27 +140,27 @@ class AdminUserController extends Controller
                 'role','phone'
             ]
         );
-        $inputQuickBlox = [
-            'username' => $input['username'],
-            'password' => $input['username'],
-            'email'    => $input['email'] ,
-            'external_user_id' => '',
-            'facebook_id' => '',
-            'twitter_id' => '',
-            'full_name'=> $input['name'] ,
-            'phone'    => $input['phone'],
-            'website' => '',
-        ];
-        $userQuick = $this->quickblox->signUp($inputQuickBlox);
-        if(isset($userQuick['errors']))
-        {
-            return redirect()
-                ->back()
-                ->withErrors(trans('admin.errors.general.save_failed'));
-        }
-        $idQuick = $userQuick['user']['id'];
         try {
             DB::beginTransaction();
+            $inputQuickBlox = [
+                'username' => $input['username'],
+                'password' => $input['username'],
+                'email'    => $input['email'] ,
+                'external_user_id' => '',
+                'facebook_id' => '',
+                'twitter_id' => '',
+                'full_name'=> $input['name'] ,
+                'phone'    => $input['phone'],
+                'website' => '',
+            ];
+            $userQuick = $this->quickblox->signUp($inputQuickBlox);
+            if(isset($userQuick['errors']))
+            {
+                return redirect()
+                    ->back()
+                    ->withErrors(trans('admin.errors.general.save_failed'));
+            }
+            $idQuick = $userQuick['user']['id'];
             $input['status'] = 2;
 
             $adminUser = $this->adminUserRepository->create($input);
