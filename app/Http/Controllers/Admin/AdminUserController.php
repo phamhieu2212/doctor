@@ -140,6 +140,25 @@ class AdminUserController extends Controller
                 'role','phone'
             ]
         );
+        $inputQuickBlox = [
+            'username' => $input['username'],
+            'password' => $input['username'],
+            'email'    => $input['email'] ,
+            'external_user_id' => '',
+            'facebook_id' => '',
+            'twitter_id' => '',
+            'full_name'=> $input['name'] ,
+            'phone'    => $input['phone'],
+            'website' => '',
+        ];
+        $userQuick = $this->quickblox->signUp($inputQuickBlox);
+        if(isset($userQuick['errors']))
+        {
+            return redirect()
+                ->back()
+                ->withErrors(trans('admin.errors.general.save_failed'));
+        }
+        $idQuick = $userQuick['user']['id'];
         try {
             DB::beginTransaction();
             $input['status'] = 2;
@@ -186,6 +205,7 @@ class AdminUserController extends Controller
                     $this->adminUserRepository->update($adminUser, ['profile_image_id' => $image->id]);
                 }
             }
+            $this->adminUserRepository->update($adminUser, ['quick_id' => $idQuick]);
 
 
             DB::commit();
@@ -200,26 +220,6 @@ class AdminUserController extends Controller
                 ->back()
                 ->withErrors(trans('admin.errors.general.save_failed'));
         }
-        $inputQuickBlox = [
-            'username' => $input['username'],
-            'password' => $input['username'],
-            'email'    => $input['email'] ,
-            'external_user_id' => '',
-            'facebook_id' => '',
-            'twitter_id' => '',
-            'full_name'=> $input['name'] ,
-            'phone'    => $input['phone'],
-            'website' => '',
-        ];
-        $userQuick = $this->quickblox->signUp($inputQuickBlox);
-        if(isset($userQuick['errors']))
-        {
-            return redirect()
-                ->back()
-                ->withErrors(trans('admin.errors.general.save_failed'));
-        }
-        $idQuick = $userQuick['user']['id'];
-        $this->adminUserRepository->update($adminUser, ['quick_id' => $idQuick]);
         return redirect()
             ->action('Admin\AdminUserController@index')
             ->with('message-success', trans('admin.messages.general.create_success'));
@@ -385,16 +385,16 @@ class AdminUserController extends Controller
     public function destroy($id)
     {
         /** @var \App\Models\AdminUser $adminUser */
-        $adminUser = $this->adminUserRepository->find($id);
-        $doctor = $adminUser->doctor;
-        if (empty($adminUser)) {
-            \App::abort(404);
-        }
-        $adminUser->delete();
-        $adminUser->save();
-        $doctor->delete();
-        $doctor->save();
-        $this->quickblox->deleteUser($adminUser->quick_id);
+//        $adminUser = $this->adminUserRepository->find($id);
+//        $doctor = $adminUser->doctor;
+//        if (empty($adminUser)) {
+//            \App::abort(404);
+//        }
+//        $adminUser->delete();
+//        $adminUser->save();
+//        $doctor->delete();
+//        $doctor->save();
+//        $this->quickblox->deleteUser($adminUser->quick_id);
 
         return redirect()
             ->action('Admin\AdminUserController@index')
