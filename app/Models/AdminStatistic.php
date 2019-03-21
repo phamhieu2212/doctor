@@ -94,14 +94,14 @@ class AdminStatistic extends Base
             'date' => date('Y-m',strtotime($this->date)),
             'log'=>
                 [
-                    'total_chat' => $this->total_chat,
-                    'total_call' => $this->total_call,
-                    'total_amount' => $this->total_amount,
-                    'price' => $this->price,
-                    'total_duration' => $this->total_duration,
+                    'total_chat' => (int)$this->total_chat,
+                    'total_call' => (int)$this->total_call,
+                    'total_amount' => (int)$this->total_amount,
+                    'price' => (int)$this->price,
+                    'total_duration' => (int)$this->total_duration,
                     'type' => $this->type,
-                    'new_patient' => $this->new_patient,
-                    'total_patient'=> $countTotalPatient
+                    'new_patient' => (int)$this->new_patient,
+                    'total_patient'=> (int)$countTotalPatient
                 ]
 
         ];
